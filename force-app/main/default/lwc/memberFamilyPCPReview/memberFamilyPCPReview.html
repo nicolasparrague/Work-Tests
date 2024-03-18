@@ -1,0 +1,56 @@
+<template>
+   <!-- BOX ONE A -->
+   <template if:true={isUpdatePCP}>
+      <div class="nds-grid nds-wrap box nds-m-bottom_large nds-m-top_x-small">
+         <div class="nds-p-horizontal_x-small nds-size_1-of-1">
+            <h2 class="nds-text-title nds-m-bottom_medium c-color-brand-heading">Effective Date and Reason for Change</h2>
+         </div>
+         <div class="nds-p-horizontal_x-small nds-m-bottom_x-small nds-size_1-of-1 nds-medium-size_1-of-3">
+            <h3 class="nds-text-title">Effective Date</h3>
+            <p class="nds-text-body_regular">{effectiveDate}</p>
+         </div>
+         <div class="nds-p-horizontal_x-small nds-m-bottom_x-small nds-size_1-of-1 nds-medium-size_1-of-3">
+            <h3 class="nds-text-title">Reason for Change</h3>
+            <p class="nds-text-body_regular">{reasonOfChange}</p>
+         </div>
+         <div class="nds-p-horizontal_x-small nds-m-bottom_x-small nds-size_1-of-1 nds-medium-size_1-of-3">
+            <div class="nds-text-body_small"></div>
+            <p class="nds-text-body_regular"></p>
+         </div>
+      </div>
+   </template>
+   <!-- BOX ONE B -->
+   <template if:false={isUpdatePCP}>
+      <div class="nds-grid nds-wrap box nds-m-bottom_large nds-m-top_x-small">
+         <div class="nds-p-horizontal_x-small nds-size_1-of-1">
+            <h2 class="nds-text-title nds-m-bottom_medium c-color-brand-heading">Effective Date for Change</h2>
+         </div>
+         <div class="nds-p-horizontal_x-small nds-m-bottom_x-small nds-size_1-of-1 nds-medium-size_1-of-3">
+            <h3 class="nds-text-title">Effective Date</h3>
+            <p class="nds-text-body_regular">{effectiveDate}</p>
+         </div>
+      </div>
+   </template>
+   <!-- BOX TWO -->
+   <template for:each={memberList} for:item="member">
+      <div key={member.memberName} class="nds-grid nds-wrap box nds-m-bottom_large">
+         <div class="nds-p-horizontal_x-small nds-size_1-of-1">
+            <h2 class="nds-text-title nds-m-bottom_medium c-color-brand-heading">
+               {member.memberType} Primary Care Provider Details
+            </h2>
+         </div>
+         <div class="nds-p-horizontal_x-small nds-m-bottom_x-small nds-size_1-of-1 nds-medium-size_1-of-3">
+            <h3 class="nds-text-title">Name</h3>
+            <p class="nds-text-body_regular">{member.memberName}</p>
+         </div>
+         <div class="nds-p-horizontal_x-small nds-m-bottom_x-small nds-size_1-of-1 nds-medium-size_1-of-3">
+            <h3 class="nds-text-title">Current Primary Care Provider Name</h3>
+            <p class="nds-text-body_regular">{member.pcpName}</p>
+         </div>
+         <div class="nds-p-horizontal_x-small nds-m-bottom_x-small nds-size_1-of-1 nds-medium-size_1-of-3">
+            <h3 class="nds-text-title">New Primary Care Provider Name</h3>
+            <p class="nds-text-body_regular">{newPCPName}</p>
+         </div>
+      </div>
+   </template>
+</template>

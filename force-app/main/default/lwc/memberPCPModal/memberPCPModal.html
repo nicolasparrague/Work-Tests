@@ -1,0 +1,34 @@
+<!--Use template if:true to display/hide popup based on isModalOpen value-->
+<template>
+   <div class="btn-centered">
+      <button onclick={openModal} 
+         class="nds-button nds-button_brand nds-button_stretch nds-p-around_xx-small nds-medium-size_5-of-12 nds-large-size_4-of-12"
+         aria-label="Next will take you to Review Changes Page">
+         Next to Review PCP Details
+      </button>
+   </div>
+   <!--Use template if:true to display/hide popup based on isModalOpen value-->
+   <template if:true={isModalOpen}>
+      <!-- Modal/Popup Box LWC starts here -->
+      <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-fade-in-open nds-modal__confirmation">
+         <div class="nds-modal__container">
+            <!-- Modal/Popup Box LWC body starts here -->
+            <div class="nds-modal__content nds-p-around_medium" id="modal-content-id-1">
+               <div class="nds-grid nds-m-bottom_large">
+                  <div class="nds-col">
+                     <h2 class="nds-m-bottom_large"><strong>Confirmation Required</strong></h2>
+                     <p>Would you like to apply changes to more than one family member?</p>
+                  </div>
+               </div>
+               <div class="nds-grid" style="text-align: center;">
+                  <div class="nds-col" style="margin-left: auto; margin-right: auto">
+                     <button class="nds-button nds-button_neutral nds-m-horizontal_small" onclick={goToPCPConfirm} title="Cancel">No, I am ok</button>
+                     <button class="nds-button nds-button_brand nds-m-horizontal_small" onclick={goToPCPFamily} title="OK">Yes, Apply to others</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <div class="nds-backdrop nds-backdrop_open"></div>
+   </template>
+</template>

@@ -1,0 +1,52 @@
+<template>
+   <div class="nds-form-element">
+      <div class="nds-form-element__control">
+         <div class="nds-combobox_container">
+            <div class="nds-combobox nds-dropdown-trigger nds-dropdown-trigger_click nds-is-open" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+               <div class="nds-form-element nds-input-has-icon nds-input-has-icon_right" role="none">
+                  <!-- Default Search Box -->
+                  <div class="defaultClass">
+                     <lightning-input
+                        type="text"
+                        theme="nds"
+                        class="nds-combobox__input nds-has-focus searchvalue c-typeahead-icon-override"
+                        id="combobox-id-3"
+                        aria-autocomplete="list"
+                        list="listbox-id-3"
+                        aria-controls="listbox-id-3"
+                        autocomplete="off"
+                        role="textbox"
+                        placeholder={placeholderText}
+                        onfocusin={handleFocusIn}
+                        onkeyup={handleKeyUp}
+                        onfocusout={handleFocusOut}
+                        value={selectedItem}
+                        label="Medical Group"
+                        icon-name-right="utility:chevrondown">
+                     </lightning-input>
+                  </div>
+               </div>
+               <!-- To display all items for the drop down -->
+               <div id="listbox-id-3" class="item_list nds-hide" role="listbox">
+                  <ul class="nds-listbox nds-listbox_vertical nds-dropdown nds-dropdown_length-with-icon-7 nds-dropdown_fluid" role="presentation" onmousedown={detectClickOnScrollbar}>
+                     <template if:true={finaloptions}>
+                        <template for:each={finaloptions} for:item="item">
+                           <li role="presentation" class="nds-listbox__item" key={item.key} onmousedown={handleOptionSelect} data-id={item.key} data-name={item.key}>
+                              <div aria-selected="true" id={item.key} class="nds-media nds-listbox__option nds-listbox__option_entity nds-listbox__option_has-meta" role="option" tabindex="0">
+                                 <span class="nds-media__body">
+                                    <span class="nds-listbox__option-text nds-listbox__option-text_entity slds_optiontxt">{item.key}</span>
+                                 </span>
+                              </div>
+                           </li>
+                        </template>
+                     </template>
+                     <template if:false={finaloptions}>
+                        <div>Error</div>
+                     </template>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</template>

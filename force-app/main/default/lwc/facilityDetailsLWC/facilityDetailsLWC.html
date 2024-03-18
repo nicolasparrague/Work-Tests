@@ -1,0 +1,280 @@
+<template>
+   <template if:true={loading}>
+      <lightning-spinner alternative-text="Loading" size="medium" theme="nds"> </lightning-spinner>
+   </template>
+
+   <!-- Print Icon -->
+   <div class="nds-grid nds-grid_align-end nds-show_medium nds-m-bottom_small">
+      <div class="">
+         <!-- Icon -->
+            <c-custom-icon
+               theme="nds"
+               icon-name="Print"
+               alternative-text="Print Details"
+               size="small"
+               title="Print Details"
+               onclick={printDetails}
+               variant="information"
+               class="cursor-print-details nds-m-right_x-small"
+            ></c-custom-icon>
+            <button class="c-text-body_regular nds-text-link attentis-border-bottom-link" onclick={printDetails} aria-label="Print Details will open a new window">Print Details</button>
+         <!-- Label -->
+      </div>
+   </div>
+
+   <!-- Provider Information Block - Desktop -->
+   <div class="nds-m-bottom_small nds-show_medium">
+      <lightning-accordion theme="nds" active-section-name={activeSectionName} allow-multiple-sections-open={sectionOpen}>
+         <lightning-accordion-section theme="nds" class="nds-text-heading_medium nds-form-element__label_toggle-text" name="FacilityInformation" label="Facility Information">
+            <div class="nds-grid nds-wrap">
+               <!-- Facility Name -->
+               <div class="nds-col nds-medium-order_1 nds-large-order_1 nds-size_6-of-12 nds-medium-size_6-of-12 nds-large-size_4-of-12">
+                  <div class="nlds-col nds-size_12-of-12">
+                     <div class="nds-m-horizontal_xxx-small">
+                        <div class="nds-text-title">Facility Name</div>
+                        <p class="nds-text-body_regular nds-m-bottom_medium">{facility.name}</p>
+                     </div>
+                  </div>
+               </div>
+               <!-- Facility Type -->
+               <div class="nds-col nds-medium-order_2 nds-large-order_2 nds-size_6-of-12 nds-medium-size_6-of-12 nds-large-size_4-of-12">
+                  <div class="nlds-col nds-size_12-of-12">
+                     <div class="nds-m-horizontal_xxx-small">
+                        <div class="nds-text-title">Facility Type</div>
+                        <p class="nds-text-body_regular nds-m-bottom_medium">{selectedFacilityType}</p>
+                     </div>
+                  </div>
+               </div>
+               <!-- Phone Number -->
+               <div class="nds-col nds-medium-order_3 nds-large-order_3 nds-size_6-of-12 nds-medium-size_6-of-12 nds-large-size_4-of-12">
+                  <div class="nlds-col nds-size_12-of-12">
+                     <div class="nds-m-horizontal_xxx-small">
+                        <div class="nds-text-title">Phone Number</div>
+                        <p class="nds-text-body_regular nds-m-bottom_medium">{locationPhone}</p>
+                     </div>
+                  </div>
+               </div>
+               <!-- Address -->
+               <div class="nds-col nds-medium-order_4 nds-large-order_4 nds-size_6-of-12 nds-medium-size_6-of-12 nds-large-size_4-of-12">
+                  <div class="nlds-col nds-size_12-of-12">
+                     <div class="nds-m-horizontal_xxx-small">
+                        <div class="nds-text-title">Address</div>
+                        <p class="nds-text-body_regular nds-m-bottom_medium">
+                           {facility.addressLine1} <br />
+                           {facility.city}, {facility.state} {facility.zip}
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <template if:true ={facilityCOEshowhide}>
+                  <div class="nds-col nds-medium-order_5 nds-large-order_5 nds-size_6-of-12 nds-medium-size_6-of-12 nds-large-size_4-of-12">
+                     <div class="nlds-col nds-size_12-of-12">
+                        <div class="nds-m-horizontal_xxx-small">
+                           <div class="nds-text-title">Center of Excellence</div>
+                           <p class="nds-text-body_regular nds-m-bottom_medium">{facility.isCOE}</p>
+                        </div>
+                     </div>
+                  </div>
+               </template>
+            </div>
+         </lightning-accordion-section>
+      </lightning-accordion>
+   </div>
+
+   <!-- Provider Information Block - Mobile -->
+   <div class="nds-grid nds-wrap nds-hide_medium nds-m-bottom_small">
+      <!-- Facility Name -->
+      <div class="nds-col nds-size_12-of-12 nds-medium-size_12-of-12 nds-large-size_12-of-12 c-medium-bold-header">{facility.name}</div>
+      <!-- Facility Type -->
+      <div class="nds-col nds-size_12-of-12 nds-medium-size_12-of-12 nds-large-size_12-of-12 nds-text-body_regular">{selectedFacilityType}</div>
+   </div>
+   <div class="nds-wrap nds-m-bottom_small nds-hide_medium">
+      <lightning-accordion theme="nds" active-section-name={activeSectionName} allow-multiple-sections-open={sectionOpen}>
+         <lightning-accordion-section theme="nds" class="nds-text-heading_medium nds-form-element__label_toggle-text" name="FacilityInformation" label="Facility Information">
+            <div class="nds-col nds-size_12-of-12 nds-text-body_small nds-media">
+               <!-- Map Icon -->
+               <div class="nds-col nds-size_1-of-12 nds-m-top_small">
+                  <span>
+                     <lightning-icon icon-name="utility:checkin" alternative-text="checkin" size="x-small" title="Map" class="mapIcon"></lightning-icon>
+                  </span>
+               </div>
+               <!-- Address -->
+               <div class="nds-col nds-size_6-of-12 nds-m-top_small">
+                  <a href={directionsUrl} target="_blank" class="nds-text-body_small">{locationAddress}</a>
+               </div>
+            </div>
+            <div class="nds-col nds-size_12-of-12 nds-text-body_small nds-media">
+               <!-- Phone Icon -->
+               <div class="nds-col nds-size_1-of-12 nds-m-top_small">
+                  <span>
+                     <lightning-icon icon-name="utility:call" alternative-text="call" size="x-small" title="Phone Number" class="phoneIcon"></lightning-icon>
+                  </span>
+               </div>
+               <!-- Phone Number -->
+               <div class="nds-col nds-size_6-of-12 nds-m-top_small">
+                  <p>
+                     <lightning-formatted-phone value={locationPhone}></lightning-formatted-phone>
+                  </p>
+               </div>
+            </div>
+            <!-- Center Of Excellence -->
+            <template if:true ={facilityCOEshowhide}>
+               <div class="nds-col nds-size_12-of-12 nds-text-body_small nds-media">
+                  <div class="nds-col nds-size_1-of-12 nds-m-top_small">
+                     <svg height="27px" width="30px" fill="#000000"  data-name="Layer 1" viewBox="9 9 50 50" x="0px" y="0px" class="nds-icon-text-default">
+                        <title>Center Of Excellence</title>
+                        
+                     </svg>
+                  </div>
+                  <div class="nds-col nds-size_6-of-12 nds-m-top_small">
+                        <div>Center of Excellence Available</div>
+                  </div>
+               </div>
+            </template>
+         </lightning-accordion-section>
+      </lightning-accordion>
+   </div>
+   <!-- Accreditation Information - Mobile  -->
+   <div class="nds-m-bottom_small nds-hide_medium">
+      <lightning-accordion theme="nds" active-section-name={accreditationInformation}>
+         <lightning-accordion-section theme="nds" name="AccreditationInformation" label="Accreditation Information">
+            <template if:false={agenciesEmpty}>
+               <!-- Headers -->
+               <template for:each={agencies} for:item="agency" for:index="index">
+                  <div key={agency.ID}>
+                     <div class="nds-grid">
+                        <div class="nds-col nds-size_4-of-12 nds-p-around_small nds-text-align_left">
+                           <b>Accreditation Agency</b>
+                        </div>
+                        <div class="nds-col nds-p-around_small nds-text-align_right">{agency.accred}</div>
+                     </div>
+                     <div class="nds-grid">
+                        <div class="nds-col nds-size_4-of-12 nds-p-around_small nds-text-align_left">
+                           <b>Certificate #</b>
+                        </div>
+                        <div class="nds-col nds-p-around_small nds-text-align_right">{agency.certificateNumber}</div>
+                     </div>
+                     <div class="nds-grid">
+                        <div class="nds-col nds-size_4-of-12 nds-p-around_small nds-text-align_left">
+                           <b>Effective Date</b>
+                        </div>
+                        <div class="nds-col nds-p-around_small nds-text-align_right">{agency.effectiveDate}</div>
+                     </div>
+                     <div class="nds-grid">
+                        <div class="nds-col nds-size_4-of-12 nds-p-around_small nds-text-align_left">
+                           <b>Expiration Date</b>
+                        </div>
+                        <div class="nds-col nds-p-around_small nds-text-align_right">{agency.expirationDate}</div>
+                     </div>
+                     <div class="nds-grid">
+                        <div class="nds-col nds-size_4-of-12 nds-p-around_small nds-text-align_left">
+                           <b>Level</b>
+                        </div>
+                        <div class="nds-col nds-p-around_small nds-text-align_right">{agency.accreditationLevel}</div>
+                     </div>
+                     <template if:true={agency.displayLine}>
+                        <hr />
+                     </template>
+                  </div>
+               </template>
+            </template>
+            <template if:true={agenciesEmpty}>
+               <p>No accreditation information is available for this facility.</p>
+            </template>
+         </lightning-accordion-section>
+      </lightning-accordion>
+   </div>
+
+   <!-- Participating Plans Block -->
+   <div class="nds-m-bottom_small">
+      <lightning-accordion theme="nds" active-section-name={PlansAccepted} allow-multiple-sections-open>
+         <lightning-accordion-section theme="nds" name="PlansAccepted" label="Participating Plans">
+            <c-member-search-combo field-to-save="PlanAccepted" options={plans} class="nds-text-body_regular"> </c-member-search-combo>
+         </lightning-accordion-section>
+      </lightning-accordion>
+   </div>
+
+   <!-- Participating Networks Block -->
+   <div class="nds-m-bottom_small">
+      <lightning-accordion theme="nds" active-section-name={NetworksAccepted} allow-multiple-sections-open>
+         <lightning-accordion-section theme="nds" name="NetworksAccepted" label="Participating Networks">
+            <c-member-search-combo field-to-save="NetworkAccepted" options={networks} class="nds-text-body_regular"> </c-member-search-combo>
+         </lightning-accordion-section>
+      </lightning-accordion>
+   </div>
+   <!-- Accreditation Information - Desktop-->
+   <div class="nds-m-bottom_small nds-show_medium">
+      <lightning-accordion theme="nds" active-section-name={accreditationInformation}>
+         <lightning-accordion-section theme="nds" name="AccreditationInformation" label="Accreditation Information">
+            <template if:false={agenciesEmpty}>
+               <!-- Headers -->
+               <div class="nds-grid mp-dark-brand-header nds-p-around_small">
+                  <div class="nds-col nds-size_3-of-12">
+                     <div>Accreditation Agency</div>
+                  </div>
+                  <div class="nds-col nds-size_2-of-12">
+                     <div>Certificate #</div>
+                  </div>
+                  <div class="nds-col nds-size_2-of-12">
+                     <div>Effective Date</div>
+                  </div>
+                  <div class="nds-col nds-size_2-of-12">
+                     <div>Expiration Date</div>
+                  </div>
+                  <div class="nds-col nds-size_3-of-12">
+                     <div>Level</div>
+                  </div>
+               </div>
+               <!-- Data -->
+               <template for:each={agencies} for:item="agency">
+                  <div key={agency.ID} class="nds-grid nds-p-around_small nds-border_bottom">
+                     <div class="nds-col nds-size_3-of-12">
+                        <div>{agency.accred}</div>
+                     </div>
+                     <div class="nds-col nds-size_2-of-12">
+                        <div>{agency.certificateNumber}</div>
+                     </div>
+                     <div class="nds-col nds-size_2-of-12">
+                        <div>{agency.effectiveDate}</div>
+                     </div>
+                     <div class="nds-col nds-size_2-of-12">
+                        <div>{agency.expirationDate}</div>
+                     </div>
+                     <div class="nds-col nds-size_3-of-12">
+                        <div>{agency.accreditationLevel}</div>
+                     </div>
+                  </div>
+               </template>
+            </template>
+            <template if:true={agenciesEmpty}>
+               <p>No accreditation information is available for this facility.</p>
+            </template>
+         </lightning-accordion-section>
+      </lightning-accordion>
+   </div>
+   <!-- Save/Print Icon -->
+   <div class="slds-no-print nds-col nds-order_1 nds-medium-order_2 nds-large-order_2 nds-size_6-of-12 nds-medium-size_6-of-12 nds-large-size_6-of-12 nds-m-bottom_small nds-media">
+      <div class="nds-medium-size_2-of-12 nds-large-size_1-of-12 slds-no-print hide-print">
+         <span class="nds-hide_medium">
+            <c-custom-icon
+               theme="nds"
+               icon-name="Save"
+               alternative-text="Save Results"
+               variant="default"
+               size="small"
+               title="Save Results"
+               onclick={printDetails}
+               class="cursor-print-details hide-print nds-m-right_x-small"
+            ></c-custom-icon>
+         </span>
+      </div>
+      <div class="nds-col nds-size_11-of-12 slds-no-print">
+         <a onclick={printDetails} class="nds-text-link nds-hide_medium hide-print"> Save</a>
+      </div>
+   </div>
+   <div if:true={facilityTypeHospital} class="nds-small-size_12-of-12 nds-medium-size_12-of-12 nds-large-size_12-of-12 nds-text-body_regular">
+      <p>
+         See the Medicare.gov <a href="http://www.medicare.gov/hospitalcompare/search.html" target="_blank" aria-label="Hospital Compare opens a new tab">Hospital compare</a> <lightning-icon theme="nds" icon-name="utility:new_window" size="xx-small" class="nds-p-left_xx-small nds-m-right_xxx-small nds-brand c-fc-action-icon_right"></lightning-icon> tool for information on hospital quality, safety and patient experience.
+      </p>
+   </div>
+</template>

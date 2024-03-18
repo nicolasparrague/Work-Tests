@@ -1,0 +1,35 @@
+<template>
+    <div class="via-nds container">
+        <template if:true={showRequestMsg}>
+            <div class="nds-grid nds-gutters nds-m-bottom_x-large">
+                <div class="nds-col nds-size_4-of-4">
+                    <div class="nds-notify nds-notify_alert" role="alert">
+                        <span class="nds-assistive-text">info</span>
+                        <h2>{requestIdCardMsg}</h2>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template if:true={showErrorMsg}>
+            <div class="nds-grid nds-box nds-m-bottom_small">
+                <lightning-icon class="nds-size_1-of-12" icon-name="utility:error" alternative-text="Error!" title="Error"></lightning-icon>
+                <div class="nds-size_11-of-12">{errorMsg}<br />{errorDetails}</div>
+            </div>
+        </template>
+        <template for:each={cards} for:item="cardData">
+            <c-member-id-card
+                key={cardData.key}
+                plan-data={cardData}
+                ongeneratepdf={handleGeneratePDFEvent}
+                ongeneratepermpdfdesktop={handleGeneratePermPDFDesktopEvent}
+                ongeneratepermpdfmobile={handleGeneratePermPDFMobileEvent}
+                ongenerateempirepdf={handleGenerateEmpirePDF}
+                onshowrequestchange={handleShowRequestMsgEvent}
+                ondoneloading={handleDoneLoading}
+                ontempattentisdental={handleTempAttentisDental} 
+                onisempirecard={handleIsEmpireCard} >
+            </c-member-id-card>
+        </template>
+    </div>
+    <div class="pdf-link" lwc:dom="manual"></div>
+</template>

@@ -1,0 +1,43 @@
+.font-adjustment {
+  font-size: 0.9em;
+  font-weight: 400;
+}
+
+table caption {
+  font-size: 1.5em;
+  margin: 0.5em 0 0.75em;
+  color: #333;
+}
+
+table tr {
+  border-top: 1px solid #ddd;
+  padding: 0.75rem !important;
+}
+
+table th,
+table td {
+  padding: 1.3em !important;
+  text-align: left;
+  color: #333;
+}
+
+table th {
+  font-size: 1em;
+  letter-spacing: 0.1em;
+  padding: 10px;
+  background-color: #f8f8f8;
+}
+
+table tr:first-child {
+  border-top: none;
+}
+
+table tr:last-child {
+  border-bottom: 1px solid #ddd;
+}
+
+.box {
+  border-radius: 0.25rem;
+  border: 1px solid #dddbda;
+  padding: 24px;
+}

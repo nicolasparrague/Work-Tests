@@ -1,0 +1,85 @@
+<template>
+    <template if:true={showiFrame}>
+        <iframe style="position: absolute; width: 0%; height: 0%; top: 0px; left: 0; right: 0; bottom: 0; background-color: white;" src={iframeUrl}></iframe>
+    </template>
+    <div if:true={loading}>
+        <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+    </div>
+    <template if:true={showError}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-01" class="nds-modal nds-fade-in-open nds-modal__error">
+            <div class="nds-modal__container modalAccessibility">
+                <div class="nds-modal__content nds-p-around_small" id="modal-content-id-01">
+                    <p class="nds-align_absolute-center nds-m-bottom_small">{errorMsg}</p>
+                    <div class="nds-grid modal-padding-3 nds-m-top_large">
+                        <div class="nds-size_1-of-1">
+                            <div class="nds-col nds-align_absolute-center">
+                                <button class="nds-button nds-button_brand modal-color-2 nds-medium-size_4-of-12"
+                                    aria-pressed aria-label="Ok Button" onclick={closeModal}>OK
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="nds-backdrop nds-backdrop_open"></div>
+    </template>
+    <!-- Member Select Dropdown -->
+    <div class="nds-m-bottom_x-large"> 
+        <div class="nds-grid nds-wrap">
+            <div class="nds-col nds-p-horizontal_small">
+                <c-member-benefits-member-select 
+                    subscriber-id={subscriberId} 
+                    selected-member-id={selectedMemberId}
+                    plan-id={planId}>
+                </c-member-benefits-member-select>
+            </div>
+        </div>
+        
+        <!-- Info Message -->
+        <div class="nds-grid  nds-m-top_x-large nds-align_absolute-center c-information-box ">
+            <c-custom-icon icon-name="Information_Tool_Tip" size="small" variant="information" title="Info" alternative-text="Info" class="nds-m-right_x-small"></c-custom-icon>
+            <p class="nds-text-body_regular">
+                Please contact your Human Resources representative to get your plan documents.
+            </p>
+        </div>
+    </div>
+    <!-- Plan Detail Documents -->
+    <template if:true={showPlanCard}>
+        <div class="nds-m-bottom_large slds-card">
+            <lightning-accordion active-section-name="PlanName"
+                allow-multiple-sections-open={sectionOpen}>
+                <lightning-accordion-section class=" nds-form-element__label_toggle-text"
+                    name="PlanName" label={planName}>
+                    <!-- DOCUMENT VERSION 2 -->
+                    <div class="nds-grid nds-wrap nds-p-horizontal_large slds-p-vertical_medium">
+                        <p if:true={showContactUs} class="nds-text-body_regular nds-m-bottom_large nds-align_absolute-center">
+                            <c-custom-icon icon-name="Information_Tool_Tip" size="small" variant="information" title="Info" alternative-text="Info" class="nds-m-right_x-small"></c-custom-icon>
+                            <a href="https://attentisconsulting.com/contact/" target="_blank"> Contact us </a>&nbsp;if you would like to have your Welcome Kit mailed to you.
+                        </p>
+                        <template if:false={showMessage}>
+                            <template for:each={documentList} for:item="doc" for:index="index">
+                                <div class="nds-size_12-of-12 nds-small-size_12-of-12 nds-medium-size_6-of-12 nds-large-size_6-of-12 slds-p-bottom_medium"
+                                    key={doc.name}>
+                                    <div class="nds-grid">
+                                        <!-- <lightning-icon icon-name="doctype:pdf" size="medium"></lightning-icon> -->
+                                        <c-custom-icon icon-name="Download" size="small" variant="information" title="Download" alternative-text="Download" class="nds-m-right_x-small"></c-custom-icon>
+                                        <span class="nds-text-link">
+                                            <a if:false={doc.isHyperlink} onclick={downloadPDF} tabindex="0" name={doc.name} aria-label={doc.accessibilityName}>{doc.name}</a>
+
+                                            <a if:true={doc.isHyperlink} href="#" tabindex="0" target="_blank" name={doc.name}>{doc.name}</a>
+                                        </span>
+                                    </div>
+                                </div> 
+                            </template>
+                        </template>
+                        <template if:true={showMessage}>
+                            <p class="c-text-body_regular" role="alert">Requested documents not available.</p>
+                        </template>
+                    </div>
+                </lightning-accordion-section>
+            </lightning-accordion>
+        </div>
+    </template>
+</template>

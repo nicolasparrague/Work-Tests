@@ -1,0 +1,18 @@
+<template>
+    <!-- <button         
+        aria-label="Ask a Question"
+        onclick={handleClick}
+        class="c-fc-action-icon_right vlocity-btn nds-button nds-button_neutral nds-button_brand">
+        <span class="btnLabel">Ask a Question</span>
+    </button > -->
+    <c-navigation-action-encrypted if:true={showButton}
+        targettype = "standard__namedPage"
+        targetname = "create-message"
+        targetparams = "{askQuestionParams}"
+        label = "Ask a Question"
+        variant = ""
+        iconposition = "left"
+        iconname = "utility:email"
+        class="c-fc-action-text"
+    ></c-navigation-action-encrypted>
+</template>

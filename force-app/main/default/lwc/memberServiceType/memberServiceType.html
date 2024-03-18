@@ -1,0 +1,448 @@
+<template>
+   <template if:true={loading}>
+      <lightning-spinner alternative-text="Loading" size="medium" theme="nds"> </lightning-spinner>
+   </template>
+
+   <div if:true={publicPlanPage} class="findCarePreviousButton nds-show_large">
+      <button onclick={goToFindCarePlans} style="border: none; background: none">
+         <lightning-icon icon-name="utility:chevronleft" alternative-text="previous" size="small"></lightning-icon>
+         <span class="nds-assistive-text">Previous</span>
+      </button>
+   </div>
+
+   <fieldset class="nds-form-element nds-has-error">
+      <!-- Hide all tiles for medicare supplement members -->
+      <div if:true={showAllTiles}>
+         <div class="nds-size_12-of-12 nds-medium-size_12-of-12">
+            <div class="nds-form-element nds-form-container nds-text-block">
+               <h2>
+                  <strong>Choose Service Type</strong>
+               </h2>
+            </div>
+         </div>
+         <div class="nds-form-element__control">
+            <div class="c-service-tile-bg nds-m-top_small nds-radio_custom-group nds-grid nds-grid_align-center nds-clearfix">
+               <div class="nds-grid nds-wrap container">
+                  <div if:true={showDoctorServiceType} class="c-service-tile">
+                     <span class="nds-radio_button nds-grid nds-grid_align-center service-type-card" onclick={radioServiceType}>
+                        <label class="nds-radio_button__label nds-grid nds-grid_vertical nds-grid_vertical-align-center">
+                           <c-custom-icon icon-name="Doctor_Provider" extra-class="service-icon" alternative-text="Illustration of stethoscope"></c-custom-icon>
+                           <button
+                              class="button-border-service-type nds-align_absolute-center nds-m-horizontal_small nds-m-vertical_large"
+                              aria-label="Doctor Service Type"
+                              value="Doctor"
+                              onclick={radioServiceType}
+                           >
+                              Doctor
+                           </button>
+                        </label>
+                     </span>
+                  </div>
+                  <div if:true={showPCPServiceType} class="c-service-tile">
+                     <span class="nds-radio_button nds-grid nds-grid_align-center service-type-card" onclick={radioServiceType}>
+                        <label class="nds-radio_button__label nds-grid nds-grid_vertical nds-grid_vertical-align-center">
+                           <c-custom-icon icon-name="Primary_Care_Physician" extra-class="service-icon" alternative-text="Illustration of medical staff with checkmark"></c-custom-icon>
+                           <button
+                              class="button-border-service-type nds-align_absolute-center nds-m-horizontal_small nds-m-vertical_large"
+                              aria-label="Primary Care Provider Service Type"
+                              value="PCP"
+                              onclick={radioServiceType}>
+                              Primary Care Provider
+                           </button>
+                        </label>
+                     </span>
+                  </div>
+                  <div if:true={showDentalServiceType} class="c-service-tile">
+                     <span class="nds-radio_button nds-grid nds-grid_align-center service-type-card" onclick={radioServiceType}>
+                        <label class="nds-radio_button__label nds-grid nds-grid_vertical nds-grid_vertical-align-center">
+                           <c-custom-icon icon-name="Dental" extra-class="service-icon" alternative-text="Illustration of tooth"></c-custom-icon>
+                           <button
+                              class="button-border-service-type nds-align_absolute-center nds-m-horizontal_small nds-m-vertical_large dentalFocusAcc"
+                              aria-label="Dental Service Type"
+                              value="Dental"
+                              onclick={radioServiceType}>
+                              Dental
+                           </button>
+                        </label>
+                     </span>
+                  </div>
+                  <div if:true={showVisionServiceType} class="c-service-tile">
+                     <span class="nds-radio_button nds-grid nds-grid_align-center service-type-card" onclick={radioServiceType}>
+                        <label class="nds-radio_button__label nds-grid nds-grid_vertical nds-grid_vertical-align-center">
+                           <c-custom-icon icon-name="Ophthalmology" extra-class="service-icon" alternative-text="Illustration of eye"></c-custom-icon>
+                           <button
+                              class="button-border-service-type nds-align_absolute-center nds-m-horizontal_small nds-m-vertical_large visionFocusAcc"
+                              aria-label="Vision Service Type"
+                              value="Vision"
+                              onclick={radioServiceType}
+                           >
+                              Vision
+                           </button>
+                        </label>
+                     </span>
+                  </div>
+                  <div if:true={showMentalServiceType} class="c-service-tile">
+                     <span class="nds-radio_button nds-grid nds-grid_align-center service-type-card" onclick={radioServiceType}>
+                        <label class="nds-radio_button__label nds-grid nds-grid_vertical nds-grid_vertical-align-center">
+                           <c-custom-icon icon-name="Mental_Behavioral_Health" extra-class="service-icon" alternative-text="Illustration of profile of head with exposed brain"></c-custom-icon>
+                           <button
+                              class="button-border-service-type nds-align_absolute-center nds-m-horizontal_small nds-m-vertical_large mentalHealthFocusAcc"
+                              aria-label="Mental Health and Substance Abuse Service Type"
+                              value="MentalHealth"
+                              onclick={radioServiceType}
+                           >
+                              Mental Health and Substance Abuse
+                           </button>
+                        </label>
+                     </span>
+                  </div>
+                  <div if:true={showFacilityServiceType} class="c-service-tile">
+                     <span class="nds-radio_button nds-grid nds-grid_align-center service-type-card" onclick={radioServiceType}>
+                        <label class="nds-radio_button__label nds-grid nds-grid_vertical nds-grid_vertical-align-center">
+                           <c-custom-icon icon-name="Hospital_Facility_Urgent_Care" extra-class="icon- service-icon" alternative-text="Illustration of letter H"></c-custom-icon>
+                           <button
+                              class="button-border-service-type nds-align_absolute-center nds-m-horizontal_small nds-m-vertical_large"
+                              aria-label="Hospital, Facility or Other Service Type"
+                              value="Facility"
+                              onclick={radioServiceType}
+                           >
+                              Hospital, Facility or Other Service
+                           </button>
+                        </label>
+                     </span>
+                  </div>
+                  <div if:true={showChiroServiceType} class="c-service-tile">
+                     <span class="nds-radio_button nds-grid nds-grid_align-center service-type-card" onclick={radioServiceType}>
+                        <label class="nds-radio_button__label nds-grid nds-grid_vertical nds-grid_vertical-align-center">
+                           <c-custom-icon icon-name="Chiropractic_Services" extra-class="service-icon" alternative-text="Illustration of spine"></c-custom-icon>
+                           <button
+                              class="button-border-service-type nds-align_absolute-center nds-m-horizontal_small nds-m-vertical_large"
+                              aria-label="Chiropractor Service Type"
+                              value="Chiropractor"
+                              onclick={radioServiceType}
+                           >
+                              Chiropractic Services
+                           </button>
+                        </label>
+                     </span>
+                  </div>
+                  <div if:true={showLabServiceType} class="c-service-tile">
+                     <span class="nds-radio_button nds-grid nds-grid_align-center service-type-card" onclick={radioServiceType}>
+                        <label class="nds-radio_button__label nds-grid nds-grid_vertical nds-grid_vertical-align-center">
+                           <c-custom-icon icon-name="Lab" extra-class="service-icon" alternative-text="Illustration of three beakers"></c-custom-icon>
+                           <button
+                              class="button-border-service-type nds-align_absolute-center nds-m-horizontal_small nds-m-vertical_large labFocusAcc"
+                              aria-label="Laboratory Service Type"
+                              value="lab"
+                              onclick={radioServiceType}
+                           >
+                              Lab
+                           </button>
+                        </label>
+                     </span>
+                  </div>
+                  <div if:true={showPharmacyServiceType} class="c-service-tile">
+                     <span class="nds-radio_button nds-grid nds-grid_align-center service-type-card" onclick={radioServiceType}>
+                        <label class="nds-radio_button__label nds-grid nds-grid_vertical nds-grid_vertical-align-center">
+                           <c-custom-icon icon-name="Pharmacy" extra-class="service-icon" alternative-text="Illustration of mortar and pestle with medical cross"></c-custom-icon>
+                           <button
+                              class="button-border-service-type nds-align_absolute-center nds-m-horizontal_small nds-m-vertical_large pharmacyFocusAcc"
+                              aria-label="Pharmacy Service Type"
+                              value="Pharmacy"
+                              onclick={radioServiceType}
+                           >
+                              Pharmacy
+                           </button>
+                        </label>
+                     </span>
+                  </div>
+                  <div if:true={showVCPServiceType} class="c-service-tile">
+                     <span class="nds-radio_button nds-grid nds-grid_align-center service-type-card" onclick={radioServiceType}>
+                        <label class="nds-radio_button__label nds-grid nds-grid_vertical nds-grid_vertical-align-center">
+                           <c-custom-icon icon-name="Telehealth_Virtual_Visit" extra-class="service-icon" alternative-text="Illustration of mobile phone with doctor"></c-custom-icon>
+                           <button
+                              class="button-border-service-type nds-align_absolute-center nds-m-horizontal_small nds-m-vertical_large"
+                              aria-label="Virtual Care Providers Service Type"
+                              value="VCP"
+                              onclick={radioServiceType}
+                           >
+                              Virtual Care Providers
+                           </button>
+                        </label>
+                     </span>
+                  </div>
+                  <div if:true={showHearingAidServiceType} class="c-service-tile">
+                     <span class="nds-radio_button nds-grid nds-grid_align-center service-type-card" onclick={radioServiceType}>
+                        <label class="nds-radio_button__label nds-grid nds-grid_vertical nds-grid_vertical-align-center">
+                           <c-custom-icon icon-name="Hearing_Aid" extra-class="service-icon" alternative-text="Illustration of ear"></c-custom-icon>
+                           <button
+                              class="button-border-service-type nds-align_absolute-center nds-m-horizontal_small nds-m-vertical_large"
+                              aria-label="Hearing Aid Service Type"
+                              value="HearingAid"
+                              onclick={radioServiceType}
+                           >
+                              Hearing Aid
+                           </button>
+                        </label>
+                     </span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div if:false={showAllTiles}>
+         <div class="nds-col nds-size_12-of-12 nds-medium-size_12-of-12 nds-large-size_12-of-12 nds-m-top_medium">
+            <!-- Text Block -->
+            <div class="nds-col nds-size_12-of-12 nds-media">
+               <c-custom-icon class="nds-m-right_x-small c-align-icon_top" icon-name="Information_Tool_Tip" size="medium" variant="information" alternative-text="Info"></c-custom-icon>
+               <p class="nds-text-body_small nds-m-bottom_medium">
+                  You are part of a Medicare Supplement plan and so you can see any doctor or health care professional who participates with Medicare. To find out which doctors accept Medicare, go to
+                  <a href="#" onclick={openModalForMedSupp}>medicare.gov</a>
+               </p>
+            </div>
+         </div>
+      </div>
+   </fieldset>
+
+   <!-- Modal -->
+   <!--Use template if:true to display/hide popup based on isModal<name> value-->
+   <template if:true={isModalGlobal}>
+      <!-- Modal/Popup Box LWC starts here -->
+      <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-modal__confirmation nds-fade-in-open">
+         <div class="nds-modal__container modalAccessibility">
+            <!-- Modal/Popup Box LWC body starts here -->
+            <div class="nds-modal__content" id="modal-content-id-1">
+               <div class="nds-grid">
+                  <div class="nds-col">
+                     <!-- Dental -->
+                     <!-- Commercial & Medicare -->
+                     <p if:true={isModalDental} class="nds-text-body_regular">
+                        You are leaving the {provider} website and going to Healthplex’s website.<br /><br />{provider} does not accept responsibility for the information, accuracy, or completeness of
+                        the Healthplex website. Please consult your doctor about any medical or treatment information you may find on the Healthplex site. This is general information and should not be
+                        relied upon without speaking with your doctor about your individual needs. The opinions and information are not necessarily those of {provider}.<br /><br />The Privacy
+                        Statement of Healthplex may be different from ours. Review this statement when you get to their site.
+                     </p>
+                     <p if:true={isModalDentalMedicare} class="nds-text-body_regular">
+                        You are leaving the {provider} website and going to Healthplex’s website.<br /><br />We encourage you to read the privacy statement on the Healthplex website.<br /><br />Please consult
+                        your doctor about any medical advice or treatment information you may find on the Healthplex site.
+                     </p>
+                     <!-- Not Commercial or Medicare -->
+                     <p if:true={isModalDentalOther} class="nds-text-body_regular">You are leaving the Website and entering the Healthplex Website.</p>
+
+                     <!-- Vision -->
+                     <!-- Commerical and Medicare -->
+                     <p if:true={isModalVision} class="nds-text-body_regular">
+                        You are leaving the {provider} website and going to EyeMed’s website.<br /><br />{provider} does not accept responsibility for the information, accuracy, or completeness of the
+                        EyeMed website. Please consult your doctor about any medical or treatment information you may find on the EyeMed site. This is general information and should not be relied upon
+                        without speaking with your doctor about your individual needs. The opinions and information are not necessarily those of {provider}.<br /><br />The Privacy Statement of EyeMed
+                        may be different from ours. Review this statement when you get to their site.
+                     </p>
+                     <p if:true={isModalVisionMedicare} class="nds-text-body_regular">
+                        You are leaving the {provider} website and going to EyeMed’s website.<br /><br />We encourage you to read the privacy statement on the EyeMed website.<br /><br />Please consult your doctor
+                        about any medical advice or treatment information you may find on the EyeMed site.
+                     </p>
+                     <!-- Not Commercial or Medicare -->
+                     <p if:true={isModalVisionOther} class="nds-text-body_regular">You are leaving the Website and entering the Vision Website.</p>
+
+                     <!-- MentalHealth -->
+                     <p if:true={isModalMentalHealthAttentisComm} class="nds-text-body_regular">
+                        You are leaving the {provider} website and going to Optum’s website.<br /><br />{provider} does not accept responsibility for the information, accuracy, or completeness of the
+                        Optum website. Please consult your doctor about any medical or treatment information you may find on the Optum site. This is general information and should not be relied upon
+                        without speaking with your doctor about your individual needs. The opinions and information are not necessarily those of {provider}.<br /><br />The Privacy Statement of Optum
+                        may be different from ours. Review this statement when you get to their site.
+                     </p>
+                     <p if:true={isModalMentalHealthAttentisMed} class="nds-text-body_regular">
+                        You are leaving the {provider} website and going to Optum’s website.<br /><br />We encourage you to read the privacy statement on the Optum website.<br /><br />Please consult your doctor
+                        about any medical advice or treatment information you may find on the Optum site.
+                     </p>
+                     <!-- Not Commercial or Medicare -->
+                     <p if:true={isModalMentalHealthOther} class="nds-text-body_regular">You are leaving the Website and entering the Mental Health Website.</p>
+
+                     <!-- Chiropractor -->
+                     <!-- Commercial and Medicare-->
+                     <p if:true={isModalChiropractor} class="nds-text-body_regular">
+                        You are leaving the {provider} website and going to OptumHealth’s website.<br /><br />{provider} does not accept responsibility for the information, accuracy, or completeness
+                        of the OptumHealth website. Please consult your doctor about any medical or treatment information you may find on the OptumHealth site. This is general information and should
+                        not be relied upon without speaking with your doctor about your individual needs. The opinions and information are not necessarily those of {provider}.<br /><br />The Privacy
+                        Statement of OptumHealth may be different from ours. Review this statement when you get to their site.
+                     </p>
+                     <p if:true={isModalChiropractorMedicare} class="nds-text-body_regular">
+                        You are leaving the {provider} website and going to OptumHealth’s website.<br /><br />We encourage you to read the privacy statement on the OptumHealth website.<br /><br />Please consult
+                        your doctor about any medical advice or treatment information you may find on the OptumHealth site.
+                     </p>
+                     <!-- Not Commercial or Medicare -->
+                     <p if:true={isModalChiropractorOther} class="nds-text-body_regular">You are leaving the Website and entering the Chiropractor Website.</p>
+
+                     <!-- Commercial and Medicare-->
+                     <p if:true={isModalPharmacy} class="nds-text-body_regular">
+                        You are leaving the {provider} website and going to Express Scripts’s website.<br /><br />{provider} does not accept responsibility for the information, accuracy, or
+                        completeness of the Express Scripts website. Please consult your doctor about any medical or treatment information you may find on the Express Scripts site. This is general
+                        information and should not be relied upon without speaking with your doctor about your individual needs. The opinions and information are not necessarily those of
+                        {provider}.<br /><br />The Privacy Statement of Express Scripts may be different from ours. Review this statement when you get to their site.
+                     </p>
+                     <p if:true={isModalPharmacyMedicare} class="nds-text-body_regular">
+                        You are leaving the {provider} website and going to Express Scripts’s website.<br /><br />We encourage you to read the privacy statement on the Express Scripts website.<br /><br />Please
+                        consult your doctor about any medical advice or treatment information you may find on the Express Scripts site.
+                     </p>
+                     <!-- Not Commercial or Medicare-->
+                     <p if:true={isModalPharmacyOther} class="nds-text-body_regular">You are leaving the Website and entering the Pharmacy Website.</p>
+
+                     <!-- Lab -->
+                     <!-- Commercial and Medicare -->
+                     <p if:true={isModalLab} class="nds-text-body_regular">
+                        You are leaving the {provider} website and going to Quest Diagnostics’s website.<br /><br />{provider} does not accept responsibility for the information, accuracy, or
+                        completeness of the Quest Diagnostics website. Please consult your doctor about any medical or treatment information you may find on the Quest Diagnostics site. This is general
+                        information and should not be relied upon without speaking with your doctor about your individual needs. The opinions and information are not necessarily those of
+                        {provider}.<br /><br />The Privacy Statement of Quest Diagnostics may be different from ours. Review this statement when you get to their site.
+                     </p>
+                     <p if:true={isModalLabMedicare} class="nds-text-body_regular">
+                        You are leaving the {provider} website and going to Quest Diagnostics’s website.<br /><br />We encourage you to read the privacy statement on the Quest Diagnostics website.<br /><br />Please
+                        consult your doctor about any medical advice or treatment information you may find on the Quest Diagnostics site.
+                     </p>
+                     <!--Not Commercial or Medicare -->
+                     <p if:true={isModalLabOther} class="nds-text-body_regular">You are leaving the Website and entering the Lab Website.</p>
+
+                     <!-- VCP -->
+                     <!-- Commercial and Medicare -->
+                     <p if:true={isModalVCP} class="nds-text-body_regular">
+                        You are leaving the {provider} website and going to Teladoc’s website.<br /><br />{provider} does not accept responsibility for the information, accuracy, or completeness of
+                        the Teladoc website. Please consult your doctor about any medical or treatment information you may find on the Teladoc site. This is general information and should not be
+                        relied upon without speaking with your doctor about your individual needs. The opinions and information are not necessarily those of {provider}.<br /><br />The Privacy
+                        Statement of Teladoc may be different from ours. Review this statement when you get to their site.
+                     </p>
+                     <p if:true={isModalVCPMedicare} class="nds-text-body_regular">
+                        You are leaving the {provider} website and going to Teladoc’s website.<br /><br />We encourage you to read the privacy statement on the Teladoc website.<br /><br />Please consult your
+                        doctor about any medical advice or treatment information you may find on the Teladoc site.
+                     </p>
+
+                     <!-- Hearing Aid -->
+                     <p if:true={isModalHearingAidMedicare} class="nds-text-body_regular">
+                        You are leaving the {provider} website and going to NationsHearing’s website.<br /><br />We encourage you to read the privacy statement on the NationsHearing website.<br /><br />Please
+                        consult your doctor about any medical advice or treatment information you may find on the NationsHearing site.
+                     </p>
+
+                     <!-- Medicare Supplement -->
+                     <!-- Commercial and Medicare -->
+                     <p if:true={isModalMedSupp} class="nds-text-body_regular">
+                        You are leaving the {company} website and going to Medicare’s website.<br /><br />We encourage you to read the privacy statement on the Medicare's website.<br /><br />Please
+                        consult your doctor about any medical advice or treatment information you may find on the Medicare site.
+                     </p>
+                  </div>
+               </div>
+            </div>
+            <footer class="nds-modal__footer">
+               <div class="nds-grid nds-text-align_center">
+                  <div class="nds-size_1-of-1">
+                     <div class="nds-col c-reverse-button-stack_small">
+                        <!-- Updating modals MPV-1680 -->
+                        <button class="nds-m-right_medium nds-button nds-button_neutral modal-color-1" onclick={closeModal} title="No, Go Back">Cancel</button>
+
+                        <!-- Dental Commercial -->
+                        <button if:true={isModalDental} class="nds-button nds-button_brand modal-color-2" onclick={navigateToDentalWebPage} title="Proceed to Healthplex Site">
+                           Continue  
+                        </button>
+                        <!-- Dental Medicare -->
+                        <button if:true={isModalDentalMedicare} class="nds-button nds-button_brand modal-color-2" onclick={navigateToDentalWebPage} title="Proceed to Healthplex Site">
+                           Continue  
+                        </button>
+                        <!-- Dental not Commercial or Medicare -->
+                        <button if:true={isModalDentalOther} class="nds-button nds-button_brand modal-color-2" onclick={navigateToDentalWebPage} title="Proceed to Healthplex Site">
+                           Continue  
+                        </button>
+
+                        <!-- Vision Commercial -->
+                        <button if:true={isModalVision} class="nds-button nds-button_brand modal-color-2" onclick={navigateToVisionWebPage} title="Proceed to Vision Site">
+                           Continue  
+                        </button>
+                        <!-- Vision Medicare -->
+                        <button if:true={isModalVisionMedicare} class="nds-button nds-button_brand modal-color-2" onclick={navigateToVisionWebPage} title="Proceed to Vision Site">
+                           Continue  
+                        </button>
+                        <!-- Vision not Commercial or Medicare -->
+                        <button if:true={isModalVisionOther} class="nds-button nds-button_brand modal-color-2" onclick={navigateToVisionWebPage} title="Proceed to Vision Site">
+                           Continue  
+                        </button>
+
+                        <button if:true={isModalMentalHealthAttentisComm} class="nds-button nds-button_brand modal-color-2" onclick={navigateToMentalWebPage} title="Proceed to Mental Health Site">
+                           Continue  
+                        </button>
+                        <button if:true={isModalMentalHealthAttentisMed} class="nds-button nds-button_brand modal-color-2" onclick={navigateToMentalWebPage} title="Proceed to Mental Health Site">
+                           Continue  
+                        </button>
+                        <!-- Mental Health not Commercial or Medicare -->
+                        <button if:true={isModalMentalHealthOther} class="nds-button nds-button_brand modal-color-2" onclick={navigateToMentalWebPage} title="Proceed to Mental Health Site">
+                           Continue  
+                        </button>
+
+                        <!-- Chiropractor  -->
+                        <!-- Commercial and Medicare -->
+                        <button if:true={isModalChiropractor} class="nds-button nds-button_brand modal-color-2" onclick={navigateToChiropractorWebPage} title="Proceed to Chiropractor Site">
+                           Continue  
+                        </button>
+                        <button if:true={isModalChiropractorMedicare} class="nds-button nds-button_brand modal-color-2" onclick={navigateToChiropractorWebPage} title="Proceed to Chiropractor Site">
+                           Continue  
+                        </button>
+                        <!-- Not Commercial or Medicare -->
+                        <button if:true={isModalChiropractorOther} class="nds-button nds-button_brand modal-color-2" onclick={navigateToChiropractorWebPage} title="Proceed to Chiropractor Site">
+                           Continue  
+                        </button>
+
+                        <!-- Lab  -->
+                        <!-- Commercial and Medicare -->
+                        <button if:true={isModalLab} class="nds-button nds-button_brand modal-color-2" onclick={navigateToLabWebPage} title="Proceed to Lab Site">
+                           Continue  
+                        </button>
+                        <button if:true={isModalLabMedicare} class="nds-button nds-button_brand modal-color-2" onclick={navigateToLabWebPage} title="Proceed to Lab Site">
+                           Continue  
+                        </button>
+                        <!-- Not Commercial or Medicare -->
+                        <button if:true={isModalLabOther} class="nds-button nds-button_brand modal-color-2" onclick={navigateToLabWebPage} title="Proceed to Lab Site">
+                           Continue  
+                        </button>
+
+                        <!-- Commercial and Medicare -->
+                        <button if:true={isModalPharmacy} class="nds-button nds-button_brand modal-color-2" onclick={navigateToPharmacyWebPage} title="Proceed to Pharmacy Site">
+                           Continue 
+                        </button>
+                        <button if:true={isModalPharmacyMedicare} class="nds-button nds-button_brand modal-color-2" onclick={navigateToPharmacyWebPage} title="Proceed to Pharmacy Site">
+                           Continue 
+                        </button>
+                        <!-- Not Commercial or Medicare -->
+                        <button if:true={isModalPharmacyOther} class="nds-button nds-button_brand modal-color-2" onclick={navigateToPharmacyWebPage} title="Proceed to Pharmacy Site">
+                           Continue 
+                        </button>
+
+                        <!-- VCP -->
+                        <button if:true={isModalVCP} class="nds-button nds-button_brand modal-color-2" onclick={navigateToVCPWebPage} title="Proceed to Teladoc Site">
+                           Continue  
+                        </button>
+
+                        <!-- VCP Medicare-->
+                        <button if:true={isModalVCPMedicare} class="nds-button nds-button_brand modal-color-2" onclick={navigateToVCPWebPage} title="Proceed to Teladoc Site">
+                           Continue  
+                        </button>
+
+                        <!-- Hearing Aid -->
+                        <button if:true={isModalHearingAid} class="nds-button nds-button_brand modal-color-2" onclick={navigateToHearingAidWebPage} title="Proceed to Hearing Aid Site">
+                           Continue  
+                        </button>
+
+                        <!-- Hearing Aid Medicare-->
+                        <button if:true={isModalHearingAidMedicare} class="nds-button nds-button_brand modal-color-2" onclick={navigateToHearingAidWebPage} title="Proceed to Hearing Aid Site">
+                           Continue  
+                        </button>
+
+                        <!-- Hearing Aid Medicare Supplement -->
+                        <button if:true={isModalMedicareSupplement} class="nds-button nds-button_brand modal-color-2" onclick={navigateToMedicareGovPage} title="Proceed to Hearing Aid Site">
+                           Continue  
+                        </button>
+                     </div>
+                  </div>
+               </div>
+            </footer>
+         </div>
+      </section>
+      <div class="nds-backdrop nds-backdrop_open"></div>
+   </template>
+</template>

@@ -1,0 +1,29 @@
+.id-card-container {
+    max-width: 1200px;
+}
+
+.card-img {
+    display: block;
+    max-width: 616px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 3px solid;
+    border-radius: 20px;
+}
+
+@media only screen and (max-width: 1023px) {
+    .id-button-container {
+        padding-left: 0;
+    }
+
+    .id-button-container div:last-child {
+        padding-left: 20px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .id-button-container div:last-child {
+        padding-left: 0;
+    }
+}

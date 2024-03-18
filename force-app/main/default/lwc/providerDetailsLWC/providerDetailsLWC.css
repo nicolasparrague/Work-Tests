@@ -1,0 +1,28 @@
+/* Custom CSS */
+.cursor-print-details{
+    cursor: pointer;
+}
+
+@page {
+    size: auto;
+    margin: 0;    
+ }
+ .modalclass {
+  margin-bottom: 12px;
+}
+
+@media print {
+    a[href]:after {
+        content: none !important;
+    }
+     a[href]:focus {
+        text-decoration: none !important;
+    }
+}
+
+.attentis-border-bottom-link{
+    border: none;
+    background: none;
+    border-bottom: solid 2px #036cb6 !important;
+    padding: 0;
+}

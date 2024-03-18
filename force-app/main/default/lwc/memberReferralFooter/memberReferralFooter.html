@@ -1,0 +1,22 @@
+<template>
+    <div class="">
+        <hr>
+        <!-- Message displayed based on User record field -->
+        <div if:true={showFooterMessage} class="nds-show_medium">
+            <p>Some of our plan benefits are managed by other vendors. To find more information about these {typeName},
+                please call the number on the back of your <a href={idCardUrl} target="_blank" aria-label="ID card opens a new tab">ID card</a>.</p>
+        </div>
+        <!-- Message displayed based on User record field -->
+        <div if:true={showFooterMessage} class="nds-hide_medium">
+            <p>Some of our plan benefits are managed by other vendors. To find more information about these {typeName},
+                please call the number on the back of your
+                <button onclick={mobileNavigationIdCard} class="c-remove-button-styles nds-text-link" aria-label="ID card opens a new tab">&nbsp;ID card
+                </button> .</p>
+        </div>
+        <template if:true={showGrievancesLink}>
+            <p>For Inquires, Grievances and Other Rights <a href={grievancesUrl} target="_blank" aria-label="Grievances and Appeals opens a new tab">Grievances and Appeals</a>
+            <lightning-icon class="nds-p-left_xxx-small" theme="nds" icon-name="utility:new_window" size="xx-small"
+                alternative-text="Grievances" title="Grievances" variant="brand"></lightning-icon></p>
+        </template>
+    </div>
+</template>

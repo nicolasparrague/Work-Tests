@@ -1,0 +1,15 @@
+li[aria-selected=true] > div {
+    background-color: #419cf9;
+    color: #fff;
+    text-decoration: none;
+ }
+
+ .affiliationLabel {
+    position: absolute;
+    width: 100%;
+    right: 0;
+    pointer-events: none;
+    overflow: visible;
+    top: -0.7rem;
+    left: 0;
+ }

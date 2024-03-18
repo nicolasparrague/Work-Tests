@@ -1,0 +1,44 @@
+<template>
+    <div class="nds-box nds-p-bottom_medium nds-m-bottom_medium">
+        <div class="nds-text-heading_small nds-p-bottom_medium">Basic Benefits</div>
+        <template for:each={basicbenefits} for:item="attr">
+           <div class="nds-grid nds-m-top_medium nds-border_bottom nds-p-bottom_small nds-show_medium" key={attr.code}>
+              <div class="nds-medium-size_4-of-12">
+                 <p class="nds-text-body_regular"><strong>{attr.label}</strong></p> 
+              </div>
+              <div class="nds-medium-size_8-of-12">
+                 <p class="nds-text-body_regular">{attr.description}</p> 
+              </div>
+           </div>
+           <div class="nds-grid nds-grid_vertical nds-m-top_medium nds-border_bottom nds-p-bottom_small nds-hide_medium" key={attr.code}>
+              <div class="nds-medium-size_4-of-12">
+                 <p class="nds-text-body_regular"><strong>{attr.label}</strong></p> 
+              </div>
+              <div class="nds-medium-size_8-of-12">
+                 <p class="nds-text-body_regular">{attr.description}</p> 
+              </div>
+           </div>
+        </template>
+    </div>
+    <div class="nds-box nds-p-bottom_medium nds-m-bottom_medium">
+        <div class="nds-text-heading_small nds-p-bottom_medium">Additional Benefits</div>
+        <template for:each={additionalbenefits} for:item="attr">
+           <div class="nds-grid nds-m-top_medium nds-border_bottom nds-p-bottom_small nds-show_medium" key={attr.code}>
+              <div class="nds-medium-size_4-of-12">
+                 <p class="nds-text-body_regular"><strong>{attr.label}</strong></p> 
+              </div>
+              <div class="nds-medium-size_8-of-12">
+                 <p class="nds-text-body_regular">{attr.description}</p> 
+              </div>
+           </div>
+           <div class="nds-grid nds-grid_vertical nds-m-top_medium nds-border_bottom nds-p-bottom_small nds-hide_medium" key={attr.code}>
+              <div class="nds-medium-size_12-of-12">
+                 <p class="nds-text-body_regular"><strong>{attr.label}</strong></p> 
+              </div>              
+              <div class="nds-medium-size_12-of-12">
+                 <p class="nds-text-body_regular">{attr.description}</p> 
+              </div>
+           </div>
+        </template>
+     </div> 
+</template>

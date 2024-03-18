@@ -1,0 +1,46 @@
+<template>
+    <li class="nds-accordion__list-item">
+      <section class={accordionClass}>
+        <div class="nds-accordion__summary">
+          <h2 class="nds-accordion__summary-heading">
+            <button
+              class="nds-button nds-button_reset nds-accordion__summary-action"
+              aria-controls={name}
+              aria-expanded="false"
+              onclick={toggleAccordion}
+            >
+              <lightning-icon
+                theme={theme}
+                icon-name={accordionIconName}
+                size={iconSize}
+              ></lightning-icon>
+              <span class="nds-truncate" title="Accordion summary">{label}</span>
+            </button>
+          </h2>
+          
+          <lightning-button-menu
+            if:true={showMenu}
+            type="action"
+            icon-name="utility:down"
+            position={menuPosition}
+            size={menuSize}
+          >
+            <lightning-menu-item
+              for:each={menuitem}
+              for:item="record"
+              theme={theme}
+              name={record.name}
+              type={record.type}
+              action-url={record.actionUrl}
+              open-url-in={record.opeUrlIn}
+              record={record.record}
+              key={record.record.id}
+            ></lightning-menu-item>
+          </lightning-button-menu>
+        </div>
+        <div class="nds-accordion__content" id={name}>
+          <slot></slot>
+        </div>
+      </section>
+    </li>
+  </template>

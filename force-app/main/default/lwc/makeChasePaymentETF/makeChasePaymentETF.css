@@ -1,0 +1,23 @@
+.center-iframe{
+    padding: 0 25%;
+    height: 800px; 
+}
+
+@media (max-width: 1024px) {
+    .center-iframe{
+        padding: 0 20%;
+    }
+}
+
+@media (max-width: 768px) {
+    .center-iframe{
+        padding: 0 8%;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .center-iframe{
+        padding: 0;
+    }
+}

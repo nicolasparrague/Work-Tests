@@ -1,0 +1,14 @@
+.custom-form-link{
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+.border-bottom-link{
+	border-bottom: solid 2px #036cb6 !important;
+	font-size: 17px !important;
+}

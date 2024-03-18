@@ -1,0 +1,30 @@
+.card {
+    border: 1px solid #DDDBDA;
+    border-radius: .25rem;
+}
+
+.plan-name-header {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 29px;
+}
+
+.label_small {
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.field-value_small {
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.message-height {
+    min-height: 57px;
+}
+
+.c-tabset-link-position {
+    top: 16px;
+    right: 16px;
+    position: absolute;
+}

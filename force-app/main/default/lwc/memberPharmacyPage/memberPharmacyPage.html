@@ -1,0 +1,307 @@
+<template>
+    <!-- Desktop Header Section along with ESI button starts here -->
+    <div class="nds-large-size_12-of-12 c-service-tile-bg nds-show_medium">
+        <div class="nds-size_12-of-12 nds-size_1-of-1 nds-medium-size_12-of-12 nds-large-size_12-of-12 nds-p-top_small">
+            <h1 class={headerClass}>Pharmacy</h1>
+            <div class="nds-text-align_center">
+                <p class="nds-text-body_regular" style="width: 50%; margin: auto;">{subHeader}</p>
+            </div>
+            <div style="padding-top: 24px; padding-bottom: 24px;">
+                <button aria-label="Go to Express Scripts opens a modal" setion-name="GoToExpress" onclick={openExternalDisclaimer} class="nds-button nds-button_brand nds-align_absolute-center" data-btn-id="wellessProgramBtn">
+                    <span data-name="orderrx" class="btnLabel1">Go to Express Scripts</span>
+                    <lightning-icon icon-name="utility:new_windowhealthyLink" size="x-small" class="nds-m-right_xxx-small nds-brand c-fc-action-icon_right" theme="nds" style="padding-left: 7px; padding-bottom: 3px;"></lightning-icon>
+                </button>
+            </div>    
+        </div> 
+    </div>
+    <!-- Desktop Header Section along with ESI button ends here -->
+
+    <!-- Desktop Page Body Section starts here -->
+    <div class=" nds-text-align_center nds-show_medium" style="padding-top: 48px; width: 50%; margin: auto;">
+        <p class="nds-text-body_regular">{bodySubHeader}</p>
+    </div>
+    <!-- Desktop Page Body Section ends here-->
+
+     <!-- Mobile Header Section along with ESI button starts here -->
+    <div class="nds-large-size_12-of-12 c-service-tile-bg nds-hide_medium">
+        <div class="nds-size_12-of-12 nds-size_1-of-1 nds-medium-size_12-of-12 nds-large-size_12-of-12 nds-p-top_small">
+            <h1 class="nds-page-header_title">Pharmacy</h1>
+            <div class="nds-text-align_left">
+                <p class="nds-text-body_regular" style="margin: auto;">{subHeader}</p>
+            </div>
+            <div style="padding-top: 24px; padding-bottom: 24px;">
+                <button setion-name="GoToExpress" onclick={openExternalDisclaimer} class="nds-button nds-button_brand nds-align_absolute-center" data-btn-id="wellessProgramBtn">
+                    <span class="btnLabel1">Go to Express Scripts</span>
+                    <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small nds-brand" theme="nds" style="padding-left: 7px; padding-bottom: 3px;"></lightning-icon>
+                </button>
+            </div>    
+        </div> 
+    </div>
+    <!-- Mobile Header Section along with ESI button starts here -->
+
+    <!-- Mobile Page Body Section starts here -->
+    <div class=" nds-text-align_left nds-hide_medium" style="padding-top: 15px; margin: auto; padding-bottom: 10px;">
+        <h3 class="nds-text-body_regular">{bodySubHeader}</h3>
+    </div>
+    <!-- Mobile Page Body Section ends here-->
+
+    <!-- Updated Desktop Icon Sections starts here -->
+    <div class="nds-show_medium" style="padding-top :32px">
+        <div class="nds-m-top_small">
+            <div class="nds-grid nds-wrap nds-col">
+                <div class="nds-large-size_4-of-12">
+                    <!-- Find a Pharmacy  style="margin-bottom: 30px;"-->
+                    <div class="c-service-tile" style="margin-bottom: 35px;">
+                        <span class="nds-radio_button nds-grid nds-grid_align-center service-type-card" style="height: 100px;" onclick={openExternalDisclaimer}>
+                        <label class="nds-radio_button__label nds-grid nds-grid_horizontal nds-grid_horizontal-align-center " role="radio" for="findapharmacy">
+                            <c-custom-icon icon-name="Find_Care" class="nds-m-top_xxx-small" style="font-size:19px; padding: 5px;" ></c-custom-icon>
+                            <button data-name="locatepharmacy" class="button-border-service-type nds-align_absolute-center nds-m-horizontal_large nds-m-vertical_small service-type-name" aria-label="Find a Pharmacy opens a modal">Find a Pharmacy</button>
+                        </label>
+                        </span>
+                    </div>
+                    <!-- Manage Home Delivey-->
+                    <div class="c-service-tile" style="padding-bottom: 15px;">
+                        <span class="nds-radio_button nds-grid nds-grid_align-center service-type-card" style="height: 100px;" onclick={openExternalDisclaimer}>
+                        <label class="nds-radio_button__label nds-grid nds-grid_horizontal nds-grid_horizontal-align-center " role="radio" for="managehomedelivery">
+                           <c-custom-icon icon-name="Mailbox" class="nds-m-top_xxx-small" style="font-size:19px; padding: 10px;" ></c-custom-icon>
+                             <button data-name="orderstatus" class="button-border-service-type nds-align_absolute-center nds-m-horizontal_large nds-m-vertical_small service-type-name" aria-label="Manage Home Delivery opens a modal">Manage Home Delivery</button>
+                        </label>
+                        </span>
+                    </div>
+                </div>
+                <div class="nds-large-size_4-of-12">
+                    <!-- Prescription History -->
+                    <div class="c-service-tile" style="margin-bottom: 35px;">
+                        <span class="nds-radio_button nds-grid nds-grid_align-center service-type-card" style="height: 100px;" onclick={openExternalDisclaimer}>
+                        <label class="nds-radio_button__label nds-grid nds-grid_horizontal nds-grid_horizontal-align-center " role="radio" for="prescriptionhistory">
+                            <c-custom-icon icon-name="Medication_Prescription" class="nds-m-top_xxx-small" style="font-size:19px; padding: 10px;" ></c-custom-icon>
+                            <button data-name="prescriptions" class="button-border-service-type nds-align_absolute-center nds-m-horizontal_large nds-m-vertical_small service-type-name" aria-label="Prescription History opens a modal">Prescription History</button>
+                        </label>
+                        </span>
+                    </div>
+
+                    <!-- View Benefits -->
+                    <div class="c-service-tile" style="padding-bottom: 15px;">
+                        <span class="nds-radio_button nds-grid nds-grid_align-center service-type-card" style="height: 100px;" onclick={openExternalDisclaimer}>
+                        <label class="nds-radio_button__label nds-grid nds-grid_horizontal nds-grid_horizontal-align-center " role="radio" for="viewbenefits">
+                            <c-custom-icon icon-name="Benefits" class="nds-m-top_xxx-small" style="font-size: 19px; padding: 10px;" ></c-custom-icon>
+                            <button data-name="rxbenefits" class="button-border-service-type nds-align_absolute-center nds-m-horizontal_large nds-m-vertical_small service-type-name" aria-label="View Benefits opens a modal">View Benefits</button>
+                        </label>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="nds-large-size_4-of-12">
+
+                    <!-- Manage Account -->
+                    <div class="c-service-tile" style="margin-bottom: 35px;">
+                        <span class="nds-radio_button nds-grid nds-grid_align-center service-type-card" style="height: 100px;" onclick={openExternalDisclaimer}>
+                        <label class="nds-radio_button__label nds-grid nds-grid_horizontal nds-grid_horizontal-align-center " role="radio" for="manageaccount">
+                            <c-custom-icon icon-name="Clipboard" class="nds-m-top_xxx-small" style="font-size:19px; padding: 10px;" ></c-custom-icon>
+                            <button data-name="pharmacyprofile" class="button-border-service-type nds-align_absolute-center nds-m-horizontal_large nds-m-vertical_small service-type-name" aria-label="Manage Account opens a modal">Manage Account</button>
+                        </label>
+                        </span>
+                    </div>
+
+                    <!-- Price a Drug -->
+                    <div class="c-service-tile" style="padding-bottom: 15px;">
+                        <span class="nds-radio_button nds-grid nds-grid_align-center service-type-card" style="height: 100px;" onclick={openExternalDisclaimer}>
+                        <label class="nds-radio_button__label nds-grid nds-grid_horizontal nds-grid_horizontal-align-center " role="radio"  for="priceadrug">
+                            <c-custom-icon icon-name="Medication_Dose" class="nds-m-top_xxx-small" style="font-size:19px; padding: 10px;" ></c-custom-icon>
+                            <button data-name="rxpricing" class="button-border-service-type nds-align_absolute-center nds-m-horizontal_large nds-m-vertical_small service-type-name" aria-label="Price a Drug opens a modal">Price a Drug</button>
+                        </label>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Updated Desktop Icon Sections ends here -->
+
+    <!-- Mobile Icon Sections from FlexCard -->
+     <!-- Forms & Documents and Pharmacy Resources sections starts here-->
+     <div class="nds-grid nds-wrap nds-m-top_x-medium">
+        <div class="nds-col nds-size_1-of-1">
+            <!-- Desktop -->
+            <div class="nds-grid nds-wrap nds-show_medium" style="margin-left: 9px; margin-right: -10px;">
+                <div class="nds-col nds-p-around_xx-small nds-size_1-of-1 nds-large-size_6-of-12">
+                    <div class="nds-box nds-size_12-of-12" style="padding: 24px;width: 97%; border-radius: 8px;">
+                        <h4 class="c-section-style">
+                            {healthyHeader}
+                        </h4>
+                        <div class="nds-text-link">
+                            <div class="nds-m-top_small" style="line-height: 2rem;">
+                                <div>
+                                    <a href="#" aria-label="Preauthorization for Pharmacy opens a modal" section-name="PreauthorizationForPharmacy" style="font-size: 19px;" onclick={openExternalDisclaimer}>Preauthorization for Pharmacy</a>
+                                    <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small c-fc-action-icon_right nds-brand" theme="nds" style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px; fill: #036cb6;"></lightning-icon>
+                                </div>
+                                
+                                <div>
+                                    <a href="#" aria-label="Specialty drug Preauthorization opens a modal" section-name="SpecialtyDrugPreauthorization" style="font-size: 19px;" onclick={openInternalDisclaimer}>Specialty drug Preauthorization</a>
+                                    <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small c-fc-action-icon_right nds-brand" theme="nds" style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px;"></lightning-icon>
+                                </div>
+                                
+                                <div>
+                                    <a href="#" aria-label="Formulary opens a modal" section-name="Formulary" style="font-size: 19px;" onclick={openInternalDisclaimer}>Formulary</a>
+                                    <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small c-fc-action-icon_right nds-brand" theme="nds" style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px;"></lightning-icon>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nds-col nds-p-around_xx-small nds-size_1-of-1 nds-large-size_6-of-12">
+                    <div class="nds-box nds-size_12-of-12" style="padding: 24px; width: 97%; border-radius: 8px;">
+                        <h4 class="c-section-style">
+                            Pharmacy Resources
+                        </h4>
+                        <div class="">
+                            <div class="nds-m-top_medium">
+                                <p class="nds-text-body_regular" style="padding-bottom: 16px;">
+                                    {attentisPharmacyResources}
+                                </p>
+                                <div>
+                                    <a aria-label="Go to Pharmacy Resources opens a modal" style="font-size: 19px; fill: #036cb6" href="#" section-name="PharmacyResources" onclick={openInternalDisclaimer}>Go to Pharmacy Resources</a>
+                                    <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small c-fc-action-icon_right nds-brand" theme="nds" style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px;"></lightning-icon>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile -->
+            <div class="nds-wrap nds-hide_medium">
+                <div class="nds-col nds-size_1-of-1 nds-m-top_small">
+                    <div class="nds-box nds-size_12-of-12">
+                        <h4 class="c-section-style">
+                            {healthyHeader}
+                        </h4>
+                        <div class="nds-m-top_small nds-text-link">
+                            <div class="nds-wrap">
+                                <div class="nds-col nds-size_1-of-1">
+                                    <div class="">
+                                        <a href="#" section-name="PreauthorizationForPharmacy" onclick={openExternalDisclaimer}>Preauthorization for Pharmacy
+                                            <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small nds-brand" theme="nds" style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px;"></lightning-icon>
+                                        </a><br />
+        
+                                        <a href="#" section-name="SpecialtyDrugPreauthorization" onclick={openInternalDisclaimer}>Specialty drug Preauthorization
+                                            <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small nds-brand" theme="nds" style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px;"></lightning-icon>
+                                        </a><br />
+        
+                                        <a href="#" section-name="Formulary" onclick={openInternalDisclaimer}>Formulary
+                                            <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small nds-brand" theme="nds" style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px;"></lightning-icon>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nds-col nds-size_1-of-1 nds-m-top_small">
+                    <div class="nds-box nds-size_12-of-12">
+                        <h4 class="c-section-style">
+                            Pharmacy Resources
+                        </h4>
+                        <div class="nds-m-top_small">
+                             <div class="">
+                                 <p class="nds-text-body_regular" style="padding-bottom: 16px;">
+                                     {attentisPharmacyResources}
+                                 </p>
+                                 <a href="#" section-name="PharmacyResources" onclick={openInternalDisclaimer}>Go to Pharmacy Resources
+                                     <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small nds-brand" theme="nds" style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px;"></lightning-icon>
+                                 </a>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Forms & Documents and Pharmacy Resources sections -->
+
+     <!-- External Disclaimer Popup -->
+    <template if:true={isExternalDisclaimerModalOpen}>
+       <section role="dialog" tabindex="0"  aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-fade-in-open">
+            <div class="nds-modal__container modalAccessibility">
+                <!-- Modal/Popup Box LWC header here -->
+
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div style="border-radius: 5px;" class="nds-modal__content nds-p-around_medium" id="modal-content-id-1">
+                    <div class="nds-grid nds-m-around_medium">
+                        <!-- ESI pop up content/message for Commercial -->
+                        <div if:true={isCommercialESI} class="nds-col nds-m-top_small">
+                            <p class="nds-text-color_default">You are leaving the {companyName} website and going to {vendorName}’s website.</p><br/>
+
+                               <p>{companyName} does not accept responsibility for the information, accuracy, or completeness of the {vendorName} website. Please consult your doctor about any medical or treatment information you may find on the {vendorName} site. This is general information and should not be relied upon without speaking with your doctor about your individual needs. The opinions and information are not necessarily those of {companyName}.</p><br/>
+                                
+                               <p>The Privacy Statement of {vendorName} may be different from ours. Review this statement when you get to their site.</p>
+                        </div>
+                        <!-- ESI pop up content/message for Medicare -->
+                        <div if:true={isMedicareESI} class="nds-col nds-m-top_small">
+                            <p class="nds-text-color_default">You are leaving the {companyName} website and going to {vendorName}’s website.</p><br/>
+
+                               <p>We encourage you to read the privacy statement on the {vendorName} website.
+                            </p><br/>
+                                
+                               <p>Please consult your doctor about any medical advice or treatment information you may find on the {vendorName} site.</p>
+                        </div>
+                    </div>
+
+                    <!-- Pop up butons for Desktop -->
+                    <div class="nds-grid nds-wrap nds-align_absolute-center">
+                        <div class="nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_3-of-12 nds-m-bottom_small nds-m-right_xx-small">
+                            <!-- To close External Disclaimer Message pop up -->
+                            <button class="nds-button nds-button_neutral nds-button_stretch" onclick={closeEDM} title="Go Back">Cancel</button>
+                        </div>
+                        <div class="nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_3-of-12 nds-m-bottom_small">
+                            <!-- To go to External link -->
+                            <button class="nds-button nds-button_brand nds-button_stretch" onclick={ssoLink} title="Proceed to the site">Continue<lightning-button-icon variant="bare" icon-name="utility:link"></lightning-button-icon></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="nds-backdrop nds-backdrop_open"></div>
+    </template>
+    <!-- External Disclaimer Popup ends here-->
+
+     <!-- Internal Disclaimer Popup starts here-->
+     <template if:true={isInternalDisclaimerModalOpen}>
+        <section role="dialog" tabindex="0" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-02" class="nds-modal nds-fade-in-open">
+            <div class="nds-modal__container modalAccessibility">
+                <!-- Modal/Popup Box LWC header here -->
+
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div style="border-radius: 5px;" class="nds-modal__content nds-p-around_medium" id="modal-content-id-02">
+                    <div class="nds-grid nds-p-around_medium">
+                        <div class="nds-col nds-p-top_small nds-show_medium">
+                            <p class="nds-text-color_default">This link will take to a new tab, but your {companyName} session will remain active in this tab.</p>
+                        </div>
+                        <div class="nds-col nds-p-top_small nds-hide_medium">
+                            <p class="nds-text-color_default" style="margin-top: -15px;">{mobileInternalPopUp}</p>
+                        </div>
+                    </div>
+
+                    <!-- pop up for desktop -->
+                    <div class="nds-grid nds-wrap nds-align_absolute-center">
+                        <div class="nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_3-of-12 nds-m-bottom_small nds-m-right_xx-small">
+                            <!-- IDM = Internal Disclaimer Message -->
+                            <button class="nds-button nds-button_neutral nds-button_stretch" onclick={closeIDM} title="Go Back">Cancel</button>
+                        </div>
+                        <div class="nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_3-of-12 nds-m-bottom_small">
+                            <!-- IDM = Internal Disclaimer Message -->
+                            <button class="nds-button nds-button_brand nds-button_stretch" onclick={openLinkIDM} title="Proceed to the site">Continue <lightning-button-icon variant="bare" icon-name="utility:link"></lightning-button-icon></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="nds-backdrop nds-backdrop_open"></div>
+    </template>
+    <!-- Internal Disclaimer Popup ends here-->
+
+</template>

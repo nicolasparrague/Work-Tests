@@ -1,0 +1,23 @@
+/* css for modal */
+.modal-close-btn {
+    border: none;
+    border-radius: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 1rem;
+  }
+
+  /* .modal-padding-3{
+    text-align: center;
+    padding-bottom:3%
+  } */
+
+  /* removed */
+  /* .modal-color-1 {
+    border-radius: 15px;
+  }
+  
+  .modal-color-2 {
+    border-radius: 15px;
+  } */

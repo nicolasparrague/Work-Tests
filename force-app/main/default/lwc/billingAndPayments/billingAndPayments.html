@@ -1,0 +1,290 @@
+<template>
+   <template if:true={loading}>
+      <lightning-spinner alternative-text="Loading" size="medium" theme="nds"> </lightning-spinner>
+   </template>
+   <!-- HEADER SECTION -->
+   <h1 class="nds-page-header_title nds-align_absolute-center nds-text-align_center nds-medium-size nds-p-horizontal_large">Billing and Payments</h1>
+   <div if:true={responseError} class="slds-theme_error nds-grid via-nds slds-box" style="border-color: red">
+      <lightning-icon icon-name="utility:warning" alternative-text="Warning" size="large" title="Info" class="nds-m-right_small nds-brand" theme="nds"> </lightning-icon>
+      <p class="nds-text-body_regular">
+         We are experiencing some technical difficulties at this time, and the details below may not reflect the most up-to-date information we have for your account. Please refresh or try again
+         later.
+      </p>
+   </div>
+   <div class="nds-size_8-of-12 nds-m-bottom_medium nds-align_absolute-center">
+       <c-member-mdm-content userid={_mdmUserId}></c-member-mdm-content>
+   </div>
+   <!-- Payment Information -->
+   <div class="wrapper">
+      <div if:true={responseError} class="overlay"></div>
+      <div class="nds-m-top_large nds-m-bottom_large">
+         <div class="nds-col nds-box c-border-branded_bottom c-box-shadow nds-size_12-of-12">
+            <div class="nds-grid nds-wrap nds-p-bottom_x-large nds-p-top_x-small nds-p-horizontal_medium">
+               <!-- Total Amount Due -->
+               <div class="nds-col nds-size_6-of-12 nds-medium-size_3-of-12 nds-large-size_4-of-12">
+                  <div class="nds-col nds-size_12-of-12">
+                     <div class="nds-m-horizontal_xxx-small">
+                        <label class="nds-show--inline board-header">Total Amount Due</label>
+                        <template if:true={showMessageMakeAPayment}>
+                           <p class="nds-m-bottom_medium field-value ">
+                              $
+                              <lightning-formatted-number value="0" minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number>
+                           </p>
+                        </template>
+                        <template if:false={showMessageMakeAPayment}>
+                           <p class="nds-m-bottom_medium field-value" style="font-size:28px; font-weight:500;">
+                              $
+                              <lightning-formatted-number value={totalAmountDue} minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number>
+                           </p>
+                        </template>
+                     </div>
+                  </div>
+               </div>
+               <!-- Premium Amount -->
+               <div class="nds-col nds-size_6-of-12 nds-medium-size_6-of-12 nds-large-size_3-of-12">
+                  <div class="nds-col nds-size_12-of-12">
+                     <div class="nds-m-horizontal_xxx-small">
+                        <!-- <label class="nds-show--inline nds-form-element__label c-text-medium_label">Premium Amount</label> -->
+                        <label class="nds-show--inline board-header">Premium Amount</label> 
+                        <p class="nds-text-body_regular nds-m-bottom_medium" style="font-size:24px; font-weight:500;">
+                           $
+                           <lightning-formatted-number value={premiumAmount} minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number>
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <!-- Past Due Amount -->
+               <template if:true={hidePastDueAmount}>
+                  <div class="nds-col nds-size_6-of-12 nds-medium-size_6-of-12 nds-large-size_3-of-12">
+                     <div class="nds-col nds-size_12-of-12">
+                        <div class="nds-m-horizontal_xxx-small">
+                           <label class="nds-show--inline board-header">Past Due Amount</label>
+                           <template if:true={showMessageMakeAPayment}>
+                              <p class="nds-text-body_regular nds-m-bottom_medium" style="font-size:24px; font-weight:500;">
+                                 $
+                                 <lightning-formatted-number value="0" minimum-fraction-digits="2" maximum-fraction-digits="2"> </lightning-formatted-number>
+                              </p>
+                           </template>
+                           <template if:false={showMessageMakeAPayment}>
+                              <p class="nds-text-body_regular nds-m-bottom_medium" style="font-size:24px; font-weight:500; ">
+                                 $
+                                 <lightning-formatted-number value={pastDueAmount} minimum-fraction-digits="2" maximum-fraction-digits="2"> </lightning-formatted-number>
+                              </p>
+                           </template>
+                        </div>
+                     </div>
+                  </div>
+               </template>
+
+               <!-- Due Date -->
+               <div class="nds-col nds-size_6-of-12 nds-medium-size_6-of-12 nds-large-size_2-of-12">
+                  <div class="nds-col nds-size_12-of-12">
+                     <div class="nds-m-horizontal_xxx-small">
+                        <label class="nds-show--inline board-header">{dueDateLabel}</label>
+                        <p class="nds-text-body_regular nds-m-bottom_medium" style="font-size:24px; font-weight:500;">{dueDate}</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="nds-grid nds-col nds-size_12-of-12 nds-large-size_8-of-12 nds-medium-size_5-of-12">
+               <template if:true={showPendingPayMessage}>
+                  <!-- <lightning-icon icon-name="utility:info_alt" alternative-text="Info" size="small" title="Info" class="nds-m-right_x-small nds-brand"> </lightning-icon> -->
+                  <c-custom-icon
+                     icon-name="Information_Tool_Tip" 
+                     size="small"
+                     variant="information"
+                     alternative-text="Info" 
+                     extra-class="nds-m-right_x-small nds-m-bottom_x-small"></c-custom-icon>
+                  <p class="nds-text-body_regular nds-m-bottom_medium">Your last payment of ${pendingPaymentAmount} is currently being processed.</p>
+               </template>
+            </div>
+
+            <div class="nds-grid nds-wrap nds-p-horizontal_medium">
+               <!-- Info + Buttons -->
+               <!-- <div class="nds-grid nds-col nds-size_12-of-12 nds-large-size_12-of-12 nds-medium-size_5-of-12"> -->
+                  
+                  <div class="nds-grid  nds-wrap nds-col nds-large-size_6-of-12  nds-small-size_12-of-12 nds-size_12-of-12 nds-medium-size_4-of-12" > 
+                  <!-- <b></b> -->
+                   <div class="nds-grid"> 
+                  <template if:false={showPendingPayMessage}>
+                     <!-- <div class="nds-grid nds-size_12-of-12"> -->
+                     <!-- <lightning-icon icon-name="utility:info_alt" alternative-text="Info" size="small" title="Info" class="nds-m-right_x-small nds-brand"> </lightning-icon> -->
+                     <c-custom-icon
+                     icon-name="Information_Tool_Tip" 
+                     size="small"
+                     variant="information"
+                     alternative-text="Info" 
+                     extra-class="nds-m-right_x-small nds-m-bottom_x-small"></c-custom-icon>
+
+                     <template if:false={showMessageMakeAPayment}>
+                        <p class="nds-text-body_regular nds-m-bottom_medium" >If you recently made a payment, it may take up to 3 business days to see it here.</p>
+                     </template>
+                     
+                     
+                     <template if:true={showMessageMakeAPayment}>
+                        <p class="nds-text-body_regular nds-m-bottom_medium nds-m-right_large">
+                           You have asked us to automatically deduct your premium from your Social Security Account or Railroad Retirement Benefits. You do not need to make a payment at this time.
+                        </p>
+                     </template>
+                    
+                  </template>
+               </div>
+               <template if:false={validateMedicare}>
+                  <!-- <template if:false={allowAutoPay}> -->
+                  <template if:true={showCancelAutoPay}>
+                     <!-- <div class="nds-grid nds-col nds-large-size_6-of-12  nds-small-size_12-of-12 nds-size_12-of-12 nds-medium-size_4-of-12"> -->
+                        <div class="nds-grid"> 
+                        <!-- <div class="nds-grid nds-col nds-large-size_6-of-12  nds-small-size_12-of-12 nds-size_12-of-12 nds-medium-size_4-of-12" style="position:absolute"> -->
+                        <p class="nds-text-body_regular nds-m-bottom_medium">
+                           <!-- <lightning-icon icon-name="utility:info_alt" alternative-text="Info" size="small" title="Info" class="nds-m-right_x-small nds-brand"> </lightning-icon> -->
+                           <c-custom-icon
+                           icon-name="Information_Tool_Tip" 
+                           size="small"
+                           variant="information"
+                           alternative-text="Info" 
+                           extra-class="nds-m-right_x-small nds-m-bottom_x-small"></c-custom-icon>
+      
+                           You have set up Autopay with
+                           <template if:true={typeAccount}> Account </template>
+                           <template if:true={typeCard}> Card </template>ending in
+                           <template if:true={typeAccount}> {acc4digits}</template>
+                           <template if:true={typeCard}> {card4digits}</template>
+                           . Your next payment will be deducted on the {ordinalDate} of the next month.
+                        </p>
+                     </div>
+                <!-- </div> -->
+                  </template>
+               </template>
+               <!-- </div> -->
+              <!-- </div> -->
+               <!-- </div> -->
+               <!-- <b></b> -->
+            <!-- </div> -->
+            <!-- <div class="nds-grid nds-grid_align-end nds-wrap"> -->
+            </div>
+               <template if:false={zeroDollarPremium}>
+                  <template if:false={validateMedicare}>
+                     <template if:true={allowAutoPay}>
+                        <!-- <div class="nds-col nds-size_1-of-1 nds-small-size_12-of-12 nds-large-size_3-of-12"> -->
+                           <div class="nds-grid nds-col  nds-size-small_6-of-12 nds-large-size_3-of-12 nds-medium-size_4-of-12">
+                           <div class="nds-col nds-size_1-of-1 nds-medium-size_12-of-12 nds-large-size_10-of-12">
+                              <div class="nds-col nds-size_12-of-12  nds-p-top_medium nds-m-bottom_medium nds-p-right_xx-small">
+                                 <button onclick={navigateSetPay} class="nds-button nds-button_neutral nds-button_stretch">
+                                    <span class="btnLabel">Set up Auto Pay</span>
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                     </template>
+                     <!-- <div if:false={allowAutoPay}> -->
+                     <!-- <div if:true={showCancelAutoPay} class="nds-col nds-size_1-of-1 nds-small-size_12-of-12 nds-large-size_3-of-12"> -->
+                        <!-- <div if:true={showCancelAutoPay} class="nds-col nds-size_3-of-12 nds-small-size_3-of-12 nds-large-size_3-of-12"> -->
+                           <div if:true={showCancelAutoPay} class="nds-grid nds-col  nds-size-small_6-of-12 nds-large-size_3-of-12 nds-medium-size_4-of-12">
+                        <div class="nds-col nds-size_1-of-1 nds-medium-size_12-of-12 nds-large-size_10-of-12">
+                           <div class="nds-col nds-size_12-of-12 nds-m-bottom_medium nds-p-top_medium nds-p-right_xx-small">
+                              <!-- <button onclick={openConfirmation} class="nds-button nds-button_brand nds-button_stretch"> -->
+                                 <button onclick={openConfirmation} class="nds-button nds-button_brand nds-button_stretch">
+                                 <span class="btnLabel">Cancel Auto Pay</span>
+                              </button>
+                           </div>
+                        </div>
+                     </div>
+                  </template>
+               </template>
+               <!-- <div class="nds-col nds-size_1-of-1 nds-small-size_12-of-12 nds-large-size_3-of-12"> -->
+                  <div class="nds-grid nds-col  nds-size-small_6-of-12 nds-large-size_3-of-12 nds-medium-size_4-of-12">
+                  <div class="nds-col nds-size_1-of-1 nds-medium-size_12-of-12 nds-p-top_medium nds-large-size_10-of-12">
+                     <div class="nds-col nds-size_12-of-12 nds-m-bottom_medium">
+                        <button onclick={navigateMakePay} class="nds-button nds-button_brand nds-button_stretch" disabled={disableMakeAPayment}>
+                           <span class="btnLabel">Make a Payment</span>
+                        </button>
+                     </div>
+                  </div>
+               </div>
+               <!--Cancel pending Payment Button-->
+               <template if:true={showCancelPendingPayButton}>
+                  <div class="nds-grid nds-col  nds-size-small_6-of-12 nds-large-size_3-of-12 nds-medium-size_4-of-12">
+                     <div class="ds-col nds-size_1-of-1 nds-medium-size_12-of-12  nds-p-top_medium nds-large-size_10-of-12">
+                        <div class="nds-col nds-size_12-of-12 nds-m-bottom_medium nds-button_stretch">
+                           <c-billing-and-payment-cancel-pending-payments info={record}></c-billing-and-payment-cancel-pending-payments>
+                        </div>
+                     </div>
+                  </div>
+               </template>
+            </div>
+         </div>
+            <!-- <div class="nds-grid nds-wrap">
+               <div class="nds-col nds-size_1-of-1">
+                  <template if:true={showMessage}>
+                     <p class="nds-text-body_small"> Your next payment will be deducted on the {ordinalDate} of the next
+                        month.</p>
+                  </template>
+               </div>
+            </div> -->
+         <!-- </div> -->
+      </div>
+   </div>
+   <template if:true={requiredConfirmation}>
+      <!-- Modal/Popup Box LWC starts here -->
+      <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-fade-in-open">
+         <template if:true={loading}>
+            <lightning-spinner alternative-text="Loading" size="small" theme="nds"> </lightning-spinner>
+         </template>
+         <div class="nds-modal__container modalAccessibility">
+            <!-- Modal/Popup Box LWC header here -->
+            <header class="nds-modal__header modal-header-confirmation">
+               <h2 id="modal-heading-02" class="nds-hyphenate modal-title">Confirmation Message</h2>
+            </header>
+            <!-- Modal/Popup Box LWC body starts here -->
+            <div class="nds-modal__content nds-p-around_medium" id="modal-content-id-2">
+               <div class="nds-grid nds-p-around_medium nds-align_absolute-center">
+                  <template if:false={successMessage}>
+                     <!-- <lightning-icon icon-name="utility:info_alt" alternative-text="Info" size="large" title="Info" class="nds-m-right_small nds-brand"></lightning-icon> -->
+                     <c-custom-icon
+                     icon-name="Information_Tool_Tip" 
+                     size="large"
+                     variant="information"
+                     alternative-text="Info" 
+                     extra-class="nds-m-right_small nds-m-bottom_x-small"></c-custom-icon>
+                     <template if:false={errorMessage}>
+                        <p class="nds-text-body_regular">Are you sure you want to cancel your autopayment?</p>
+                     </template>
+                     <template if:true={errorMessage}>
+                        <p class="nds-text-body_regular">Your auto payment could not be cancelled at this time. Please try again, or contact us through the Message Center</p>
+                     </template>
+                  </template>
+                  <template if:true={successMessage}>
+                     <!-- <lightning-icon icon-name="utility:success" alternative-text="Success" size="large" title="Info" class="nds-m-right_x-small nds-brand"></lightning-icon> -->
+                     <p class="nds-text-body_regular">Your autopayment is cancelled successfully!</p>
+                  </template>
+               </div>
+               <div class="nds-grid nds-wrap">
+                  <template if:false={successMessage}>
+                     <template if:false={errorMessage}>
+                        <div class="nds-size_1-of-1 nds-col nds-small-size_6 nds-medium-size_5-of-12 nds-large-size_5-of-12 nds-align_absolute-center nds-m-bottom_medium">
+                           <button class="nds-button nds-button_neutral nds-button_stretch" onclick={closeConfirmation} title="No, don't cancel">No, don't cancel</button>
+                        </div>
+                        <div class="nds-size_1-of-1 nds-col nds-small-size_6 nds-medium-size_5-of-12 nds-large-size_5-of-12 nds-align_absolute-center nds-m-bottom_medium">
+                           <button class="nds-button nds-button_brand nds-button_stretch" onclick={cancelAutoPay} title="Yes, cancel">Yes, cancel</button>
+                        </div>
+                     </template>
+                     <template if:true={errorMessage}>
+                        <div class="nds-size_1-of-1 nds-col nds-small-size_6 nds-medium-size_6-of-12 nds-large-size_6-of-12 nds-align_absolute-center nds-m-bottom_medium">
+                           <button class="nds-button nds-button_neutral nds-button_stretch" onclick={tryAgain} title="Try again">Try again</button>
+                        </div>
+                     </template>
+                  </template>
+                  <template if:true={successMessage}>
+                     <div class="nds-size_1-of-1 nds-col nds-small-size_6 nds-medium-size_6-of-12 nds-large-size_6-of-12 nds-align_absolute-center nds-m-bottom_medium">
+                        <button class="nds-button nds-button_brand nds-button_stretch" onclick={closeReload} title="Ok">Ok</button>
+                     </div>
+                  </template>
+               </div>
+            </div>
+         </div>
+      </section>
+      <div class="nds-backdrop nds-backdrop_open"></div>
+   </template>
+
+   <c-billing-and-payment-tabs enrollment-status={recStatus} total-amount={totalAmountDue} jsondata={initJSON} due-date={dueDate}> </c-billing-and-payment-tabs>
+</template>

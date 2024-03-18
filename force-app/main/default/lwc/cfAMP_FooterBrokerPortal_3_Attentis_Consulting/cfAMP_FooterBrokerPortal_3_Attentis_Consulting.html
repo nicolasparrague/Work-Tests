@@ -1,0 +1,367 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="slds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:true={showLoader} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <omnistudio-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small " style="background-color:#09212b;      
+    border-radius:0;     ">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small  slds-size_1-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element0_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-border_top  slds-size_10-of-12  " data-rindex={rindex} style="     border-top: #99b1bb 1px solid; 
+    border-radius:1px; height:60px;    " >
+    <omnistudio-block data-style-id="state0element1_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element2" class="slds-col   slds-p-around_x-small  slds-size_1-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element2_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element3" class="slds-col   slds-p-around_x-small slds-size_1-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element3_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element4" class="slds-col   slds-p-around_x-small  slds-size_3-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element4_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element4block_element0" class="slds-col  slds-align_absolute-center nds-align_absolute-center slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-flex-img data-style-id="state0element4block_element0_child"   record={record}  card={card}  extraclass=""  size="small"  state-img='\{"alternativeText":"","document":{"label":"att_health_dark_no_padding_1 (Version:1)","value":"/sfc/servlet.shepherd/version/download/068DL000002QSvvYAG","title":"att_health_dark_no_padding_1","Id":"068DL000002QSvvYAG","attachmentType":"ContentVersion"},"imgsrc":"/resource/Attentis_Footer_Logo"}'  theme="slds"  ></omnistudio-flex-img>
+      </div><div data-style-id="state0element4block_element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element4block_element1_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element4block_element2" class="slds-col  slds-text-align_center  slds-size_12-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element4block_element2_child"   record={record}  card={card}  merge-field="%3Cdiv%3ECopyright%20&copy;2022%20All%20rights%20reserved%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element5" class="slds-col   slds-p-around_x-small  slds-size_2-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element5_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element5block_element0" class="slds-col  slds-align_absolute-center nds-align_absolute-center slds-size_2-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-flex-icon data-style-id="state0element5block_element0_child"   record={record}  card={card}  color="#FFFFFF"  extraclass="slds-icon_container slds-icon__svg--default "  icon-name="utility:checkin"  icon-type="Salesforce SVG"  imgsrc=""  size="small"  variant="default"  theme="slds"  ></omnistudio-flex-icon>
+      </div><div data-style-id="state0element5block_element1" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element5block_element1_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2010pt;%22%3E8%20The%20Green,%20Suite%207066,%3C/span%3E%3Cbr%20/%3E%3Cspan%20style=%22font-size:%2010pt;%22%3EDover,%20DE%2019901%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element5block_element2" class="slds-col   slds-p-around_x-small  slds-size_12-of-12  " data-rindex={rindex} style="      
+     height:10px;    " >
+    <omnistudio-block data-style-id="state0element5block_element2_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element5block_element3" class="slds-col  slds-align_absolute-center nds-align_absolute-center slds-size_2-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-flex-icon data-style-id="state0element5block_element3_child"   record={record}  card={card}  color="#FFFFFF"  extraclass="slds-icon_container slds-icon__svg--default "  icon-name="utility:call"  icon-type="Salesforce SVG"  imgsrc=""  size="small"  variant="inverse"  theme="slds"  ></omnistudio-flex-icon>
+      </div><div data-style-id="state0element5block_element4" class="slds-col  slds-text-align_left  slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element5block_element4_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2010pt;%22%3E(302)%20401-1329%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element5block_element5" class="slds-col   slds-p-around_x-small  slds-size_12-of-12  " data-rindex={rindex} style="      
+     height:10px;    " >
+    <omnistudio-block data-style-id="state0element5block_element5_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element5block_element6" class="slds-col  slds-align_absolute-center nds-align_absolute-center slds-size_2-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-flex-icon data-style-id="state0element5block_element6_child"   record={record}  card={card}  color="#FFFFFF"  extraclass="slds-icon_container slds-icon__svg--default "  icon-name="utility:email"  icon-type="Salesforce SVG"  imgsrc=""  size="small"  variant="inverse"  theme="slds"  ></omnistudio-flex-icon>
+      </div><div data-style-id="state0element5block_element7" class="slds-col  slds-text-align_left  slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb; " ><omnistudio-output-field data-style-id="state0element5block_element7_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%208pt;%22%3Econtactus@attentisconsulting.com%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6" class="slds-col   slds-p-around_x-small  slds-size_2-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element6_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element0" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element6block_element0_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2012pt;%22%3EFollow%20us%20in&nbsp;%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element6block_element1" class="slds-col   slds-p-around_x-small slds-size_3-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6block_element1_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element1block_element0" class="slds-col  slds-align_absolute-center nds-align_absolute-center slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-flex-icon data-style-id="state0element6block_element1block_element0_child"   record={record}  card={card}  extraclass=""  icon-name="standard:default"  icon-type="Custom"  imgsrc="/resource/FacebookIcon"  size="medium"  variant="default"  theme="slds"  ></omnistudio-flex-icon>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6block_element2" class="slds-col   slds-text-link_reset  slds-p-around_x-small slds-size_3-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6block_element2_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://instagram.com/attentisconsulting"},"displayName":"Action","id":"flex-action-1655228720430","openUrlIn":"New Tab/Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://instagram.com/attentisconsulting"},"displayName":"Action","id":"flex-action-1655228720430","openUrlIn":"New Tab/Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block7block3clone0" data-action-key="state0element6block_element2" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element2block_element0" class="slds-col  slds-align_absolute-center nds-align_absolute-center slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-flex-icon data-style-id="state0element6block_element2block_element0_child"   record={record}  card={card}  extraclass=""  icon-name="standard:default"  icon-type="Custom"  imgsrc="/resource/InstagramIcon"  size="medium"  variant="default"  theme="slds"  ></omnistudio-flex-icon>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6block_element3" class="slds-col   slds-text-link_reset  slds-p-around_x-small slds-size_3-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6block_element3_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://www.linkedin.com/company/attentis-consulting-inc/"},"displayName":"Action","id":"flex-action-1655228708254","openUrlIn":"New Tab/Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://www.linkedin.com/company/attentis-consulting-inc/"},"displayName":"Action","id":"flex-action-1655228708254","openUrlIn":"New Tab/Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block7block0clone0" data-action-key="state0element6block_element3" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element3block_element0" class="slds-col  slds-align_absolute-center nds-align_absolute-center slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-flex-icon data-style-id="state0element6block_element3block_element0_child"   record={record}  card={card}  extraclass=""  icon-name="standard:default"  icon-type="Custom"  imgsrc="/resource/LinkedinIcon"  size="medium"  variant="default"  theme="slds"  ></omnistudio-flex-icon>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6block_element4" class="slds-col   slds-p-around_x-small slds-size_3-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6block_element4_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6block_element5" class="slds-col   slds-p-around_x-small slds-size_3-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6block_element5_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element5block_element0" class="slds-col   slds-align_absolute-center nds-align_absolute-center slds-size_12-of-12  " data-rindex={rindex} style="      
+    border-radius:10px;     " ><omnistudio-flex-icon data-style-id="state0element6block_element5block_element0_child"   record={record}  card={card}  extraclass=""  icon-name="standard:default"  icon-type="Custom"  imgsrc="/resource/TwitterIcon"  size="medium"  variant="default"  theme="slds"  ></omnistudio-flex-icon>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6block_element6" class="slds-col   slds-p-around_x-small slds-size_3-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6block_element6_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element6block_element0" class="slds-col   slds-align_absolute-center nds-align_absolute-center slds-size_12-of-12  " data-rindex={rindex} style="      
+    border-radius:10px;     " ><omnistudio-flex-icon data-style-id="state0element6block_element6block_element0_child"   record={record}  card={card}  extraclass=""  icon-name="standard:default"  icon-type="Custom"  imgsrc="/resource/YoutubeIcon"  size="medium"  variant="default"  theme="slds"  ></omnistudio-flex-icon>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6block_element7" class="slds-col   slds-p-around_x-small slds-size_3-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6block_element7_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6block_element8" class="slds-col   slds-p-around_x-small slds-size_3-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6block_element8_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element7" class="slds-col   slds-text-link_reset  slds-p-around_x-small  slds-size_3-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element7_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Community Named Page":{},"displayName":"Action","id":"flex-action-1655228020878","openUrlIn":"New Tab/Window","targetType":"Community Named Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Community Named Page":{},"displayName":"Action","id":"flex-action-1655228020878","openUrlIn":"New Tab/Window","targetType":"Community Named Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block6" data-action-key="state0element7" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element7block_element0" class="slds-col   slds-text-link_reset  slds-p-around_x-small slds-size_6-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element7block_element0_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Community Named Page":{"targetName":"Home"},"displayName":"Action","id":"flex-action-1655230930814","openUrlIn":"New Tab/Window","targetType":"Community Named Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Community Named Page":{"targetName":"Home"},"displayName":"Action","id":"flex-action-1655230930814","openUrlIn":"New Tab/Window","targetType":"Community Named Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block6block1" data-action-key="state0element7block_element0" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element7block_element0block_element0" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element7block_element0block_element0_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2012pt;%20color:%20#79b61b;%22%3EHome%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element7block_element1" class="slds-col   slds-text-link_reset  slds-text-align_left slds-p-around_x-small slds-button_inverse slds-size_6-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element7block_element1_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/about/"},"displayName":"Action","id":"flex-action-1655230968148","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/about/"},"displayName":"Action","id":"flex-action-1655230968148","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block6block0clone1" data-action-key="state0element7block_element1" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element7block_element1block_element0" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element7block_element1block_element0_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2012pt;%20color:%20#79b61b;%22%3EWho%20We%20Are%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element7block_element2" class="slds-col   slds-text-link_reset  slds-text-align_left slds-p-around_x-small slds-button_inverse slds-size_6-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element7block_element2_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/who-we-serve/"},"displayName":"Action","id":"flex-action-1655230114205","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/who-we-serve/"},"displayName":"Action","id":"flex-action-1655230114205","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block6block1" data-action-key="state0element7block_element2" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element7block_element2block_element0" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element7block_element2block_element0_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2012pt;%22%3EWho%20We%20Serve%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element7block_element3" class="slds-col   slds-text-link_reset  slds-text-align_left slds-p-around_x-small slds-button_inverse slds-size_6-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element7block_element3_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/our-process/"},"displayName":"Action","id":"flex-action-1655230990318","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/our-process/"},"displayName":"Action","id":"flex-action-1655230990318","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block6block2clone0" data-action-key="state0element7block_element3" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element7block_element3block_element0" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element7block_element3block_element0_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2012pt;%22%3EOur%20Process%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element7block_element4" class="slds-col   slds-text-link_reset  slds-text-align_left slds-p-around_x-small slds-button_inverse slds-size_6-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element7block_element4_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/contact/"},"displayName":"Action","id":"flex-action-1655230149212","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/contact/"},"displayName":"Action","id":"flex-action-1655230149212","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block6block1clone1" data-action-key="state0element7block_element4" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element7block_element4block_element0" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element7block_element4block_element0_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2012pt;%22%3EContact%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element7block_element5" class="slds-col   slds-text-link_reset  slds-text-align_left slds-p-around_x-small slds-button_inverse slds-size_6-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element7block_element5_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/contact/"},"displayName":"Action","id":"flex-action-1655230149212","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/contact/"},"displayName":"Action","id":"flex-action-1655230149212","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block6block4clone0" data-action-key="state0element7block_element5" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element7block_element5block_element0" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element7block_element5block_element0_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2012pt;%22%3EResources%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element8" class="slds-col   slds-p-around_x-small slds-size_1-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element8_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <omnistudio-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-card slds-p-around_x-small slds-m-bottom_x-small " style="background-color:#09212b;      
+    border-radius:0;     ">
+          <div data-style-id="state0element0" class="slds-col   slds-p-around_x-small  slds-size_1-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element0_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element1" class="slds-col   slds-border_top  slds-size_10-of-12  " data-rindex={rindex} style="     border-top: #99b1bb 1px solid; 
+    border-radius:1px; height:60px;    " >
+    <omnistudio-block data-style-id="state0element1_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element2" class="slds-col   slds-p-around_x-small  slds-size_1-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element2_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element3" class="slds-col   slds-p-around_x-small slds-size_1-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element3_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element4" class="slds-col   slds-p-around_x-small  slds-size_3-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element4_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element4block_element0" class="slds-col  slds-align_absolute-center nds-align_absolute-center slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-flex-img data-style-id="state0element4block_element0_child"   record={record}  card={card}  extraclass=""  size="small"  state-img='\{"alternativeText":"","document":{"label":"att_health_dark_no_padding_1 (Version:1)","value":"/sfc/servlet.shepherd/version/download/068DL000002QSvvYAG","title":"att_health_dark_no_padding_1","Id":"068DL000002QSvvYAG","attachmentType":"ContentVersion"},"imgsrc":"/resource/Attentis_Footer_Logo"}'  theme="slds"  ></omnistudio-flex-img>
+      </div><div data-style-id="state0element4block_element1" class="slds-col   slds-p-around_x-small slds-size_12-of-12 " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element4block_element1_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element4block_element2" class="slds-col  slds-text-align_center  slds-size_12-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element4block_element2_child"   record={record}  card={card}  merge-field="%3Cdiv%3ECopyright%20&copy;2022%20All%20rights%20reserved%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element5" class="slds-col   slds-p-around_x-small  slds-size_2-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element5_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element5block_element0" class="slds-col  slds-align_absolute-center nds-align_absolute-center slds-size_2-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-flex-icon data-style-id="state0element5block_element0_child"   record={record}  card={card}  color="#FFFFFF"  extraclass="slds-icon_container slds-icon__svg--default "  icon-name="utility:checkin"  icon-type="Salesforce SVG"  imgsrc=""  size="small"  variant="default"  theme="slds"  ></omnistudio-flex-icon>
+      </div><div data-style-id="state0element5block_element1" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element5block_element1_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2010pt;%22%3E8%20The%20Green,%20Suite%207066,%3C/span%3E%3Cbr%20/%3E%3Cspan%20style=%22font-size:%2010pt;%22%3EDover,%20DE%2019901%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element5block_element2" class="slds-col   slds-p-around_x-small  slds-size_12-of-12  " data-rindex={rindex} style="      
+     height:10px;    " >
+    <omnistudio-block data-style-id="state0element5block_element2_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element5block_element3" class="slds-col  slds-align_absolute-center nds-align_absolute-center slds-size_2-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-flex-icon data-style-id="state0element5block_element3_child"   record={record}  card={card}  color="#FFFFFF"  extraclass="slds-icon_container slds-icon__svg--default "  icon-name="utility:call"  icon-type="Salesforce SVG"  imgsrc=""  size="small"  variant="inverse"  theme="slds"  ></omnistudio-flex-icon>
+      </div><div data-style-id="state0element5block_element4" class="slds-col  slds-text-align_left  slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element5block_element4_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2010pt;%22%3E(302)%20401-1329%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element5block_element5" class="slds-col   slds-p-around_x-small  slds-size_12-of-12  " data-rindex={rindex} style="      
+     height:10px;    " >
+    <omnistudio-block data-style-id="state0element5block_element5_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element5block_element6" class="slds-col  slds-align_absolute-center nds-align_absolute-center slds-size_2-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-flex-icon data-style-id="state0element5block_element6_child"   record={record}  card={card}  color="#FFFFFF"  extraclass="slds-icon_container slds-icon__svg--default "  icon-name="utility:email"  icon-type="Salesforce SVG"  imgsrc=""  size="small"  variant="inverse"  theme="slds"  ></omnistudio-flex-icon>
+      </div><div data-style-id="state0element5block_element7" class="slds-col  slds-text-align_left  slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb; " ><omnistudio-output-field data-style-id="state0element5block_element7_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%208pt;%22%3Econtactus@attentisconsulting.com%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6" class="slds-col   slds-p-around_x-small  slds-size_2-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element6_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element0" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element6block_element0_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2012pt;%22%3EFollow%20us%20in&nbsp;%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div><div data-style-id="state0element6block_element1" class="slds-col   slds-p-around_x-small slds-size_3-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6block_element1_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element1block_element0" class="slds-col  slds-align_absolute-center nds-align_absolute-center slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-flex-icon data-style-id="state0element6block_element1block_element0_child"   record={record}  card={card}  extraclass=""  icon-name="standard:default"  icon-type="Custom"  imgsrc="/resource/FacebookIcon"  size="medium"  variant="default"  theme="slds"  ></omnistudio-flex-icon>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6block_element2" class="slds-col   slds-text-link_reset  slds-p-around_x-small slds-size_3-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6block_element2_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://instagram.com/attentisconsulting"},"displayName":"Action","id":"flex-action-1655228720430","openUrlIn":"New Tab/Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://instagram.com/attentisconsulting"},"displayName":"Action","id":"flex-action-1655228720430","openUrlIn":"New Tab/Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block7block3clone0" data-action-key="state0element6block_element2" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element2block_element0" class="slds-col  slds-align_absolute-center nds-align_absolute-center slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-flex-icon data-style-id="state0element6block_element2block_element0_child"   record={record}  card={card}  extraclass=""  icon-name="standard:default"  icon-type="Custom"  imgsrc="/resource/InstagramIcon"  size="medium"  variant="default"  theme="slds"  ></omnistudio-flex-icon>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6block_element3" class="slds-col   slds-text-link_reset  slds-p-around_x-small slds-size_3-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6block_element3_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://www.linkedin.com/company/attentis-consulting-inc/"},"displayName":"Action","id":"flex-action-1655228708254","openUrlIn":"New Tab/Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://www.linkedin.com/company/attentis-consulting-inc/"},"displayName":"Action","id":"flex-action-1655228708254","openUrlIn":"New Tab/Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block7block0clone0" data-action-key="state0element6block_element3" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element3block_element0" class="slds-col  slds-align_absolute-center nds-align_absolute-center slds-size_12-of-12  " data-rindex={rindex} style="      
+         " ><omnistudio-flex-icon data-style-id="state0element6block_element3block_element0_child"   record={record}  card={card}  extraclass=""  icon-name="standard:default"  icon-type="Custom"  imgsrc="/resource/LinkedinIcon"  size="medium"  variant="default"  theme="slds"  ></omnistudio-flex-icon>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6block_element4" class="slds-col   slds-p-around_x-small slds-size_3-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6block_element4_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6block_element5" class="slds-col   slds-p-around_x-small slds-size_3-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6block_element5_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element5block_element0" class="slds-col   slds-align_absolute-center nds-align_absolute-center slds-size_12-of-12  " data-rindex={rindex} style="      
+    border-radius:10px;     " ><omnistudio-flex-icon data-style-id="state0element6block_element5block_element0_child"   record={record}  card={card}  extraclass=""  icon-name="standard:default"  icon-type="Custom"  imgsrc="/resource/TwitterIcon"  size="medium"  variant="default"  theme="slds"  ></omnistudio-flex-icon>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6block_element6" class="slds-col   slds-p-around_x-small slds-size_3-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6block_element6_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element6block_element6block_element0" class="slds-col   slds-align_absolute-center nds-align_absolute-center slds-size_12-of-12  " data-rindex={rindex} style="      
+    border-radius:10px;     " ><omnistudio-flex-icon data-style-id="state0element6block_element6block_element0_child"   record={record}  card={card}  extraclass=""  icon-name="standard:default"  icon-type="Custom"  imgsrc="/resource/YoutubeIcon"  size="medium"  variant="default"  theme="slds"  ></omnistudio-flex-icon>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6block_element7" class="slds-col   slds-p-around_x-small slds-size_3-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6block_element7_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element6block_element8" class="slds-col   slds-p-around_x-small slds-size_3-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element6block_element8_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element7" class="slds-col   slds-text-link_reset  slds-p-around_x-small  slds-size_3-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element7_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Community Named Page":{},"displayName":"Action","id":"flex-action-1655228020878","openUrlIn":"New Tab/Window","targetType":"Community Named Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Community Named Page":{},"displayName":"Action","id":"flex-action-1655228020878","openUrlIn":"New Tab/Window","targetType":"Community Named Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block6" data-action-key="state0element7" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element7block_element0" class="slds-col   slds-text-link_reset  slds-p-around_x-small slds-size_6-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element7block_element0_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Community Named Page":{"targetName":"Home"},"displayName":"Action","id":"flex-action-1655230930814","openUrlIn":"New Tab/Window","targetType":"Community Named Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Community Named Page":{"targetName":"Home"},"displayName":"Action","id":"flex-action-1655230930814","openUrlIn":"New Tab/Window","targetType":"Community Named Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block6block1" data-action-key="state0element7block_element0" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element7block_element0block_element0" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element7block_element0block_element0_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2012pt;%20color:%20#79b61b;%22%3EHome%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element7block_element1" class="slds-col   slds-text-link_reset  slds-text-align_left slds-p-around_x-small slds-button_inverse slds-size_6-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element7block_element1_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/about/"},"displayName":"Action","id":"flex-action-1655230968148","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/about/"},"displayName":"Action","id":"flex-action-1655230968148","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block6block0clone1" data-action-key="state0element7block_element1" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element7block_element1block_element0" class="slds-col   slds-size_12-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element7block_element1block_element0_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2012pt;%20color:%20#79b61b;%22%3EWho%20We%20Are%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element7block_element2" class="slds-col   slds-text-link_reset  slds-text-align_left slds-p-around_x-small slds-button_inverse slds-size_6-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element7block_element2_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/who-we-serve/"},"displayName":"Action","id":"flex-action-1655230114205","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/who-we-serve/"},"displayName":"Action","id":"flex-action-1655230114205","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block6block1" data-action-key="state0element7block_element2" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element7block_element2block_element0" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element7block_element2block_element0_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2012pt;%22%3EWho%20We%20Serve%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element7block_element3" class="slds-col   slds-text-link_reset  slds-text-align_left slds-p-around_x-small slds-button_inverse slds-size_6-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element7block_element3_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/our-process/"},"displayName":"Action","id":"flex-action-1655230990318","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/our-process/"},"displayName":"Action","id":"flex-action-1655230990318","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block6block2clone0" data-action-key="state0element7block_element3" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element7block_element3block_element0" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element7block_element3block_element0_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2012pt;%22%3EOur%20Process%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element7block_element4" class="slds-col   slds-text-link_reset  slds-text-align_left slds-p-around_x-small slds-button_inverse slds-size_6-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element7block_element4_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/contact/"},"displayName":"Action","id":"flex-action-1655230149212","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/contact/"},"displayName":"Action","id":"flex-action-1655230149212","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block6block1clone1" data-action-key="state0element7block_element4" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element7block_element4block_element0" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element7block_element4block_element0_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2012pt;%22%3EContact%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element7block_element5" class="slds-col   slds-text-link_reset  slds-text-align_left slds-p-around_x-small slds-button_inverse slds-size_6-of-12  " data-rindex={rindex} style="      
+         " >
+    <omnistudio-block data-style-id="state0element7block_element5_child"  record={record}  card={card}  action='\{"actionData":{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/contact/"},"displayName":"Action","id":"flex-action-1655230149212","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"},"eventType":"onclick","iconName":"standard-default","label":"Action","name":"","actionList":[{"card":"{card}","stateAction":{"Web Page":{"targetName":"https://attentisconsulting.com/contact/"},"displayName":"Action","id":"flex-action-1655230149212","openUrlIn":"Current Window","targetType":"Web Page","type":"Custom","vlocityIcon":"standard-default"},"stateObj":"{record}"}]}'  collapsed-by-default="false"  collapsible="false"  label="Block"  extraclass=" slds-text-link_reset"  theme="slds"  onclick={executeAction} data-element-label="block6block4clone0" data-action-key="state0element7block_element5" onkeydown={executeActionWithKeyboard} tabindex="0"><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element7block_element5block_element0" class="slds-col   slds-size_10-of-12  " data-rindex={rindex} style="      
+         color: #99b1bb;" ><omnistudio-output-field data-style-id="state0element7block_element5block_element0_child"   record={record}  card={card}  merge-field="%3Cdiv%3E%3Cspan%20style=%22font-size:%2012pt;%22%3EResources%3C/span%3E%3C/div%3E"  theme="slds"  ></omnistudio-output-field>
+      </div>
+        </div></omnistudio-block>
+    </div>
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element8" class="slds-col   slds-p-around_x-small slds-size_1-of-12  " data-rindex={rindex} style="" >
+    <omnistudio-block data-style-id="state0element8_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  label="Block"  theme="slds"  ><div class="slds-grid slds-wrap">
+          
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

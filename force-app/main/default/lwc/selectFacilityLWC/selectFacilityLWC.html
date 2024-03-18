@@ -1,0 +1,233 @@
+<template>
+    <div class="slds-grid slds-wrap" style="margin-bottom: 2%;">
+        <div class="slds-col slds-size_1-of-12">
+            <span>
+                <lightning-icon class="infoIcon" icon-name="utility:info" alternative-text="Info" size="small" title="small size"></lightning-icon>
+            </span>
+          </div>
+          <div class="slds-col slds-size_11-of-12 compareText">
+            <span>You can compare only 3 Facilities at a single time.</span>
+          </div>
+    </div>
+    <div class="slds-grid slds-wrap" style="margin-bottom: 2%;">
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 sorting">
+            <div class="slds-col slds-size_2-of-12 ">
+                <select id="filter2" style="font-size: 14px;">
+                    <option value="sbd">View</option>
+                </select>
+            </div>
+            <div class="slds-col slds-size_4-of-12">
+                <select id="filter1" style="font-size: 14px;">
+                    <option value="sbd">Sort by Distance</option>
+                </select>
+            </div>
+            <div class="slds-col slds-size_3-of-12">
+                <div style="font-size: 14px;color: #0070d2;">
+                    Distance From X Miles
+                </div>
+            </div>
+            <div class="slds-col slds-size_3-of-12">
+                <div style="font-size: 14px;color: #0070d2;">
+                   Ambulatory Surgical Center
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 buttonsContainer" style="display: flex;">
+            <div class="slds-col slds-size_5-of-12 comparePro">
+                <span>
+                    <div>
+                        <button name="Compare" onclick={openModal} class="compareMain">Compare Facilities</button>
+                    </div>
+                </span>
+            </div>
+            <div class="slds-col slds-size_5-of-12">
+                <span>
+                    <div>
+                        <button name="Reset" class="resetMain">Reset Search</button>
+                    </div>
+                </span>
+            </div>
+            <div class="slds-col slds-size_1-of-12 slds-border_left icons">
+                <span class="slds-float_right">
+                    <lightning-icon icon-name="standard:picklist_type" alternative-text="Picklist" title="PiclList"></lightning-icon>
+                </span>
+            </div>
+            <div class="slds-col slds-size_1-of-12">
+                <span>
+                    <lightning-icon icon-name="custom:custom78" title="custom78"></lightning-icon>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="slds-grid slds-wrap" style="margin-top: 5%;">
+        <!-- Provider Information -->
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 providerInformation">
+            <div class="slds-col slds-size_12-of-12 providerHeader">
+                <span>BloomField ASC LLC</span>
+            </div>
+            <div class="slds-col slds-size_12-of-12">
+                <span>Ambulatory Surgical Center</span>
+            </div>
+            <div class="slds-col slds-size_12-of-12">
+                <span>Facility # 123456789</span>
+            </div>
+        </div>
+        <!-- Facility Information -->
+
+        <!-- Address Information -->
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 borderLeft addressInformation">
+            <div class="slds-col slds-size_12-of-12 headers">
+                <span>Address</span>
+            </div>
+            <div class="slds-col slds-size_12-of-12" style="display: flex;">
+                <div class="slds-col slds-size_2-of-12">
+                    <span>
+                        <lightning-icon icon-name="utility:checkin" alternative-text="checkin" size="small" title="small size"></lightning-icon>
+                    </span>
+                </div>
+                <div class="slds-col slds-size_10-of-12 content">
+                    <div>
+                        580 Cottage Grove Road<br />Suite 211, <br /> Bloomfield, CT, 06002<br />
+                        <div style="display: contents;">0.2 Milles</div>
+                        <a href="https://www.salesforce.com/" target="_blank" style="font-size: 14px; font-weight: 500;padding-left: 20px;">Get Directions</a>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_12-of-12" style="display: flex;">
+                <div class="slds-col slds-size_2-of-12">
+                    <span>
+                        <lightning-icon icon-name="utility:call" alternative-text="call" size="small" title="small size"></lightning-icon>
+                    </span>
+                </div>
+                <div class="slds-col slds-size_10-of-12 content">
+                    <div>
+                        (860) 224-2193
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Address Information -->
+
+        <!-- Accreditation Information -->
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+            <div class="slds-col slds-size_12-of-12 headers">
+                <span>Accreditation</span>
+            </div>
+            <div class="slds-col slds-size_12-of-12 content">
+                <span>AAAHC - Accreditation Association for Ambulatory Health Care</span>
+            </div>
+        </div>
+        <!-- Accreditation Information -->
+
+        <!-- Center of Excellence Information -->
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+            <div class="slds-col slds-size_12-of-12 headers">
+                <span>Center of Excellence</span>
+            </div>
+            <div class="slds-col slds-size_12-of-12 content">
+                <span>Yes</span>
+            </div>
+        </div>
+        <!-- Center of Excellence Information -->
+
+        <!-- Review Details & Compare Buttons -->
+        <div class="slds-grid slds-wrap slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_2-of-12" style="position: unset;display: block;text-align: center;">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                <div class="slds-col slds-size_12-of-12">
+                    <button name="Review Button" title="Review Details" class="reviewButton">Review Details</button>
+                </div>
+                <div class="slds-col slds-size_12-of-12">
+                    <button name="Compare" title="Compare" class="reviewButton">Compare</button>
+                </div>
+            </div>
+        </div> 
+        <!-- Review Details & Compare Buttons -->
+    </div>
+
+    <div class="slds-grid slds-wrap" style="margin-top: 5%;">
+        <!-- Facility Information -->
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 providerInformation">
+            <div class="slds-col slds-size_12-of-12 providerHeader">
+                <span>Attentis Health Surgery Center Limited Partnership</span>
+            </div>
+            <div class="slds-col slds-size_12-of-12">
+                <span>Ambulatory Surgical Center</span>
+            </div>
+            <div class="slds-col slds-size_12-of-12">
+                <span>Facility # 123456789</span>
+            </div>
+        </div>
+        <!-- Facility Information -->
+
+        <!-- Address Information -->
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-border_left addressInformation">
+            <div class="slds-col slds-size_12-of-12 headers">
+                <span>Address</span>
+            </div>
+            <div class="slds-col slds-size_12-of-12" style="display: flex;">
+                <div class="slds-col slds-size_2-of-12">
+                    <span>
+                        <lightning-icon icon-name="utility:checkin" alternative-text="checkin" size="small" title="small size"></lightning-icon>
+                    </span>
+                </div>
+                <div class="slds-col slds-size_10-of-12 content">
+                    <div>
+                        580 Cottage Grove Road<br />Suite 211, <br /> Bloomfield, CT, 06002<br />
+                        <div style="display: contents;">0.2 Milles</div>
+                        <a href="https://www.salesforce.com/" target="_blank" style="font-size: 14px; font-weight: 500;padding-left: 20px;">Get Directions</a>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_12-of-12" style="display: flex;">
+                <div class="slds-col slds-size_2-of-12">
+                    <span>
+                        <lightning-icon icon-name="utility:call" alternative-text="call" size="small" title="small size"></lightning-icon>
+                    </span>
+                </div>
+                <div class="slds-col slds-size_10-of-12 content">
+                    <div>
+                        (860) 224-2193
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Address Information -->
+
+        <!-- Accreditation Information -->
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+            <div class="slds-col slds-size_12-of-12 headers">
+                <span>Accreditation</span>
+            </div>
+            <div class="slds-col slds-size_12-of-12 content">
+                <span>AAAHC - Accreditation Association for Ambulatory Health Care</span>
+            </div>
+        </div>
+        <!-- Accreditation Information -->
+
+        <!-- Center of Excellence Information -->
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+            <div class="slds-col slds-size_12-of-12 headers">
+                <span>Center of Excellence</span>
+            </div>
+            <div class="slds-col slds-size_12-of-12 content">
+                <span>Yes</span>
+            </div>
+        </div>
+        <!-- Center of Excellence Information -->
+
+        <!-- Review Details & Compare Buttons -->
+        <div class="slds-grid slds-wrap slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_2-of-12" style="position: unset;display: block;text-align: center;">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                <div class="slds-col slds-size_12-of-12">
+                    <button name="Review Button" title="Review Details" class="reviewButton">Review Details</button>
+                </div>
+                <div class="slds-col slds-size_12-of-12">
+                    <button name="Compare" title="Compare" class="reviewButton">Compare</button>
+                </div>
+            </div>
+        </div> 
+        <!-- Review Details & Compare Buttons -->
+    </div>
+</template>

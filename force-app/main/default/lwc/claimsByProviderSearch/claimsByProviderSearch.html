@@ -1,0 +1,88 @@
+<template>
+   <div class="nds-form-element">
+      <div class="nds-form-element__control">
+         <div class="nds-combobox_container">
+            <div class="nds-combobox nds-dropdown-trigger nds-dropdown-trigger_click nds-is-open" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+               <div class="nds-combobox__form-element nds-input-has-icon nds-input-has-icon_right" role="none">
+                  <!-- Default Search Box -->
+                  <div if:true={showCombo} class="defaultClass">
+                     <input
+                        title={selectedItem}
+                        type="text"
+                        class="nds-input nds-combobox__input nds-has-focus searchvalue expandCombo"
+                        id="combobox-id-3"
+                        aria-autocomplete="list"
+                        list="listbox-id-3"
+                        aria-controls="listbox-id-3"
+                        autocomplete="off"
+                        role="combobox"
+                        placeholder={placeholderText}
+                        onfocusin={handleFocusIn}
+                        onkeyup={handleKeyUp}
+                        onfocusout={handleFocusOut}
+                        aria-label={ariaLabel}
+                        aria-activedescendant={selectedItem}
+                        value={selectedItem}
+                     />
+                     <!-- aria-label={ariaLabel} -->
+                     <!-- value={selectedItem} -->
+                     <!-- value="All" -->
+                     <!-- tabindex="0" -->
+                     <span class="nds-icon_container" onclick={handleClickArrow}>
+                        <lightning-icon
+                           theme="nds"
+                           icon-name="utility:chevrondown"
+                           class="nds-icon-utility-search nds-input__icon nds-input__icon_right nds-searchIcon"
+                           alternative-text="Approved"
+                           size="x-small"
+                        >
+                        </lightning-icon>
+                        <lightning-icon theme="nds" icon-name="utility:chevrondown" class="nds-icon-utility-down nds-input__icon nds-input__icon_right nds-hide" size="x-small"> </lightning-icon>
+                     </span>
+                  </div>
+               </div>
+               <!-- To display all items for the drop down -->
+               <!-- <datalist id="listbox-id-3">
+                  <template if:true={options}>
+                     <template for:each={options} for:item="item">
+                        <option key={item.key}  value={item.key}></option>
+                     </template>
+                  </template>
+                </datalist> -->
+
+
+               <!-- Original code -->
+               <div id="listbox-id-3" class="item_list nds-hide OneLinkNoTx" role="listbox">
+                  <ul class="nds-listbox nds-listbox_vertical nds-dropdown nds-dropdown_length-with-icon-7 nds-dropdown_fluid" role="listbox" aria-label={ariaLabelCombobox}>
+                     <template if:true={options}>
+                        <template for:each={options} for:item="item">
+                           <li role="presentation" 
+                              class="nds-listbox__item"
+                               key={item.key} 
+                               onmousedown={handleOptionSelect} 
+                               data-id={item.key} 
+                               data-name={item.label}>
+                              <div aria-selected="true" 
+                                    id={item.key} 
+                                    class="nds-media nds-listbox__option nds-listbox__option_entity nds-listbox__option_has-meta" 
+                                    role="option">
+                                 <span class="nds-media__body">
+                                    <span style="white-space:pre-wrap;" 
+                                          title={item.value} 
+                                          class="nds-listbox__option-text nds-listbox__option-text_entity slds_optiontxt" >{item.label}
+                                    </span>
+                                 </span>
+                              </div>
+                           </li>
+                        </template>
+                     </template>
+                     <template if:false={options}>
+                        <div>Error</div>
+                     </template>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</template>

@@ -1,0 +1,18 @@
+<template>
+   <template if:true={loading}>
+      <lightning-spinner alternative-text="Loading" size="medium" theme="nds"> </lightning-spinner>
+   </template>
+   <div if:true={showPlanName} class="line-height-align nds-text-body_regular nds-form-element__label_toggle-text nds-p-vertical_small p-horizontal nds-m-bottom_x-small">
+      <c-wrapping-select-field
+         default-value={defaultPlan}
+         placeholder-text="Choose a Plan"
+         label-value="Plan Name"
+         required="true"
+         field-to-save="selectedPlan"
+         options={plans}
+         read-only={readOnly}
+         onitemselected={handleItemChange}
+      >
+      </c-wrapping-select-field>
+   </div>
+</template>

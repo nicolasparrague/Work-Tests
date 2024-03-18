@@ -1,0 +1,26 @@
+<template>
+    <div if:true={loading}>
+       <lightning-spinner alternative-text="Loading..." size="medium" theme="nds"></lightning-spinner>
+    </div>
+    <!-- <lightning-button label={_buttonLabel} variant="neutral" theme="nds" onclick={generateExcel} icon-position="right" icon-name="doctype:excel" icon-fill="#343741" extraclass="nds-button_stretch">
+    </lightning-button>label="Export to Excel"  -->
+      <!-- <lightning-button
+      label="Export to Excel"
+      variant="neutral" 
+      theme="nds" 
+      onclick={generateExcel} 
+      icon-position="right" 
+      icon-name="doctype:excel" 
+      icon-fill="#343741" 
+      extraclass="nds-button_stretch"
+      aria-hidden="true"
+      role="none"
+      aria-label=" ">
+      <label aria-hidden="true" class="btnLabel">Export to Excel</label> 
+      </lightning-button> -->
+
+      <button onclick={generateExcel} class="nds-button nds-button_neutral nds-button_stretch">
+         <span class="btnLabel">Export to Excel</span>
+      </button>
+   
+ </template>

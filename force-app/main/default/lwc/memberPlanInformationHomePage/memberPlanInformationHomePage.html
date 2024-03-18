@@ -1,0 +1,624 @@
+<template>
+   <div class="nds-is-relative">
+      <lightning-tabset  id="tabTest2" class="">
+         <template if:true={hasMedical}>
+            <lightning-tab data-id="testTrayDataId" id="testTrayId2" aura:id="testAuraId"  label="Medical" title="Medical" class="nds-p-around_medium">
+               <div>
+                  <div class="nds-m-bottom_medium nds-m-top_x-small nds-p-horizontal_x-large">
+                     <p if:true={isSubscriber} class="plan-name-header">
+                        {medicalPlanName}
+                     </p>
+                     <p if:false={isSubscriber} class="plan-name-header">
+                        {medicalPlanName} <span if:true={medicalactiveStatus} class="active-status nds-float_right"> <span class="c-success-dot nds-m-right_x-small"></span>Active</span>
+                        <span if:false={medicalactiveStatus} class="active-status nds-float_right"> <span class="c-error-dot nds-m-right_x-small"></span>Inactive</span>
+                     </p>
+                  </div>
+                  <div if:false={isSubscriber} class="nds-m-bottom_medium nds-p-horizontal_x-large">
+                     <div if:false={dependentMedicalStatus}>
+                        <p if:false={PreeffectuatedStatus} class="nds-text-title nds-m-bottom_xx-small">Coverage Dates</p>
+                        <p if:false={PreeffectuatedStatus} class="nds-text-body_regular">{dependentMedicalEligibilityEffectiveDate} - {dependentMedicalEligibilityTerminationDate}</p>
+                        <p if:true={PreeffectuatedStatus} class="nds-text-title nds-m-bottom_xx-small">Expected Effective Date</p>
+                        <p if:true={PreeffectuatedStatus} class="nds-text-body_regular">{dependentMedicalEligibilityEffectiveDate}</p>
+                     </div>
+
+                     <p if:true={dependentMedicalStatus} class="nds-text-title nds-m-bottom_xx-small">Effective Date</p>
+                     <p if:true={dependentMedicalStatus} class="nds-text-body_regular">{dependentMedicalEligibilityEffectiveDate}</p>
+                  </div>
+                  <div if:true={pcpnotEmpty} class="nds-m-bottom_medium nds-p-horizontal_x-large">
+                     <p if:true={showPCPLink} class="nds-text-title nds-m-bottom_xx-small">
+                        Primary Care Physician<a tabindex="0" class="nds-text-body_regular nds-m-left_x-small nds-text-link" onclick={navigateToFindCare}>Change PCP </a>
+                     </p>
+                     <p if:false={showPCPLink} class="nds-text-title nds-m-bottom_xx-small">Primary Care Physician</p>
+                     <p class="nds-text-body_regular">{pcpName}</p>
+                  </div>
+
+                  <div if:true={medicalshowPCPMessage} class="nds-col nds-size_12-of-12 nds-media nds-m-bottom_medium nds-p-horizontal_x-large">
+                     <span>
+                        <c-custom-icon
+                           icon-name="Information_Tool_Tip"
+                           alternative-text="info"
+                           variant="information"
+                           size="small"
+                           title="Info"
+                           class="nds-grid nds-grid_vertical-align-start nds-p-right_x-small nds-text-icon_default"
+                        ></c-custom-icon>
+                     </span>
+                     <p class="nds-text-body_regular">{medicalpcpMessage}</p>
+                  </div>
+
+                  <div if:true={isSubscriber} class="via-nds news-feed c-plan-info-carousel">
+                     <div class="nds-grid nds-p-around_medium nds-m-bottom_x-small carousel-container">
+                        <div if:false={_isMobile}>
+                           <button if:true={disablemedicalshowleftarrow} class="arrow-left" data-id={medicalarrowvalue} value="Medical" onclick={leftArrowClick}>
+                              <lightning-icon icon-name="utility:chevronleft" size="small"></lightning-icon>
+                           </button>
+                        </div>
+
+                        <div if:true={_isMobile}>
+                           <button if:true={disablemedicalshowleftarrow} class="arrow-leftmobile" data-id={medicalarrowvalue} value="Medical" onclick={leftArrowClick}>
+                              <lightning-icon icon-name="utility:chevronleft" size="small"></lightning-icon>
+                           </button>
+                        </div>
+
+                        <div if:true={_isMobile} class="slider">
+                           <div class="slides">
+                              <div for:each={medicalMembersMobile} for:item="member" key={member.Id} class="nds-col nds-size_9-of-10">
+                                 <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium">
+                                    <div class="nds-m-bottom_small">
+                                       <label class="nds-text-title nds-m-bottom_x-small"
+                                          >
+                                          <span class="OneLinkNoTx">{member.firstName} {member.lastName}</span>
+                                          <span if:false={member.ActiveStatus} class="active-status nds-float_right"><span class="c-error-dot nds-m-right_x-small"></span>Inactive</span>
+                                          <span if:true={member.ActiveStatus} class="active-status nds-float_right"><span class="c-success-dot nds-m-right_x-small"></span>Active</span></label
+                                       >
+                                       <p class="nds-text-body_regular">{member.Relationship}</p>
+                                    </div>
+                                    <div if:true={member.MemberActiveStatus}>
+                                       <label class="nds-text-title nds-m-bottom_x-small">Effective Date</label>
+                                       <p class="nds-text-body_regular">{member.eligibilityEffectiveDate}</p>
+                                    </div>
+                                    <div if:false={member.MemberActiveStatus}>
+                                       <div if:false={member.PreeffectuatedStatus}>
+                                          <label class="nds-text-title nds-m-bottom_x-small">Coverage Dates</label>
+                                          <p class="nds-text-body_regular">{member.eligibilityEffectiveDate} - {member.eligibilityTerminationDate}</p>
+                                       </div>
+                                       <div if:true={member.PreeffectuatedStatus}>
+                                          <label class="nds-text-title nds-m-bottom_x-small">Expected Effective Date</label>
+                                          <p class="nds-text-body_regular">{member.eligibilityEffectiveDate}</p>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div if:false={_isMobile} for:each={medicalcurrentallmembers} for:item="member" key={member.Id} class="nds-p-horizontal_medium nds-col nds-size_1-of-2">
+                           <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium">
+                              <div class="nds-m-bottom_medium">
+                                 <label class="nds-text-title nds-m-bottom_x-small"
+                                    >
+                                    <span class="OneLinkNoTx">{member.firstName} {member.lastName}</span>
+                                    <span if:false={member.ActiveStatus} class="active-status nds-float_right"><span class="c-error-dot nds-m-right_x-small"></span>Inactive</span>
+                                    <span if:true={member.ActiveStatus} class="active-status nds-float_right"><span class="c-success-dot nds-m-right_x-small"></span>Active</span></label
+                                 >
+                                 <p class="nds-text-body_regular">{member.Relationship}</p>
+                              </div>
+                              <div if:true={member.MemberActiveStatus}>
+                                 <label class="nds-text-title nds-m-bottom_x-small">Effective Date</label>
+                                 <p class="nds-text-body_regular">{member.eligibilityEffectiveDate}</p>
+                              </div>
+                              <div if:false={member.MemberActiveStatus}>
+                                 <div if:false={member.PreeffectuatedStatus}>
+                                    <label class="nds-text-title nds-m-bottom_x-small">Coverage Dates</label>
+                                    <p class="nds-text-body_regular">{member.eligibilityEffectiveDate} - {member.eligibilityTerminationDate}</p>
+                                 </div>
+                                 <div if:true={member.PreeffectuatedStatus}>
+                                    <label class="nds-text-title nds-m-bottom_x-small">Expected Effective Date</label>
+                                    <p class="nds-text-body_regular">{member.eligibilityEffectiveDate}</p>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div if:false={_isMobile}>
+                           <button if:true={disablemedicalshowrightarrow} class="arrow-right" data-id={medicalarrowvalue} value="Medical" onclick={rightArrowClick}>
+                              <lightning-icon icon-name="utility:chevronright" size="small"></lightning-icon>
+                           </button>
+                        </div>
+                        <div if:true={_isMobile}>
+                           <button if:true={disablemedicalshowrightarrow} class="arrow-rightmobile" data-id={medicalarrowvalue} value="Medical" onclick={rightArrowClick}>
+                              <lightning-icon icon-name="utility:chevronright" size="small"></lightning-icon>
+                           </button>
+                        </div>
+                     </div>
+                     <div if:false={_isMobile}>
+                        <ul if:true={medicalshowPagination} class="nds-carousel__indicators nds-text-align_center nds-p-top_small" role="tablist">
+                           <li class="nds-carousel__indicator" role="presentation" for:each={medicalpages} for:item="medicalpage" key={medicalpage.key}>
+                              <a id={medicalpage.key} class={medicalpage.classes} href="#" role="tab" data-page-number={medicalpage.number} plan-type="Medical" onclick={handlePaginationClick}>
+                                 <span class="nds-assistive-text">Visit news slider tab</span>
+                              </a>
+                           </li>
+                        </ul>
+                     </div>
+                     <div if:true={_isMobile}>
+                        <ul if:true={medicalshowPagination} class="nds-carousel__indicators nds-text-align_center nds-p-top_small" role="tablist">
+                           <li class="nds-carousel__indicator" role="presentation" for:each={medicalpages} for:item="medicalpage" key={medicalpage.key}>
+                              <a id={medicalpage.key} class={medicalpage.classes} href="#" role="tab" data-page-number={medicalpage.number} plan-type="Medical" onclick={handlePaginationClick}>
+                                 <span class="nds-assistive-text">Visit news slider tab</span>
+                              </a>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </lightning-tab>
+         </template>
+
+         <template if:true={hasDental}>
+            <lightning-tab  label="Dental" title="Dental" class="nds-p-around_medium">
+               <div class="nds-m-bottom_medium nds-m-top_x-small nds-p-horizontal_x-large">
+                  <p if:true={isSubscriber} class="plan-name-header">
+                     {dentalPlanName}
+                  </p>
+                  <p if:false={isSubscriber} class="plan-name-header">
+                     {dentalPlanName} <span if:true={dentalactiveStatus} class="active-status nds-float_right"> <span class="c-success-dot nds-m-right_x-small"></span>Active</span>
+                     <span if:false={dentalactiveStatus} class="active-status nds-float_right"> <span class="c-error-dot nds-m-right_x-small"></span>Inactive</span>
+                  </p>
+               </div>
+
+               <div if:true={isSubscriber} class="via-nds news-feed c-plan-info-carousel">
+                  <div class="nds-grid nds-p-around_medium nds-m-bottom_x-small carousel-container">
+                     <div if:false={_isMobile}>
+                        <button if:true={disabledentalshowleftarrow} class="arrow-left" data-id={dentalarrowvalue} value="Dental" onclick={leftArrowClick}>
+                           <lightning-icon icon-name="utility:chevronleft" size="small"></lightning-icon>
+                        </button>
+                     </div>
+                     <div if:true={_isMobile}>
+                        <button if:true={disabledentalshowleftarrow} class="arrow-leftmobile" data-id={dentalarrowvalue} value="Dental" onclick={leftArrowClick}>
+                           <lightning-icon icon-name="utility:chevronleft" size="small"></lightning-icon>
+                        </button>
+                     </div>
+                     <div if:false={_isMobile} for:each={dentalcurrentallmembers} for:item="member" key={member.Id} class="nds-p-horizontal_medium nds-col nds-size_1-of-2">
+                        <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium">
+                           <div class="nds-m-bottom_medium">
+                              <label class="nds-text-title nds-m-bottom_x-small"
+                                 >
+                                 <span class="OneLinkNoTx">{member.firstName} {member.lastName}</span>
+                                 <span if:false={member.ActiveStatus} class="active-status nds-float_right"><span class="c-error-dot nds-m-right_x-small"></span>Inactive</span>
+                                 <span if:true={member.ActiveStatus} class="active-status nds-float_right"><span class="c-success-dot nds-m-right_x-small"></span>Active</span></label
+                              >
+                              <p class="nds-text-body_regular">{member.Relationship}</p>
+                           </div>
+                           <div if:true={member.MemberActiveStatus}>
+                              <label class="nds-text-title nds-m-bottom_x-small">Effective Date</label>
+                              <p class="nds-text-body_regular">{member.eligibilityEffectiveDate}</p>
+                           </div>
+                           <div if:false={member.MemberActiveStatus}>
+                              <div if:false={member.PreeffectuatedStatus}>
+                                 <label class="nds-text-title nds-m-bottom_x-small">Coverage Dates</label>
+                                 <p class="nds-text-body_regular">{member.eligibilityEffectiveDate} - {member.eligibilityTerminationDate}</p>
+                              </div>
+                              <div if:true={member.PreeffectuatedStatus}>
+                                 <label class="nds-text-title nds-m-bottom_x-small">Expected Effective Date</label>
+                                 <p class="nds-text-body_regular">{member.eligibilityEffectiveDate}</p>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div if:true={_isMobile} class="slider">
+                        <div class="slides">
+                           <div for:each={dentalMembersMobile} for:item="member" key={member.Id} class="nds-col nds-size_9-of-10">
+                              <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium">
+                                 <div class="nds-m-bottom_medium">
+                                    <label class="nds-text-title nds-m-bottom_x-small"
+                                       >
+                                       <span class="OneLinkNoTx">{member.firstName} {member.lastName}</span>
+                                       <span if:false={member.ActiveStatus} class="active-status nds-float_right"><span class="c-error-dot nds-m-right_x-small"></span>Inactive</span>
+                                       <span if:true={member.ActiveStatus} class="active-status nds-float_right"><span class="c-success-dot nds-m-right_x-small"></span>Active</span></label
+                                    >
+                                    <p class="nds-text-body_regular">{member.Relationship}</p>
+                                 </div>
+                                 <div if:true={member.MemberActiveStatus}>
+                                    <label class="nds-text-title nds-m-bottom_x-small">Effective Date</label>
+                                    <p class="nds-text-body_regular">{member.eligibilityEffectiveDate}</p>
+                                 </div>
+                                 <div if:false={member.MemberActiveStatus}>
+                                    <div if:false={member.PreeffectuatedStatus}>
+                                       <label class="nds-text-title nds-m-bottom_x-small">Coverage Dates</label>
+                                       <p class="nds-text-body_regular">{member.eligibilityEffectiveDate} - {member.eligibilityTerminationDate}</p>
+                                    </div>
+                                    <div if:true={member.PreeffectuatedStatus}>
+                                       <label class="nds-text-title nds-m-bottom_x-small">Expected Effective Date</label>
+                                       <p class="nds-text-body_regular">{member.eligibilityEffectiveDate}</p>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div if:false={_isMobile}>
+                        <button if:true={disabledentalshowrightarrow} class="arrow-right" data-id={dentalarrowvalue} value="Dental" onclick={rightArrowClick}>
+                           <lightning-icon icon-name="utility:chevronright" size="small"></lightning-icon>
+                        </button>
+                     </div>
+                     <div if:true={_isMobile}>
+                        <button if:true={disabledentalshowrightarrow} class="arrow-rightmobile" data-id={dentalarrowvalue} value="Dental" onclick={rightArrowClick}>
+                           <lightning-icon icon-name="utility:chevronright" size="small"></lightning-icon>
+                        </button>
+                     </div>
+                  </div>
+                  <ul if:true={dentalshowPagination} class="nds-carousel__indicators nds-text-align_center nds-p-top_small" role="tablist">
+                     <li class="nds-carousel__indicator" role="presentation" for:each={dentalpages} for:item="dentalpage" key={dentalpage.key}>
+                        <a id={dentalpage.key} class={dentalpage.classes} href="#" role="tab" data-page-number={dentalpage.number} plan-type="Dental" onclick={handlePaginationClick}>
+                           <span class="nds-assistive-text">Visit news slider tab</span>
+                        </a>
+                     </li>
+                  </ul>
+               </div>
+               <div if:false={isSubscriber} class="nds-p-around_small">
+                  <p if:false={dependentDentalStatus} class="nds-text-title nds-m-bottom_x-small">Coverage Dates</p>
+                  <p if:true={dependentDentalStatus} class="nds-text-title nds-m-bottom_x-small">Effective Date</p>
+                  <p if:true={dependentDentalStatus} class="nds-text-body_regular">{dependentDentalEligibilityEffectiveDate}</p>
+                  <p if:false={dependentDentalStatus} class="nds-text-body_regular">{dependentDentalEligibilityEffectiveDate} - {dependentDentalEligibilityTerminationDate}</p>
+               </div>
+            </lightning-tab>
+         </template>
+
+         <template if:true={hasVision}>
+            <lightning-tab  label="Vision" title="Vision" class="nds-p-around_medium">
+               <div class="nds-m-bottom_medium nds-m-top_x-small nds-p-horizontal_x-large">
+                  <p if:true={isSubscriber} class="plan-name-header">
+                     {visionPlanName}
+                  </p>
+                  <p if:false={isSubscriber} class="plan-name-header">
+                     {visionPlanName} <span if:true={visionactiveStatus} class="active-status nds-float_right"> <span class="c-success-dot nds-m-right_x-small"></span>Active</span>
+                     <span if:false={visionactiveStatus} class="active-status nds-float_right"> <span class="c-error-dot nds-m-right_x-small"></span>Inactive</span>
+                  </p>
+               </div>
+
+               <template if:true={isModalGlobal}>
+                  <!-- Modal/Popup Box LWC starts here -->
+                  <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-fade-in-open">
+                     <div class="nds-modal__container">
+                        <!-- Modal/Popup Box LWC header here -->
+
+                        <!-- Modal/Popup Box LWC body starts here -->
+                        <div class="nds-modal__content nds-p-around_x-large" id="modal-content-id-1">
+                           <div class="nds-grid nds-m-bottom_large">
+                              <div class="nds-col">
+                                 <div if:true={eyeMed1}>
+                                    <div class="nds-col">
+                                       <p if:true={isModalGlobal}>
+                                          You are leaving the Attentis Health website and going to EyeMed’s website. <br><br>
+                                          Attentis Health does not accept responsibility for the information, accuracy, or completeness of the EyeMed website.
+                                          Please consult your doctor about any medical or treatment information you may find on the EyeMed site. 
+                                          This is general information and should not be relied upon without speaking with your doctor about your individual needs. 
+                                          The opinions and information are not necessarily those of Attentis Health.<br><br>
+                                          The Privacy Statement of EyeMed may be different from ours. Review this statement when you get to their site.
+                                 
+                                       </p>
+                                       <!--  You are leaving the website and entering other website. -->
+                                    </div>
+                                 </div>
+                                 <div if:false={eyeMed1}>
+                                    <div class="nds-col">
+                                       <div if:true={productBrandCommercial}>
+                                          <p if:true={isModalGlobal}>
+                                             You are leaving the Attentis Health website and going to EyeMed’s website.<br><br>
+                                             Attentis Health does not accept responsibility for the information, accuracy, or completeness of the EyeMed website. 
+                                             Please consult your doctor about any medical or treatment information you may find on the EyeMed site. 
+                                             This is general information and should not be relied upon without speaking with your doctor about your individual needs. 
+                                             The opinions and information are not necessarily those of Attentis Health.<br><br>
+                                             The Privacy Statement of EyeMed may be different from ours. Review this statement when you get to their site.
+                                          </p>
+                                       </div>
+                                       <div if:true={productBrandMedicare}>
+                                          <p if:true={isModalGlobal}>
+                                             You are leaving the Attentis Health website and going to EyeMed’s website.<br><br>
+                                             We encourage you to read the privacy statement on the EyeMed website. 
+                                             Please consult your doctor about any medical advice or treatment information you may find on the EyeMed site.
+                                          </p>
+                                       </div>
+                                       <div if:true={showVisionOnlyAttentis}>
+                                          <p if:true={isModalGlobal}>
+                                             You are leaving the Attentis Health website and going to EyeMed’s website.<br><br>
+                                             Attentis Health does not accept responsibility for the information, accuracy, or completeness of the EyeMed website. 
+                                             Please consult your doctor about any medical or treatment information you may find on the EyeMed site. 
+                                             This is general information and should not be relied upon without speaking with your doctor about your individual needs. 
+                                             The opinions and information are not necessarily those of Attentis Health. <br><br>
+                                             The Privacy Statement of EyeMed may be different from ours. Review this statement when you get to their site.
+                                          </p>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+
+                           <div class="nds-grid nds-text-align_center">
+                              <div class="nds-size_1-of-1">
+                                 <div class="nds-col c-reverse-button-stack_small">
+                                    <!-- Go Back option -->
+                                    <button class="nds-m-right_large nds-button nds-button_neutral modal-color-1" onclick={closeModal}>Cancel</button>
+
+                                    <!-- Cost Calculator -->
+                                    <button if:true={isModalGlobal} class="nds-button nds-button_brand modal-color-2" onclick={navigateToEyeMedURL}>
+                                       Continue<lightning-button-icon variant="bare" icon-name="utility:link"></lightning-button-icon>
+                                    </button>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </section>
+                  <div class="nds-backdrop nds-backdrop_open"></div>
+               </template>
+
+               <div if:true={showVisionOnly} class="nds-p-vertical_small nds-p-horizontal_x-large nds-grid">
+                  <c-custom-icon
+                     icon-name="Information_Tool_Tip"
+                     variant="information"
+                     alternative-text="Info"
+                     size="small"
+                     title="Info"
+                     class="nds-m-right_x-small nds-brand"
+                  ></c-custom-icon>
+                  <p class="nds-text-body_regular">
+                     You can view vision copays, deductibles, check on claims, find an eye doctor and get special offers for vision care by visiting the EyeMed <a onclick={navigateToEyeMed1} href="#"
+                        >website</a
+                     ><lightning-icon onclick={navigateToEyeMed1} variant="brand" icon-name="utility:new_window" size="xx-small" class="nds-m-left_xx-small nds-brand" ></lightning-icon>
+                  </p>
+               </div>
+
+               <div if:true={showVisionOnly} class="nds-p-vertical_small nds-p-horizontal_x-large nds-grid">
+                  <c-custom-icon
+                     icon-name="Information_Tool_Tip"
+                     variant="information"
+                     alternative-text="Info"
+                     size="small"
+                     title="Info"
+                     class="nds-m-right_x-small nds-brand"
+                  ></c-custom-icon>
+                  <p class="nds-text-body_regular">
+                     To find a vision provider in your network, visit the EyeMed <a onclick={navigateToEyeMed2} href="#">website</a
+                     ><lightning-icon onclick={navigateToEyeMed2} variant="brand" icon-name="utility:new_window" size="xx-small" class="nds-m-left_xx-small nds-brand" ></lightning-icon>
+                  </p>
+               </div>
+
+               <div if:true={showVisionOnlyAttentis} class="nds-p-vertical_small nds-p-horizontal_x-large nds-grid">
+                  <c-custom-icon
+                     icon-name="Information_Tool_Tip"
+                     variant="information"
+                     alternative-text="Info"
+                     size="small"
+                     title="Info"
+                     class="nds-m-right_x-small nds-brand"
+                  ></c-custom-icon>
+                  <p class="nds-text-body_regular">
+                     To find a vision provider in your network, visit the EyeMed <a onclick={navigateToEyeMed2} href="#">website</a
+                     ><lightning-icon onclick={navigateToEyeMed2} icon-name="utility:new_window" size="xx-small" variant="brand" class="nds-m-left_xx-small nds-brand" ></lightning-icon>
+                  </p>
+               </div>
+
+               <div if:true={isSubscriber} class="via-nds news-feed c-plan-info-carousel">
+                  <div class="nds-grid nds-p-around_medium nds-m-bottom_x-small carousel-container">
+                     <div if:false={_isMobile}>
+                        <button if:true={disablevisionshowleftarrow} class="arrow-left" data-id={visionarrowvalue} value="Vision" onclick={leftArrowClick}>
+                           <lightning-icon icon-name="utility:chevronleft" size="small"></lightning-icon>
+                        </button>
+                     </div>
+                     <div if:true={_isMobile}>
+                        <button if:true={disablevisionshowleftarrow} class="arrow-leftmobile" data-id={visionarrowvalue} value="Vision" onclick={leftArrowClick}>
+                           <lightning-icon icon-name="utility:chevronleft" size="small"></lightning-icon>
+                        </button>
+                     </div>
+                     <div if:false={_isMobile} for:each={visioncurrentallmembers} for:item="member" key={member.Id} class="nds-p-horizontal_medium nds-col nds-size_1-of-2">
+                        <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium">
+                           <div class="nds-m-bottom_medium">
+                              <label class="nds-text-title nds-m-bottom_x-small"
+                                 >
+                                 <span class="OneLinkNoTx">{member.firstName} {member.lastName}</span>
+                                 <span if:false={member.ActiveStatus} class="active-status nds-float_right"><span class="c-error-dot nds-m-right_x-small"></span>Inactive</span>
+                                 <span if:true={member.ActiveStatus} class="active-status nds-float_right"><span class="c-success-dot nds-m-right_x-small"></span>Active</span></label
+                              >
+                              <p class="nds-text-body_regular">{member.Relationship}</p>
+                           </div>
+                           <div if:true={member.MemberActiveStatus}>
+                              <label class="nds-text-title nds-m-bottom_x-small">Effective Date</label>
+                              <p class="nds-text-body_regular">{member.eligibilityEffectiveDate}</p>
+                           </div>
+                           <div if:false={member.MemberActiveStatus}>
+                              <div if:false={member.PreeffectuatedStatus}>
+                                 <label class="nds-text-title nds-m-bottom_x-small">Coverage Dates</label>
+                                 <p class="nds-text-body_regular">{member.eligibilityEffectiveDate} - {member.eligibilityTerminationDate}</p>
+                              </div>
+                              <div if:true={member.PreeffectuatedStatus}>
+                                 <label class="nds-text-title nds-m-bottom_x-small">Expected Effective Date</label>
+                                 <p class="nds-text-body_regular">{member.eligibilityEffectiveDate}</p>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div if:true={_isMobile} class="slider">
+                        <div class="slides">
+                           <div for:each={visionMembersMobile} for:item="member" key={member.Id} class="nds-col nds-size_9-of-10">
+                              <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium">
+                                 <div class="nds-m-bottom_medium">
+                                    <label class="nds-text-title nds-m-bottom_x-small"
+                                       >
+                                       <span class="OneLinkNoTx">{member.firstName} {member.lastName}</span>
+                                       <span if:false={member.ActiveStatus} class="active-status nds-float_right"><span class="c-error-dot nds-m-right_x-small"></span>Inactive</span>
+                                       <span if:true={member.ActiveStatus} class="active-status nds-float_right"><span class="c-success-dot nds-m-right_x-small"></span>Active</span></label
+                                    >
+                                    <p class="nds-text-body_regular">{member.Relationship}</p>
+                                 </div>
+                                 <div if:true={member.MemberActiveStatus}>
+                                    <label class="nds-text-title nds-m-bottom_x-small">Effective Date</label>
+                                    <p class="nds-text-body_regular">{member.eligibilityEffectiveDate}</p>
+                                 </div>
+                                 <div if:false={member.MemberActiveStatus}>
+                                    <div if:false={member.PreeffectuatedStatus}>
+                                       <label class="nds-text-title nds-m-bottom_x-small">Coverage Dates</label>
+                                       <p class="nds-text-body_regular">{member.eligibilityEffectiveDate} - {member.eligibilityTerminationDate}</p>
+                                    </div>
+                                    <div if:true={member.PreeffectuatedStatus}>
+                                       <label class="nds-text-title nds-m-bottom_x-small">Expected Effective Date</label>
+                                       <p class="nds-text-body_regular">{member.eligibilityEffectiveDate}</p>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div if:false={_isMobile}>
+                        <button if:true={disablevisionshowrightarrow} class="arrow-right" data-id={visionarrowvalue} value="Vision" onclick={rightArrowClick}>
+                           <lightning-icon icon-name="utility:chevronright" size="small"></lightning-icon>
+                        </button>
+                     </div>
+                     <div if:true={_isMobile}>
+                        <button if:true={disablevisionshowrightarrow} class="arrow-rightmobile" data-id={visionarrowvalue} value="Vision" onclick={rightArrowClick}>
+                           <lightning-icon icon-name="utility:chevronright" size="small"></lightning-icon>
+                        </button>
+                     </div>
+                  </div>
+                  <ul if:true={visionshowPagination} class="nds-carousel__indicators nds-text-align_center nds-p-top_small" role="tablist">
+                     <li class="nds-carousel__indicator" role="presentation" for:each={visionpages} for:item="visionpage" key={visionpage.key}>
+                        <a id={visionpage.key} class={visionpage.classes} href="#" role="tab" data-page-number={visionpage.number} plan-type="Vision" onclick={handlePaginationClick}>
+                           <span class="nds-assistive-text">Visit news slider tab</span>
+                        </a>
+                     </li>
+                  </ul>
+               </div>
+               <div if:false={isSubscriber} class="nds-p-around_small">
+                  <p if:false={dependentVisionStatus} class="nds-text-title nds-m-bottom_x-small">Coverage Dates</p>
+                  <p if:true={dependentVisionStatus} class="nds-text-title nds-m-bottom_x-small">Effective Date</p>
+                  <p if:true={dependentVisionStatus} class="nds-text-body_regular">{dependentVisionEligibilityEffectiveDate}</p>
+                  <p if:false={dependentVisionStatus} class="nds-text-body_regular">{dependentVisionEligibilityEffectiveDate} - {dependentVisionEligibilityTerminationDate}</p>
+               </div>
+            </lightning-tab>
+         </template>
+
+         <template if:true={hasPharmacy}>
+            <lightning-tab  label="Pharmacy" title="Pharmacy" class="nds-p-around_medium">
+               <div class="nds-m-bottom_medium nds-m-top_x-small nds-p-horizontal_x-large">
+                  <p if:true={isSubscriber} class="plan-name-header">
+                     {pharmacyPlanName}
+                  </p>
+                  <p if:false={isSubscriber} class="plan-name-header">
+                     {pharmacyPlanName} <span if:true={pharmacyactiveStatus} class="active-status nds-float_right"> <span class="c-success-dot nds-m-right_x-small"></span>Active</span>
+                     <span if:false={pharmacyactiveStatus} class="active-status nds-float_right"> <span class="c-error-dot nds-m-right_x-small"></span>Inactive</span>
+                  </p>
+               </div>
+
+               <div if:true={isSubscriber} class="via-nds news-feed c-plan-info-carousel">
+                  <div class="nds-grid nds-p-around_medium nds-m-bottom_x-small carousel-container">
+                     <div if:false={_isMobile}>
+                        <button if:true={disablepharmacyshowleftarrow} class="arrow-left" data-id={pharmacyarrowvalue} value="Pharmacy" onclick={leftArrowClick}>
+                           <lightning-icon icon-name="utility:chevronleft" size="small"></lightning-icon>
+                        </button>
+                     </div>
+                     <div if:true={_isMobile}>
+                        <button if:true={disablepharmacyshowleftarrow} class="arrow-leftmobile" data-id={pharmacyarrowvalue} value="Pharmacy" onclick={leftArrowClick}>
+                           <lightning-icon icon-name="utility:chevronleft" size="small"></lightning-icon>
+                        </button>
+                     </div>
+
+                     <div if:false={_isMobile} for:each={pharmacycurrentallmembers} for:item="member" key={member.Id} class="nds-p-horizontal_medium nds-col nds-size_1-of-2">
+                        <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium">
+                           <div class="nds-m-bottom_medium">
+                              <label class="nds-text-title nds-m-bottom_x-small"
+                                 >
+                                 <span class="OneLinkNoTx">{member.firstName} {member.lastName}</span>
+                                 <span if:false={member.ActiveStatus} class="active-status nds-float_right"><span class="c-error-dot nds-m-right_x-small"></span>Inactive</span>
+                                 <span if:true={member.ActiveStatus} class="active-status nds-float_right"><span class="c-success-dot nds-m-right_x-small"></span>Active</span></label
+                              >
+                              <p class="nds-text-body_regular">{member.Relationship}</p>
+                           </div>
+                           <div if:true={member.MemberActiveStatus}>
+                              <label class="nds-text-title nds-m-bottom_x-small">Effective Date</label>
+                              <p class="nds-text-body_regular">{member.eligibilityEffectiveDate}</p>
+                           </div>
+                           <div if:false={member.MemberActiveStatus}>
+                              <div if:false={member.PreeffectuatedStatus}>
+                                 <label class="nds-text-title nds-m-bottom_x-small">Coverage Dates</label>
+                                 <p class="nds-text-body_regular">{member.eligibilityEffectiveDate} - {member.eligibilityTerminationDate}</p>
+                              </div>
+                              <div if:true={member.PreeffectuatedStatus}>
+                                 <label class="nds-text-title nds-m-bottom_x-small">Expected Effective Date</label>
+                                 <p class="nds-text-body_regular">{member.eligibilityEffectiveDate}</p>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div if:true={_isMobile} class="slider">
+                        <div class="slides">
+                           <div for:each={pharmacyMembersMobile} for:item="member" key={member.Id} class="nds-col nds-size_9-of-10">
+                              <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium">
+                                 <div class="nds-m-bottom_medium">
+                                    <label class="nds-text-title nds-m-bottom_x-small"
+                                       >
+                                       <span class="OneLinkNoTx">{member.firstName} {member.lastName}</span>
+                                       <span if:false={member.ActiveStatus} class="active-status nds-float_right"><span class="c-error-dot nds-m-right_x-small"></span>Inactive</span>
+                                       <span if:true={member.ActiveStatus} class="active-status nds-float_right"><span class="c-success-dot nds-m-right_x-small"></span>Active</span></label
+                                    >
+                                    <p class="nds-text-body_regular">{member.Relationship}</p>
+                                 </div>
+                                 <div if:true={member.MemberActiveStatus}>
+                                    <label class="nds-text-title nds-m-bottom_x-small">Effective Date</label>
+                                    <p class="nds-text-body_regular">{member.eligibilityEffectiveDate}</p>
+                                 </div>
+                                 <div if:false={member.MemberActiveStatus}>
+                                    <div if:false={member.PreeffectuatedStatus}>
+                                       <label class="nds-text-title nds-m-bottom_x-small">Coverage Dates</label>
+                                       <p class="nds-text-body_regular">{member.eligibilityEffectiveDate} - {member.eligibilityTerminationDate}</p>
+                                    </div>
+                                    <div if:true={member.PreeffectuatedStatus}>
+                                       <label class="nds-text-title nds-m-bottom_x-small">Expected Effective Date</label>
+                                       <p class="nds-text-body_regular">{member.eligibilityEffectiveDate}</p>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div if:false={_isMobile}>
+                        <button if:true={disablepharmacyshowrightarrow} class="arrow-right" data-id={pharmacyarrowvalue} value="Pharmacy" onclick={rightArrowClick}>
+                           <lightning-icon icon-name="utility:chevronright" size="small"></lightning-icon>
+                        </button>
+                     </div>
+                     <div if:true={_isMobile}>
+                        <button if:true={disablepharmacyshowrightarrow} class="arrow-rightmobile" data-id={pharmacyarrowvalue} value="Pharmacy" onclick={rightArrowClick}>
+                           <lightning-icon icon-name="utility:chevronright" size="small"></lightning-icon>
+                        </button>
+                     </div>
+                  </div>
+                  <ul if:true={pharmacyshowPagination} class="nds-carousel__indicators nds-text-align_center nds-p-top_small" role="tablist">
+                     <li class="nds-carousel__indicator" role="presentation" for:each={pharmacypages} for:item="pharmacypage" key={pharmacypage.key}>
+                        <a id={pharmacypage.key} class={pharmacypage.classes} href="#" role="tab" data-page-number={pharmacypage.number} plan-type="Pharmacy" onclick={handlePaginationClick}>
+                           <span class="nds-assistive-text">Visit news slider tab</span>
+                        </a>
+                     </li>
+                  </ul>
+               </div>
+               <div if:false={isSubscriber} class="nds-p-around_small">
+                  <p if:false={dependentPharmacyStatus} class="nds-text-title nds-m-bottom_x-small">Coverage Dates</p>
+                  <p if:true={dependentPharmacyStatus} class="nds-text-title nds-m-bottom_x-small">Effective Date</p>
+                  <p if:true={dependentPharmacyStatus} class="nds-text-body_regular">{dependentPharmacyEligibilityEffectiveDate}</p>
+                  <p if:false={dependentPharmacyStatus} class="nds-text-body_regular">{dependentPharmacyEligibilityEffectiveDate} - {dependentPharmacyEligibilityTerminationDate}</p>
+               </div>
+            </lightning-tab>
+         </template>
+      </lightning-tabset>
+      <div if:true={showBenefitstab} class="nds-is-absolute c-tabset-link-position_plan-info nds-show_medium">
+         <lightning-button
+            class="c-fc-action-text"
+            variant="base"
+            icon-name="utility:chevronright"
+            icon-position="right"
+            label="View Benefits"
+            title="View Benefits"
+            onclick={navigateToBenefits}
+         ></lightning-button>
+      </div>
+   </div>
+</template>

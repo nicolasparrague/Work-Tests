@@ -1,0 +1,24 @@
+<template>
+    
+   
+   <div class="nds-m-top_medium nds-p-bottom_medium">
+      <template for:each={memberList} for:item="member">
+         <div key={member.memberId} class="nds-grid nds-wrap box nds-m-bottom_large">
+            <div class="nds-p-horizontal_small nds-m-bottom_x-small nds-size_1-of-1 nds-medium-size_1-of-3">
+               <h3 class="nds-text-title">Member Name</h3>
+               <p class="nds-text-body_regular">{member.MemberName}</p>
+            </div>
+            <div class="nds-p-horizontal_small nds-m-bottom_x-small nds-size_1-of-1 nds-medium-size_1-of-3">
+               <h3 class="nds-text-title">PCP Update Status</h3>
+               <p class="nds-text-body_regular">{member.Status}</p>
+            </div>
+            
+            <div class="nds-p-horizontal_small nds-m-bottom_x-small nds-size_1-of-1 nds-medium-size_1-of-3">
+               <h3 class="nds-text-title">Status Description</h3>
+               <p class="nds-text-body_regular">{member.ErrorDescription}</p>
+            </div>
+         
+         </div>
+      </template>
+   </div>
+ </template>

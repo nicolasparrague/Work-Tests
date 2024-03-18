@@ -1,0 +1,63 @@
+<template>
+   <div class="nds-form-element">
+      <div class="nds-form-element__control nds-form-container">
+         <div class="nds-combobox_container">
+            <div class="nds-combobox nds-dropdown-trigger nds-dropdown-trigger_click nds-is-open">
+               <div class="nds-form-element nds-input-has-icon nds-input-has-icon_right">
+                  <!-- Default Search Box -->
+                  <div class="defaultClass">
+                     <label for="combobox-id-3" class="affiliationLabel  c-input-label_not-empty">Hospital Affiliation</label>
+                     <input                  
+                        type="text"
+                        class="nds-input nds-combobox__input nds-has-focus searchvalue"
+                        id="combobox-id-3"
+                        aria-autocomplete="list"
+                        aria-controls="comboListbox"
+                        autocomplete="off"
+                        role="combobox"
+                        placeholder="Search Affiliations"
+                        aria-label="Hospital Affiliation"
+                        onkeyup={handleKeyUp}
+                        onkeydown={handleKeyDown}
+                        onfocus={handleFocusIn}
+                        onblur={handleFocusOut}
+                        value={displayValue}
+                        aria-expanded="false" />
+                     <span class="">
+                        <lightning-icon
+                           theme="nds"
+                           icon-name="utility:chevrondown"
+                           class="nds-icon-utility-search nds-input__icon nds-input__icon_right nds-searchIcon"
+                           alternative-text="Approved"
+                           size="x-small"
+                           style="padding-right: 35px"
+                        >
+                        </lightning-icon>
+                        <lightning-icon theme="nds" icon-name="utility:chevrondown" class="nds-icon-utility-down nds-input__icon nds-input__icon_right nds-hide" size="x-small"> </lightning-icon>
+                     </span>
+                  </div>
+               </div>
+               <!-- To display all items for the drop down -->
+               <div id="listbox-id-3" class="item_list nds-hide">
+                  <ul id="comboListbox" class="nds-listbox nds-listbox_vertical nds-dropdown nds-dropdown_length-with-icon-7 nds-dropdown_fluid" role="listbox" onmousedown={detectClickOnScrollbar}>
+                     <template if:true={filteredOptions}>
+                        <template for:each={filteredOptions} for:item="item">
+                           <li id={item.code} aria-selected="false" aria-label={item.code} role="option" class="nds-listbox__item" key={item.code} onmousedown={handleOptionSelect} data-id={item.code} data-name={item.code}>
+                              <div class="nds-media nds-listbox__option nds-listbox__option_entity nds-listbox__option_has-meta">
+                                 <span class="nds-media__body">
+                                    <span class="nds-listbox__option-text nds-listbox__option-text_entity slds_optiontxt">{item.code}</span>
+                                 </span>
+                              </div>
+                           </li>
+                        </template>
+                     </template>
+                     <template if:false={filteredOptions}>
+                        <div>Error</div>
+                     </template>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</template>

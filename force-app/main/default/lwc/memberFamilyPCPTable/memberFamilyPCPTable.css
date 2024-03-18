@@ -1,0 +1,9 @@
+.line-height-125 {
+   line-height: 1.25;
+}
+
+.box {
+   border-radius: 0.25rem;
+   border: 1px solid #dddbda;
+   padding: 24px 32px;
+ }

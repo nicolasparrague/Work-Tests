@@ -1,0 +1,16 @@
+.center-iframe{
+    margin-left: 18%;
+    padding-right: 28%;
+}
+
+@media (max-width:300px) {
+    .iframeMobile {
+        margin-left: 16% !important;
+    }
+}
+
+@media (min-width:1500px) {
+    .iframeDesktop {
+        margin-left: 28%;
+    }
+}

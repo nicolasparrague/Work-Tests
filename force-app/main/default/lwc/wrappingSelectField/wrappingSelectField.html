@@ -1,0 +1,84 @@
+<template>
+   <label class="c-input-label_not-empty" for="combobox-unique-id" aria-label={labelValue}>{labelValue}
+      <template if:true={isRequired}>
+         <abbr title="Required" class="nds-required nds-p-left_xx-small">*</abbr>
+      </template>
+   </label>
+   <div class="nds-form-element nds-p-top_small">
+      <div class="nds-form-element__control">
+         <div class="nds-combobox_container">
+            <div class="nds-combobox nds-dropdown-trigger nds-dropdown-trigger_click nds-is-open" aria-haspopup="listbox">
+               <div class="nds-combobox__form-element nds-input-has-icon nds-input-has-icon_right" >
+                  <!-- Default Search Box -->
+                  <div class="defaultClass">
+                     <template if:false={isDisabled}> 
+                        <div
+                           class="input_color nds-input nds-combobox__input nds-has-focus searchvalue eh-combobox-focus-field"
+                           id="combobox-id-3"
+                           data-id="networkNameFocus"
+                           tabindex="0"
+                           aria-controls="comboListbox"
+                           onfocus={handleFocusIn}
+                           onkeyup={handleKeyUp}
+                           onkeydown={handleKeyDown}
+                           onclick={handleKeyUp}
+                           onblur={handleFocusOut}
+                           aria-label={selectedItemAccessibilityPN} 
+                           aria-required={isRequired}
+                           role="combobox"
+                           aria-expanded="false">
+                              {selectedItem}
+                        </div>
+                     </template>
+                     <template if:true={isDisabled}>
+                        <div
+                           class="input_color nds-input nds-combobox__input nds-has-focus searchvalue c-disabled-text disabled-field eh-combobox-focus-field"
+                           id="combobox-id-5"
+                           aria-disabled="true" 
+                           aria-label={selectedItemAccessibility} 
+                           tabindex="0"
+                           role="combobox">
+                              {selectedItem}
+                        </div>                        
+                     </template>
+                     <template if:false={isDisabled}>
+                     <span class="nds-icon_container">
+                        <lightning-icon
+                           theme="nds"
+                           icon-name="utility:chevrondown"
+                           class="nds-icon-utility-search nds-input__icon nds-input__icon_right nds-searchIcon"
+                           alternative-text="Approved"
+                           size="x-small"
+                        >
+                        </lightning-icon>
+                        <lightning-icon theme="nds" icon-name="utility:chevrondown" class="nds-icon-utility-down nds-input__icon nds-input__icon_right nds-hide" size="x-small"> </lightning-icon>
+                     </span>
+                  </template>
+                  </div>
+               </div>
+               <!-- To display all items for the drop down -->
+               <template if:false={isDisabled}>
+                  <div id="listbox-id-3" class="item_list nds-hide item_list">
+                     <ul id="comboListbox" class="nds-listbox nds-listbox_vertical nds-dropdown nds-dropdown_length-with-icon-7 nds-dropdown_fluid" role="listbox">
+                        <template if:true={options}>
+                           <template for:each={options} for:item="item">
+                              <li id={item.key} aria-selected="false" role="option" class="nds-listbox__item" key={item.key} onmousedown={handleOptionSelect} data-id={item.key} data-name={item.value}>
+                                 <div class="nds-media nds-listbox__option nds-listbox__option_entity nds-listbox__option_has-meta">
+                                    <span class="nds-media__body">
+                                       <span class="nds-listbox__option-text nds-listbox__option-text_entity slds_optiontxt option_text">{item.value}</span>
+                                    </span>
+                                 </div>
+                              </li>
+                           </template>
+                        </template>
+                        <template if:false={options}>
+                           <div>Error</div>
+                        </template>
+                     </ul>
+                  </div>
+               </template>
+            </div>
+         </div>
+      </div>
+   </div>
+ </template>

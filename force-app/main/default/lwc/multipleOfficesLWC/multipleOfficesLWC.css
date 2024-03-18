@@ -1,0 +1,19 @@
+/* Custom CSS */
+.nds-button{
+    width: 100%;
+    border-radius: 20px;
+}
+
+lightning-map {
+    margin: 1rem;
+    min-height: 88vh;
+    position: sticky;
+    top: 120px;
+}
+
+@media only screen and (max-width: 768px) {
+    lightning-map {
+       margin-left: auto;
+       margin-right: auto;
+    }
+ }

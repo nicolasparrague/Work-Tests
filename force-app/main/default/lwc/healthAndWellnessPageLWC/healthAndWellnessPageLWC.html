@@ -1,0 +1,674 @@
+<template>
+    <template if:true={loading}>
+        <lightning-spinner alternative-text="Loading" size="medium" theme="nds"> </lightning-spinner>
+    </template>
+<div style="margin-top:-6px" class="wellness-page-wrapper">
+    <!-- HEADER SECTION -->
+    <h1 class="nds-page-header_title nds-align_absolute-center nds-text-align_center nds-medium-size nds-p-horizontal_large nds-hide_medium">
+        Health and Wellness
+    </h1>
+
+    <!-- Wellness Program -->
+    <template if:true={showWellnessProgramAllMembers}>
+            <div class="nds-grid nds-wrap">
+                <div class="nds-col nds-size_1-of-1">
+
+                    <!-- Desktop -->
+                    <div class="nds-grid box nds-p-top_large nds-p-bottom_large nds-show_medium nds-m-top_large nds-p-right_x-large">
+                        <div class=" nds-m-left_x-large nds-m-right_x-large" style="display: flex;">
+                            <div style="min-width: 100px;">
+                                <img src="/memberportal/resource/Attentis_Apple_Nutrition" class="nds-icon nds-icon-text-default nds-icon_large " style="width: 100%; height: 100%;max-width: maxcontent;">
+                            </div>
+                        </div>
+                        <div class="nds-col nds-size_10-of-12 nds-medium-size_6-of-12 nds-large-size_2-of-12 " style="display: flex; align-items: center;">
+                            <div class="">
+                                <h3 class="nds-text-heading_medium">Wellness Program</h3>
+                            </div>
+                        </div>
+                        <div class="nds-col c-brand-border_left">
+                            <div class="nds-p-left_x-large">
+                                <div if:false={wellnessGoldMemberText} class="nds-col nds-large-size_12-of-12">
+                                    <div class="">
+                                        {wellnessProgramText}
+                                    </div>
+                                </div>
+                                <div if:true={wellnessGoldMemberText} class="nds-col nds-large-size_12-of-12">
+                                    <div class="">
+                                        Achieve your healthiest self. Our Wellness Program is tailored to your needs, and in order to match you with the perfect coach, we'll need you to answer a few health questions. 
+                                        Take our <a href="#" name="questionareWellnessGoldMember" onclick={openInternalDisclaimer} aria-label="Questionnare opens a modal">questionnaire</a>, or read more about the program by clicking here.
+                                    </div>
+                                </div>
+                                <div class="nds-col nds-large-size_3-of-12 nds-m-top_medium rightButton">
+                                        <button onclick={openWellnessProgramModal} class="nds-button nds-button_brand nds-button_stretch" data-btn-id="wellessProgramBtn" aria-label="Get Started opens a modal">
+
+                                        <span class="btnLabel1">Get Started</span>
+                                        <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small nds-brand c-fc-action-icon_right" theme="nds" style="padding-left: 7px;"></lightning-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile -->
+                    <div class="nds-grid  nds-wrap nds-box nds-m-top_large nds-hide_medium">
+                        <div class="nds-col nds-size_2-of-12 nds-medium-size_6-of-12 nds-large-size_2-of-12">
+                            <div>
+                                <img src="/memberportal/resource/Attentis_Apple_Nutrition?" class="nds-icon nds-icon-text-default nds-icon_large">
+                            </div>
+                        </div>
+                        <div class="nds-col nds-size_10-of-12 nds-medium-size_6-of-12 nds-large-size_2-of-12">
+                            <div class="nds-text-heading_small nds-p-left_small nds-p-top_x-small">Wellness Program</div>
+                        </div>
+                        <div class="nds-col nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_8-of-12">
+                            <div if:false={wellnessGoldMemberText} class="nds-col nds-large-size_12-of-12 nds-m-top_small">
+                                <div class="nds-text-body_regular">
+                                    {wellnessProgramText}
+                                </div>
+                            </div>
+                            <div if:true={wellnessGoldMemberText} class="nds-col nds-large-size_12-of-12 nds-m-top_small">
+                                <div class="nds-text-body_regular">
+                                    Achieve your healthiest self. Our Wellness Program is tailored to your needs, and in order to match you with the perfect coach, we'll need you to answer a few health questions. 
+                                    Take our <a href="#" name="questionareWellnessGoldMember" onclick={openInternalDisclaimer} aria-label="Questionnare opens a modal">questionnaire</a>, or read more about the program by clicking here.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nds-col nds-size_1-of-1 nds-m-top_small">
+                            <button onclick={openWellnessProgramModal} class="nds-button nds-button_brand nds-button_stretch" data-btn-id="wellessProgramBtnMobile">
+                                <span class="btnLabel1">Get Started</span>
+                                <lightning-icon icon-name="utility:chevronright" size="x-small" class="nds-m-right_xxx-small nds-brand" theme="nds" style="padding-left: 7px;"></lightning-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        
+        </template>
+
+    <!-- Health Risk Assessment -->
+    <template if:true={showHealthRiskAssessment}>
+            <div class="nds-grid nds-wrap nds-m-top_large">
+                <div class="nds-col nds-size_1-of-1">
+                    <!-- Desktop -->
+                    <div class="nds-grid box nds-show_medium nds-p-top_large nds-p-bottom_large nds-p-right_x-large">
+                        <div class="nds-m-left_x-large nds-m-right_x-large" style="display: flex;">
+                            <div style="min-width: 100px;">
+                                <img src="/memberportal/resource/Attentis_Medical_Records?" class="nds-icon nds-icon-text-default nds-icon_large " style="width: 100%; height: 100%; max-width: maxcontent;">
+                            </div>
+                        </div>
+                        <div class="nds-col nds-size_10-of-12 nds-medium-size_6-of-12 nds-large-size_2-of-12" style="display: flex; align-items: center;">
+                            <div >
+                                <h3 class="nds-text-heading_medium ">Health Risk Assessment</h3>
+                            </div>
+                        </div>
+                        <div class="nds-col c-brand-border_left">
+                            <div class="nds-p-left_x-large">
+                                
+                                <div class="nds-col nds-large-size_12-of-12 nds-p-bottom_x-large">
+                                    Let us help you on your journey to better health. By completing this&nbsp;
+                                 <a href="#" section-name="HRA" onclick={healthRiskAssessment} aria-label="questionnaire link opens a modal">questionnaire
+                                </a>
+
+                                     , we can get a snapshot of your health. 
+                                    This will help us work with you to identify the changes you’d like to see, and then help you make actionable goals to reach them.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile -->
+                    <div class="nds-grid  nds-wrap nds-box nds-hide_medium">
+                        <div class="nds-col nds-size_2-of-12 nds-medium-size_6-of-12 nds-large-size_2-of-12">
+                            <div>
+                                <img src="/memberportal/resource/Attentis_Medical_Records?" class="nds-icon nds-icon-text-default nds-icon_large nds-align_absolute-center">
+                            </div>
+                        </div>
+                        <div class="nds-col nds-size_10-of-12 nds-medium-size_6-of-12 nds-large-size_2-of-12">
+                            <div class="nds-text-heading_small nds-p-left_small nds-p-top_xx-small">Health Risk Assessment</div>
+                        </div>
+                        <div class="nds-col nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_8-of-12">
+                            <div class="nds-col nds-large-size_12-of-12 nds-m-top_small">
+                                <div class="nds-text-body_regular">
+                                    Let us help you on your journey to better health. By completing this&nbsp;                                      
+                                        <a href="#" section-name="HRA" onclick={healthRiskAssessment} style="text-decoration:none; font-weight:bold;">questionnaire
+                                        </a>
+                                , we can get a snapshot of your health. 
+                                    This will help us work with you to identify the changes you’d like to see, and then help you make actionable goals to reach them.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+    <!-- Fitness Benefits -->
+    <template if:true={showFitnessBenefits}>
+            <div class="nds-grid nds-wrap nds-m-top_large">
+                <div class="nds-col nds-size_1-of-1">
+
+                    <!-- Desktop -->
+                    <div class="nds-grid box nds-p-top_large nds-p-bottom_large nds-show_medium nds-p-right_x-large">
+                            <div class="nds-m-left_x-large nds-m-right_x-large" style="display:flex;">
+                            <div style="min-width:100px;">
+                                <img src="/memberportal/resource/Attentis_Dumbbell?" class="nds-icon nds-icon-text-default nds-icon_large " style="width: 100%; height: 100%;max-width: maxcontent;">
+                            </div>
+                        </div>
+                        <div class="nds-col nds-size_10-of-12 nds-medium-size_6-of-12 nds-large-size_2-of-12 " style="display: flex; align-items: center;">
+                            <div class="">
+                                <h3 class="nds-text-heading_medium">Fitness Benefits</h3>
+                            </div>
+                        </div>
+                        
+                        <div class="nds-col c-brand-border_left  ">
+                            <template if:true={ashText}>
+                                <p class="nds-p-left_x-large ">
+                                    Get rewarded just for going to the gym! Log your classes, earn rewards. Sign in at <a href="#" section-name="ashExerciseRewards" onclick={openExternalDisclaimer}>ExerciseRewards™</a> to get started.
+                                </p>
+                                
+                            </template>
+    <template if:true={silverSneakersText}>
+                                <p class="nds-p-left_x-large nds-p-bottom_large">
+                                    The SilverSneakers® fitness program gives you access to workout videos for all levels, articles and videos on how to keep healthy, fitness challenges, and more! 
+                                    Sign in at <a href="#" section-name="silverSneakers" onclick={openExternalDisclaimer}>SilverSneakers®</a> or download the <a href="#" section-name="silverSneakersGo" onclick={openExternalDisclaimer}>SilverSneakers GO™</a> to get started.
+                                </p>
+                            </template>
+
+    <template if:true={activeFitText}>
+                                <p class="nds-p-left_x-large">
+                                    Get a discount on monthly membership fees at participating fitness centers with no long-term contracts through one monthly fee. 
+                                    Choose from thousands of locations, including independent gyms, fitness studios, and national fitness chains with flexibility to change at any time through the Active&Fit Direct™ member self-pay program. 
+                                    Call <b>844-646-2746 (TTY/TDD 711)</b> from Monday to Friday, 5am to 6pm PT to sign up.
+                                </p>
+                            </template>
+
+    <div if:true={ashText} class="nds-col nds-size_12-of-12 nds-large-size_3-of-12 nds-m-top_large nds-p-left_medium rightButton">
+
+
+        <button onclick={openExternalDisclaimer} class="nds-button nds-button_brand nds-button_stretch" data-btn-id="ashExerciseDesktop" aria-label="Sign In opens a modal">
+                                    <span class="btnLabel1">Sign In</span>
+                                    <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small nds-brand c-fc-action-icon_right" theme="nds" style="padding-left: 7px;"></lightning-icon>
+                                </button>
+    </div>
+</div>
+</div>
+
+<!-- Mobile -->
+<div class="nds-grid  nds-wrap nds-box nds-hide_medium">
+    <div class="nds-col nds-size_2-of-12 nds-medium-size_6-of-12 nds-large-size_2-of-12">
+        <div>
+            <img src="/memberportal/resource/Attentis_Dumbbell?" class="nds-icon nds-icon-text-default nds-icon_large">
+        </div>
+    </div>
+    <div class="nds-col nds-size_10-of-12 nds-medium-size_6-of-12 nds-large-size_2-of-12">
+        <div class="nds-text-heading_small nds-p-left_small nds-p-top_x-small">Fitness Benefits</div>
+    </div>
+    <div class="nds-col nds-size_12-of-12 nds-medium-size_6-of-12 nds-large-size_8-of-12">
+        <template if:true={ashText}>
+                                <p class="nds-m-top_small nds-text-body_regular">
+                                    Get rewarded just for going to the gym! Log your classes, earn rewards. Sign in at <a href="#" section-name="ashExerciseRewards" onclick={openExternalDisclaimer}>ExerciseRewards™</a> to get started.
+                                </p>
+                            </template>
+        <template if:true={silverSneakersText}>
+                                <p class="nds-m-top_small nds-text-body_regular">
+                                    The SilverSneakers® fitness program gives you access to workout videos for all levels, articles and videos on how to keep healthy, fitness challenges, and more! 
+                                    Sign in at <a href="#" section-name="silverSneakers" onclick={openExternalDisclaimer}>SilverSneakers®</a> or download the <a href="#" section-name="silverSneakersGo" onclick={openExternalDisclaimer}>SilverSneakers GO™</a> to get started.
+                                </p>
+                            </template>
+        <template if:true={activeFitText}>
+                                <p class="nds-m-top_small nds-text-body_regular">
+                                    Get a discount on monthly membership fees at participating fitness centers with no long-term contracts through one monthly fee. 
+                                    Choose from thousands of locations, including independent gyms, fitness studios, and national fitness chains with flexibility to change at any time through the Active&Fit Direct™ member self-pay program. 
+                                    Call  <lightning-formatted-phone value="8446462746"></lightning-formatted-phone> (TTY/TDD 711) from Monday to Friday, 5am to 6pm PT to sign up.
+                                </p>
+                            </template>
+    </div>
+    <div if:true={ashText} class="nds-col nds-size_12-of-12 nds-large-size_4-of-12 nds-m-top_medium nds-p-left_medium">
+        <button onclick={openExternalDisclaimer} class="nds-button nds-button_neutral nds-button_stretch" data-btn-id="ashExerciseMobile">
+                                <span class="btnLabel1">Sign In</span>
+                                <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small nds-brand c-fc-action-icon_right" theme="nds" style="padding-left: 7px;"></lightning-icon>
+                            </button>
+    </div>
+</div>
+
+</div>
+</div>
+</template>
+<!--  BenefitHub -->
+<template if:true={showBenefitHub}>
+    <div class="nds-grid nds-wrap nds-m-top_large">
+        <div class="nds-col nds-size_1-of-1">
+
+            <!-- Desktop -->
+            <div class="nds-grid box nds-p-top_large nds-p-bottom_large nds-show_medium nds-p-right_x-large">
+                    <div class="nds-m-left_x-large nds-m-right_x-large" style="display:flex;">
+                    
+                    <div style="min-width:100px;">
+                       <c-custom-icon icon-name="Money" size="large" class="nds-brand c-hw-icon-size_xx-large" theme="nds" variant="information"></c-custom-icon> </div>
+                </div>
+                <div class="nds-col nds-size_10-of-12 nds-medium-size_6-of-12 nds-large-size_2-of-12 " style="display: flex; align-items: center;">
+                    <div class="" >
+                        <h3 class="nds-text-heading_medium">BenefitHub</h3>
+                    </div>
+                </div>
+                <div class="nds-col c-brand-border_left">
+                        <p class="nds-p-left_x-large">
+                            Find deals on many of your favorite brands including electronics, clothing, gift cards, and even cars and vacations. Sign in to BenefitHub to start saving.
+                        </p>
+                        <div class="nds-col nds-large-size_3-of-12 nds-m-top_medium rightButton">
+                                <button onclick={openExternalDisclaimer} class="nds-button nds-button_brand nds-button_stretch" data-btn-id="BenefitHubDesktop" aria-label="Sign In opens a modal">
+
+                                <span class="btnLabel1">Sign in</span>
+                                <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small nds-brand c-fc-action-icon_right" theme="nds" style="padding-left: 7px;"></lightning-icon>
+                            </button>
+                        </div>
+                </div>
+            </div>
+
+            <!-- Mobile -->
+            <div class="nds-grid  nds-wrap nds-box nds-hide_medium">
+                <div class="nds-col nds-size_2-of-12 nds-medium-size_6-of-12 nds-large-size_2-of-12">
+                        <c-custom-icon icon-name="Money" size="large" class="nds-brand" theme="nds" variant="information"></c-custom-icon>
+                </div>
+                <div class="nds-col nds-size_10-of-12 nds-medium-size_6-of-12 nds-large-size_2-of-12">
+                    <div class="nds-text-heading_small nds-p-left_small nds-p-top_x-small">BenefitHub</div>
+                </div>
+                <div class="nds-col nds-size_12-of-12 nds-medium-size_6-of-12 nds-large-size_8-of-12">
+                        <p class="nds-m-top_small nds-text-body_regular">
+                            Find deals on many of your favorite brands including electronics, clothing, gift cards, and even cars and vacations. Sign in to BenefitHub to start saving.
+                        </p>
+                  
+                   
+                </div>
+                <div  class="nds-col nds-size_12-of-12 nds-large-size_4-of-12 nds-m-top_medium nds-p-left_medium">
+                    <button onclick={openExternalDisclaimer} class="nds-button nds-button_neutral nds-button_stretch" data-btn-id="BenefitHubMobile">
+                        <span class="btnLabel1">Sign In</span>
+                        <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small nds-brand c-fc-action-icon_right" theme="nds" style="padding-left: 7px;"></lightning-icon>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</template>
+
+
+
+
+<!-- Discounts & Live Well -->
+<div class="nds-grid nds-wrap nds-m-top_large">
+    <div class="nds-col nds-size_1-of-1">
+        <!-- Desktop -->
+        <div class="nds-grid nds-wrap nds-show_medium">
+            <div class="nds-col nds-size_1-of-1 nds-large-size_6-of-12 nds-p-right_large">
+                <div class="nds-box nds-size_12-of-12 " style="min-height: 221.84px;">
+                    <h3 class="health-card-title nds-m-left_medium">
+                        {healthyHeader}
+                    </h3>
+                    <div class="nds-m-top_large nds-m-right_medium nds-m-left_medium">
+                        <p class="nds-text-body_regular">
+                            {healthyText}
+                        </p>
+                    </div>
+                    <div class="nds-text-link" style="text-align:right;" role="main" aria-label="Go to Healthy Discounts opens a modal">
+                        <div class="nds-m-top_large link-bottom nds-m-right_medium nds-p-bottom_x-small">
+                            <lightning-button name="Discounts" class="c-fc-action-text" theme="nds" variant="information" icon-name="utility:chevronright" icon-position="right" label="Go to Discounts and Rewards" onclick={openInternalDisclaimer}></lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nds-col nds-size_1-of-1 nds-large-size_6-of-12">
+                <div class="nds-box nds-size_12-of-12 " style="min-height: 221.84px;">
+                    <h3 class="health-card-title nds-m-left_medium">
+                        Live Well
+                    </h3>
+                    <div class="nds-m-top_large nds-m-right_medium nds-m-left_medium">
+                        <p class="nds-text-body_regular">Stay up to date on the latest topics, get help managing chronic conditions, get tips on how to care for yourself and your loved ones; see the latest from our blog and more.
+                        </p>
+                    </div>
+                    <div class="nds-m-top_large nds-text-link nds-m-right_medium nds-p-bottom_x-small" style="text-align:right;" role="main" aria-label="Go to Live Well opens a modal">
+                        <lightning-button name="LiveWell" class="c-fc-action-text" theme="nds" variant="information" icon-name="utility:chevronright" icon-position="right" label="Go to Live Well" onclick={openInternalDisclaimer}></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile -->
+        <div class="nds-grid nds-wrap nds-hide_medium">
+            <div class="nds-col nds-size_1-of-1">
+                <div class="nds-box nds-size_12-of-12">
+                    <h3 class="nds-text-heading_small">
+                        {healthyHeader}
+                    </h3>
+                    <div class="nds-m-top_large">
+                        <p class="nds-text-body_regular">{healthyText}</p>
+                    </div>
+                    <div class="nds-m-top_small nds-text-link">
+                        <div class="nds-grid nds-wrap">
+                            <div class="nds-col nds-size_1-of-1">
+                                <a href="#" name="Discounts" onclick={openInternalDisclaimer}>{healthyLink}
+                                            <c-custom-icon icon-name="Arrow_Forward" size="medium" class="nds-m-right_xxx-small nds-brand" theme="nds" variant="information" onclick={openInternalDisclaimer}></c-custom-icon>
+                                        </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nds-col nds-size_1-of-1 nds-m-top_large">
+                <div class="nds-box nds-size_12-of-12">
+                    <h3 class="nds-text-heading_small">
+                        Live Well
+                    </h3>
+                    <div class="nds-m-top_large">
+                        <p class="nds-text-body_regular">Stay up to date on the latest topics, get help managing chronic conditions, get tips on how to care for yourself and your loved ones; see the latest from our blog and more.
+                        </p>
+                    </div>
+                    <div class="nds-m-top_small nds-text-link">
+                        <a href="#" name="LiveWell" onclick={openInternalDisclaimer}>Go to Live Well
+                                    <c-custom-icon icon-name="Arrow_Forward" size="medium" class="nds-m-right_xxx-small nds-brand" theme="nds" variant="information" onclick={openInternalDisclaimer}></c-custom-icon>
+                                </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Care Management -->
+<div class="nds-grid nds-wrap ">
+    <div class="nds-col nds-size_1-of-1">
+        <div class="nds-grid  nds-wrap box nds-m-top_large nds-show_medium careManagement">
+            <div class="nds-col nds-size_4-of-12 nds-medium-size_6-of-12 nds-large-size_4-of-12 care-container">
+                <div class="care-management-image"></div>
+            </div>
+            <div class="nds-col nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_8-of-12">
+                <div class="nds-m-left_x-large nds-m-top_small nds-m-right_x-large nds-m-bottom_medium">
+                    <div>
+                        <h3 class="nds-text-heading_medium">Care Management</h3>
+                    </div>
+                    <div class="nds-m-top_medium">
+                        <p>As a member, you can access our Care Management programs if you have health concerns such as diabetes, asthma, or a mental health condition. There is no cost to join. Our Care Management team provides personalized service to help
+                            you and your loved ones get the care, education, and resources you need to better manage your health.
+                            <br><br>To learn more, and to see if you qualify for one of our Care Management programs, click below to make a referral for yourself or another member on your plan.</p>
+                    </div>
+                    <div class="nds-col nds-large-size_3-of-12 nds-m-top_medium rightButton">
+                        <button onclick={openConnectWithCareMang} class="nds-button nds-button_brand nds-button_stretch nds-m-bottom_large" data-btn-id="wellessProgramBtn" aria-label="Get Started takes you to Connect with Care Management page">
+                            <span class="btnLabel1">Get Started</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Mobile -->
+        <div class="nds-grid  nds-wrap nds-box nds-m-top_large nds-hide_medium careManagement">
+            <div class="nds-col nds-size_10-of-12 nds-medium-size_6-of-12 nds-large-size_2-of-12">
+                <div class="nds-text-heading_small ">Care Management</div>
+            </div>
+            <div class="nds-col nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_8-of-12">
+                <div class="nds-text-body_regular nds-m-top_large">
+                    <p>As a member, you can access our Care Management programs if you have health concerns such as diabetes, asthma, or a mental health condition. There is no cost to join. Our Care Management team provides personalized service to help you
+                        and your loved ones get the care, education, and resources you need to better manage your health.
+                        <br><br>To learn more, and to see if you qualify for one of our Care Management programs, click below to make a referral for yourself or another member on your plan.</p>
+                </div>
+            </div>
+            <div class="nds-col nds-size_1-of-1 nds-m-top_small">
+                <button onclick={openConnectWithCareMang} class="nds-button nds-button_brand nds-button_stretch" data-btn-id="wellessProgramBtnMobile">
+                    <span class="btnLabel1">Get Started</span>
+                    <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small nds-brand c-fc-action-icon_right" theme="nds" style="padding-left: 7px;"></lightning-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Advanced Care Planning -->
+<template if:true={showAdvancedCare}>
+            <div class="nds-grid nds-wrap ">
+                <div class="nds-col nds-size_1-of-1">
+                    <!-- Desktop -->
+                    <div class="nds-grid  nds-wrap nds-p-top_large nds-p-bottom_large nds-p-right_x-large nds-p-left_x-large box nds-show_medium nds-m-top_large">
+                        <div class="nds-col nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_8-of-12">
+                            <div class="">
+                                <div>
+                                    <h3 class="nds-text-heading_medium">Advanced Care Planning</h3>
+                                </div>
+                                <div class="nds-m-top_medium nds-m-right_x-large">
+                                    <p>Accidents and illnesses can happen to anyone at any time. People of all ages should make their medical wishes known with an Advance Directive -- a legal document that provides directions for your family and caregivers if you become unable to speak for yourself or make decisions about your care.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class = "nds-col nds-size_4-of-12 nds-medium-size_6-of-12 nds-large-size_4-of-12 c-brand-border_left c-bg-brand_light " >
+                            <div class="nds-col ">
+                            <div class = " nds-m-left_x-large nds-m-top_large nds-m-right_x-large ">
+                            <p >Click below to learn more and get started with an Advance Directive.</p>
+                                <button onclick={openAdvancedCareDisclaimer} class="nds-m-bottom_large nds-size_7-of-12 rightButton nds-button nds-button_brand nds-button_stretch nds-align_absolute-center nds-m-right_small" data-btn-id="wellessProgramBtn" aria-label="Get Started opens a modal">
+                                    <span class="btnLabel1">Get Started</span>
+                                    <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small nds-brand c-fc-action-icon_right" theme="nds" style="padding-left: 7px; fill: white;"></lightning-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <!-- Mobile -->
+                    <div class="nds-grid  nds-wrap nds-box nds-m-top_large nds-hide_medium c-bg-brand_light">
+                        <div class="nds-col nds-size_10-of-12 nds-medium-size_6-of-12 nds-large-size_2-of-12">
+                            <div class="nds-text-heading_small nds-p-top_x-small">Advanced Care Planning</div>
+                        </div>
+                        <div class="nds-col nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_8-of-12">
+                            <div class="nds-col nds-large-size_12-of-12 nds-m-top_small">
+                                <div class="nds-text-body_regular">
+                                    Accidents and illnesses can happen to anyone at any time. People of all ages should make their medical wishes known with an Advance Directive -- a legal document that provides directions for your family and caregivers if you become unable to speak for yourself or make decisions about your care.
+                                    <br><br> Click below to learn more and get started with an Advance Directive.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nds-col nds-size_1-of-1 nds-m-top_small">
+                            <button onclick={openAdvancedCareDisclaimer} class="nds-button nds-button_brand nds-button_stretch" data-btn-id="wellessProgramBtnMobile">
+                                <span class="btnLabel1">Get Started</span>
+                                <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small nds-brand c-fc-action-icon_right" theme="nds" style="padding-left: 7px;"></lightning-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</template>
+
+<!-- **************************************** Modal Windows **************************************** -->
+
+<!-- Internal Disclaimer Popup -->
+<template if:true={isInternalDisclaimerModalOpen}>
+            <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-fade-in-open nds-modal__confirmation ">
+                <div class="nds-modal__container modalAccessibility">
+                    <!-- Modal/Popup Box LWC header here -->
+
+                    <!-- Modal/Popup Box LWC body starts here -->
+                    <div class="nds-modal__content" id="modal-content-id-1">
+                        <div role="alert" class="nds-grid">
+                            <div class="nds-col nds-p-top_small nds-show_medium">
+                                <p class="nds-text-color_default">This link will take to a new tab, but your {companyName} session will remain active in this tab.</p>
+                            </div>
+                            <div class="nds-col nds-p-top_small nds-hide_medium">
+                                <p class="nds-text-color_default">This link will open in your browser. You can come back to the app at any time to pick up where you left off.</p>
+                            </div>
+                        </div>
+                        <div class="c-reverse-button-stack_small nds-m-top_large  nds-grid nds-wrap nds-align_absolute-center">
+                                <button class="nds-button nds-button_neutral nds-button_stretch nds-m-right_large nds-size_1-of-1 nds-small-size_4-of-12 nds-large-size_3-of-12" onclick={closeIDM} title="Go Back">Cancel</button>
+                            <template if:false={gotoVideovalue}>
+                            <button class="nds-button nds-button_brand nds-button_stretch nds-size_1-of-1 nds-small-size_4-of-12 nds-large-size_3-of-12" onclick={openLinkIDM} title="Proceed to the site">Continue</button>
+                            </template>
+<template if:true={gotoVideovalue}>
+                            <button  class="nds-button nds-button_brand nds-button_stretch nds-size_1-of-1 nds-small-size_4-of-12 nds-large-size_3-of-12" onclick={goToVideo} title="Proceed to the site">Continue</button>
+                            </template>
+</div>
+</div>
+</div>
+</section>
+<div class="nds-backdrop nds-backdrop_open"></div>
+</template>
+
+<!-- External Disclaimer Popup -->
+<template if:true={isExternalDisclaimerModalOpen}>
+            <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-2" class="nds-modal nds-modal__confirmation nds-fade-in-open">
+                <div class="nds-modal__container modalAccessibility">
+                    <!-- Modal/Popup Box LWC header here -->
+
+                    <!-- Modal/Popup Box LWC body starts here -->
+                    <div class="nds-modal__content" id="modal-content-id-2">
+                        <div class="nds-grid">
+                            <div if:true={benefitHubText} class="nds-col nds-p-top_small">
+                                <p class="nds-text-color_default">
+                                    You are leaving the Attentis Health website and going to BenefitHub's website.
+                                </p>
+                                    <br>
+                                <p class="nds-text-color_default">
+                                    Attentis Health does not accept responsibility for the information, accuracy, or completeness of the BenefitHub website. Please consult your doctor about any medical or treatment information you may find on the BenefitHub's site. This is general information and should not be relied upon without speaking with your doctor about your individual needs. The opinions and information are not necessarily those of Attentis Health. 
+                                </p>
+                                    <br>
+                                <p class="nds-text-color_default">
+                                    The Privacy Statement of BenefitHub may be different from ours. Review this statement when you get to their site.
+                                </p>
+                        </div>
+                            <div if:true={ashTextDisclaimer} class="nds-col nds-p-top_small">
+                                <p class="nds-text-color_default">
+                                    You are leaving the Attentis Health website and going to American Specialty Healths website. <br > Attentis Health does not accept responsibility for the information, accuracy, or completeness of the American Specialty Health website. Please consult your doctor about any medical or treatment information you may find on the American Specialty Health's site. This is general information and should not be relied upon without speaking with your doctor about your individual needs. The opinions and information are not necessarily those of Attentis Health. <br > The Privacy Statement of American Specialty Health may be different from ours. Review this statement when you get to their site.
+                                </p>
+                            </div>
+                            <div if:true={silverSneakerText} class="nds-col nds-p-top_small">
+                                <p class="nds-text-color_default">
+                                    You are leaving the Attentis Health website and going to SilverSneakers website. <br > We encourage you to read the privacy statement on the SilverSneakers website. <br > Please consult your doctor about any medical advice or treatment information you may find on the SilverSneakers site.
+                                </p>
+                            </div>
+                            <div if:true={silverSneakerGoText} class="nds-col nds-p-top_small">
+                                <p class="nds-text-color_default">
+                                    You are leaving the Attentis Health website and going to SilverSneakers website. <br > We encourage you to read the privacy statement on the SilverSneakers website. <br > Please consult your doctor about any medical advice or treatment information you may find on the SilverSneakers site.
+                                </p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                        <footer class="nds-modal__footer">
+                            <div class="nds-grid nds-text-align_center">
+                                <div class="nds-size_1-of-1">
+                                    <div class="nds-col c-reverse-button-stack_small">
+                                        <button class="nds-m-right_x-small nds-button nds-button_neutral modal-color-1" onclick={closeEDM} title="No, Go Back">Cancel</button>
+                                        <button class="nds-button nds-button_brand modal-color-2" onclick={openLinkEDM} title="Proceed to Healthplex Site">Continue <c-custom-icon variant="bare" icon-name="External_Link" size="x-small"></c-custom-icon></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </footer>
+                        
+                    
+                </div>
+            </section>
+            <div class="nds-backdrop nds-backdrop_open"></div>
+        </template>
+
+<!-- Wellness Program Modal -->
+<template if:true={isWellnessProgramModalOpen}>
+            <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-fade-in-open nds-modal__confirmation nds-modal__confirmation wellness-modal">
+                <div class="nds-modal__container modalAccessibility">
+                    <!-- Modal/Popup Box LWC header here -->
+                    <div if:true={wellnessGoldMemberText}>
+                        <div if:true={coniferDisclaimerFlag} class = "modal-header">
+                            <h2  class="nds-text-title" > Attentis Health Wellness Program </h2>
+                        </div>
+                    </div>
+                    <!-- Modal/Popup Box LWC body starts here -->
+                    <div if:false={wellnessGoldMemberText} class="nds-modal__content" id="modal-content-id-3">
+                        <div class="nds-grid">
+                            <!-- <div role="alert" class="nds-col nds-p-top_small elementHoldingHTMLContent" lwc:dom="manual"></div> -->
+                            <div if:false={wellnessGoldMemberText}>
+                                <p if:false={wellnessMobileApp} class="nds-text-color_default">This link will take to a new tab, but your {companyName} session will remain active in this tab.</p>
+                                <p if:true={wellnessMobileApp}>This link will open in your browser. You can come back to the app at any time to pick up where you left off.</p> 
+                            </div>
+                        </div>
+                        <div class="c-reverse-button-stack_small nds-m-top_large  nds-grid nds-wrap nds-align_absolute-center">
+                                <!-- IDM = Internal Disclaimer Message -->
+                            <div if:true={wellnessGoldMemberText}>
+                                <button if:false={coniferDisclaimerFlag} class="nds-button nds-button_neutral nds-button_stretch nds-m-right_large nds-size_1-of-1 nds-small-size_4-of-12 nds-large-size_3-of-12" onclick={closeEDM} title="Go Back">Cancel</button>
+                            </div>
+                            
+                            <button if:false={wellnessGoldMemberText}  class="nds-button nds-button_neutral nds-button_stretch nds-m-right_large nds-size_1-of-1 nds-small-size_4-of-12 nds-large-size_3-of-12" onclick={closeEDM} title="Go Back">Cancel</button>
+                               
+                                <!-- IDM = Internal Disclaimer Message -->
+                            <div if:true={wellnessGoldMemberText}>
+                                <button if:false={coniferDisclaimerFlag} class="nds-button nds-button_brand nds-button_stretch nds-size_1-of-1 nds-small-size_4-of-12 nds-large-size_3-of-12" onclick={ssoLink} title="Proceed to the site">Continue</button>
+                            </div>
+                            <button if:false={wellnessGoldMemberText} class="nds-button nds-button_brand nds-button_stretch nds-size_1-of-1 nds-small-size_4-of-12 nds-large-size_3-of-12" onclick={ssoLink} title="Proceed to the site">Continue<lightning-button-icon variant="bare" icon-name="utility:link"></lightning-button-icon></button>
+                        </div>
+                    </div>
+
+                     <!-- testing -->
+                    <div if:true={wellnessGoldMemberText} class="nds-modal__content nds-p-around_medium children-height-100" id="modal-content-id-7">
+                        <div class="nds-grid">
+                            <div >
+                            <!--  Disclaimer text the first time CNY Gold Member clicks "Get Started" -->
+                                <div if:true={coniferDisclaimerFlag}>
+                                    <div role="alert" class="nds-col nds-p-top_small elementHoldingHTMLContent nds-box" lwc:dom="manual">
+                                    </div>
+                                </div>
+                                <div if:false={coniferDisclaimerFlag} role="alert" class="nds-col nds-p-top_small "  >                                
+                                    <!--  Disclaimer text after CNY Gold Member accepts disclaimer --> 
+                                    <p>You are leaving the Attentis Health website and going to Conifer’s website.
+                                        <br><br>
+                                        Attentis Health does not accept responsibility for the information, accuracy, or completeness of the Conifer website. Please consult your doctor about any medical or treatment information you may find on the Conifer site. This is general information and should not be relied upon without speaking with your doctor about your individual needs. The opinions and information are not necessarily those of Attentis Health.
+                                        <br><br>
+                                        The Privacy Statement of Conifer may be different from ours. Review this statement when you get to their site.</p>
+                                    </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div if:true={wellnessGoldMemberText} class="nds-grid nds-wrap nds-modal__footer">
+                        <div class="nds-grid modal-button-section c-reverse-button-stack_small">
+                            <div class="button-m-right_large">
+                                <!-- IDM = Internal Disclaimer Message -->
+                                <div>
+                                    <button if:true={coniferDisclaimerFlag} class="nds-button nds-button_neutral nds-button_stretch" onclick={closeEDM} title="Go Back">Decline</button>
+                                    <button if:false={coniferDisclaimerFlag} class="nds-button nds-button_neutral nds-button_stretch" onclick={closeEDM} title="Go Back">Cancel</button>
+                                </div>                            
+                            </div>
+                            <div class="">
+                                <!-- IDM = Internal Disclaimer Message -->
+                            <div if:true={wellnessGoldMemberText}>
+                                <button if:true={coniferDisclaimerFlag} class="nds-button nds-button_brand nds-button_stretch" onclick={postTOS} title="Proceed to the site">Accept<lightning-button-icon variant="bare" icon-name="utility:link"></lightning-button-icon></button>
+                                <button if:false={coniferDisclaimerFlag} class="nds-button nds-button_brand nds-button_stretch" onclick={ssoLink} title="Proceed to the site">Continue<lightning-button-icon variant="bare" icon-name="utility:link"></lightning-button-icon></button>
+                            </div>
+                            </div>
+                        </div>  
+                    </div>
+                    
+                </div>
+            </section>
+            <div class="nds-backdrop nds-backdrop_open"></div>
+        </template>
+
+
+<!-- Advanced Care Planning Modal -->
+<template if:true={isAdvancedCareModalOpen}>
+            <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-fade-in-open nds-modal__confirmation">
+                <div class="nds-modal__container modalAccessibility">
+                    <!-- Modal/Popup Box LWC header here -->
+
+                    <!-- Modal/Popup Box LWC body starts here -->
+                    <div class="nds-modal__content" id="modal-content-id-5">
+                        <div class="nds-grid">
+                            <p if:true={isModalAdvancedCareAttentis} class="nds-text-body_regular">You are leaving the {provider} website and going to WiserCare’s website.<br>
+                                We encourage you to read the privacy statement on the WiserCare website.<br>
+                                Please consult your doctor about any medical advice or treatment information you may find on the WiserCare site.</p>
+                        </div>
+                        <div class="c-reverse-button-stack_small nds-m-top_large  nds-grid nds-wrap nds-align_absolute-center">
+                            <button class="nds-button nds-button_neutral nds-button_stretch nds-size_1-of-1 nds-small-size_4-of-12 nds-large-size_3-of-12 nds-m-right_large" onclick={closeEDM} title="Go Back">Cancel</button>
+                            <button class="nds-button nds-button_brand nds-button_stretch nds-size_1-of-1 nds-small-size_4-of-12 nds-large-size_3-of-12" onclick={navigateToAdvancedCareWebPage} title="Proceed to the site">Continue<lightning-button-icon variant="bare" icon-name="utility:link"></lightning-button-icon></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="nds-backdrop nds-backdrop_open"></div>
+        </template>
+</div>
+</template>

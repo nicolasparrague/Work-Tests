@@ -1,0 +1,15 @@
+.nds-text-body_regular.line-height-align {
+    line-height: 0.25;
+}
+
+.p-horizontal {
+    padding-left: 0;
+    padding-right: 10px;
+ }
+ 
+ @media (max-width: 48rem) {
+    .p-horizontal {
+       padding-left: 0;
+       padding-right: 0;
+    }
+ }

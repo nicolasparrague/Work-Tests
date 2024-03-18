@@ -1,0 +1,49 @@
+button {
+    z-index: 1000;
+}
+.fixed-wrapper {
+    position:absolute;
+    bottom:15;
+    right:15;
+   /* width:30px;
+    height:30px;*/
+}
+
+.fixed-wrapper .fixed {
+    position: fixed;
+    width: 70px;
+    height: 70px;
+    bottom: 95px;
+    right: 30px;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 2px 4px rgb(64, 64, 65, 0.5);
+    border-style: none;
+}
+
+.fixed-wrapper .fixeddesktop {
+    position: fixed;
+    width: 70px;
+    height: 70px;
+    bottom: 15px;
+    right: 30px;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 2px 4px rgb(64, 64, 65, 0.5);
+    border-style: none;
+}
+
+.backgroundAttentis{
+    background: #15397F;
+}
+
+.img-questions{
+    filter: invert(100%);
+}
+
+.attentis-border-bottom-link:focus{
+	/* border: solid 3px #404041 !important; */
+    background-color: #404041;
+}

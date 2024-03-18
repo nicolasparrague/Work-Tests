@@ -1,0 +1,315 @@
+<template>
+   <!--
+   <template if:true={loading}>
+      <lightning-spinner alternative-text="Loading" size="medium" theme="nds"> </lightning-spinner>
+   </template>
+   -->
+   <template if:false={loading}>
+      <template if:true={_planId}>
+         <div class="slds-card">
+            <lightning-accordion active-section-name="RefineSearchResults" allow-multiple-sections-open={sectionOpen}>
+            <lightning-accordion-section class="nds-form-element__label_toggle-text" name="RefineSearchResults" label="Refine Search Results">
+               <div class="nds-grid nds-wrap nds-m-bottom_none nds-p-bottom_none">
+                  <div class="nds-col nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_4-of-12">
+                     <div class="nlds-col nds-size_12-of-12 slds-p-left_x-large slds-p-bottom_large">
+                        <div>
+                           <div class="nds-form-element__control nds-form-element__control-animated-label">
+                              <lightning-input max-length="100" class="filter_category" label="Category Name" onkeyup={filterCategoryName}> </lightning-input>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </lightning-accordion-section>
+            </lightning-accordion>
+         </div>
+         <div class="nds-grid nds-m-bottom_large slds-align_absolute-center slds-p-vertical_medium">
+            <c-custom-icon icon-name="Information_Tool_Tip" size="small" variant="information" title="Info" alternative-text="Info" class="nds-m-right_x-small"></c-custom-icon>
+            <p class="c-text-body_regular">
+               Some services may require preauthorization. Check your plan materials to learn more.
+            </p>
+         </div>
+         <!-- Desktop Start -->
+         <template for:each={benefitCategories} for:item="category">
+            <div key={category.CategoryName} class="nds-show_medium nds-size_1-of-1">
+               <p class="nds-text-body_regular nds-p-bottom_small"><strong>{category.CategoryName}</strong></p>
+               <div class="nds-grid nds-wrap nds-box nds-m-bottom_small nds-p-bottom_none nds-show_medium">
+                  <template iterator:it={category.SubCategory}>
+                     <div key={it.value.BSDL} class="nds-p-horizontal_small nds-m-bottom_x-small nds-size_1-of-1 nds-medium-size_2-of-8 minheight">
+                        <template if:true={category.LinkFlag}>
+                           <h3 class="nds-text-title"></h3>
+                        </template>
+                        <template if:false={category.LinkFlag}>
+                           <h3 class="nds-text-title">Service</h3>
+                        </template>
+                        <p class="nds-text-body_regular">{it.value.serviceName}</p>
+                     </div>
+                     <template if:true={category.LinkFlag}>
+                        <div key={it.value.BSDL} class="nds-p-horizontal_small nds-m-bottom_x-small nds-size_2-of-2 nds-medium-size_6-of-8">
+                           <p if:true={category.showVisionInfo} class="nds-text-body_regular nds-m-bottom_x-small">
+                              Your vision benefits are managed by our partner,
+                              <a tabindex="0" data-id="vision" class="nds-text-body_regular nds-text-align_center nds-m-bottom_x-small nds-text-link" onclick={openExternalDisclaimer}>EyeMed</a>. To
+                              learn about your benefits and coverage, visit their site.
+                           </p>
+                           <p if:true={category.showVisionInfoNonSSO} class="nds-text-body_regular nds-m-bottom_x-small">
+                              Your vision benefits are managed by our partner,
+                              <a tabindex="0" data-id="visionnonsso" class="nds-text-body_regular nds-text-align_center nds-m-bottom_x-small nds-text-link" onclick={openExternalDisclaimer}>EyeMed</a>.
+                              To learn about your benefits and coverage, visit their site.
+                           </p>
+                           <p if:true={category.showDentalInfo} class="nds-text-body_regular nds-m-bottom_x-small">
+                              Your dental benefits are managed by our partner,
+                              <a tabindex="0" data-id="dental" class="nds-text-body_regular nds-text-align_center nds-m-bottom_x-small nds-text-link" onclick={openExternalDisclaimer}>HealthPlex</a>.
+                              To learn about your benefits and coverage, visit their site.
+                           </p>
+                           <p if:true={category.showPharmacyInfo} class="nds-text-body_regular nds-m-bottom_x-small">
+                              Your pharmacy benefits are managed by our partner,
+                              <a tabindex="0" data-id="pharmacy" class="nds-text-body_regular nds-text-align_center nds-m-bottom_x-small nds-text-link" onclick={openExternalDisclaimer}
+                                 >Express Scripts, Inc., (ESI)</a
+                              >. To learn about your benefits and coverage, visit their site.
+                           </p>
+                        </div>
+                     </template>
+                     <template if:false={category.LinkFlag}>
+                        <!-- In Network-->
+                        <div key={it.value.BSDL} class="nds-p-horizontal_small nds-m-bottom_x-small nds-size_1-of-2 nds-medium-size_3-of-8">
+                           <h3 class="nds-text-title nds-text-align_center nds-m-bottom_x-small">In-Network</h3>
+                           <template if:true={it.value.inNetworkLanguage.moreThanOne}>
+                              <table>
+                                 <tr>
+                                    <td>
+                                       <div class="nds-grid nds-grid_align-center">
+                                          <template iterator:benefit={it.value.inNetworkLanguage.benefit}>
+                                             <div key={benefit.value.type} class="nds-col nds-size_1-of-2 nds-show_inline-block nds-p-left_large">
+                                                <template for:each={benefit.value.language} for:item="lang">
+                                                   <div key={lang.id}>
+                                                      <p class="nds-text-body_regular nds-text-align_center">
+                                                         <span if:true={lang.amountflag} class="c-field-output_large">{lang.amount}</span>{lang.value}
+                                                      </p>
+                                                   </div>
+                                                </template>
+                                             </div>
+                                             <div if:false={benefit.last} key={benefit.value.type} class="nds-grid nds-grid_vertical-align-center c-field-output_large amp-font">&amp;</div>
+                                          </template>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr if:true={it.value.inNetworkLanguage.limitflag}>
+                                    <td><p class="nds-text-body_regular nds-text-align_center">{it.value.inNetworkLanguage.limit}</p></td>
+                                 </tr>
+                              </table>
+                           </template>
+                           <template if:false={it.value.inNetworkLanguage.moreThanOne}>
+                              <template for:each={it.value.inNetworkLanguage.benefit} for:item="benefit">
+                                 <template for:each={benefit.language} for:item="lang">
+                                    <div key={lang.id}>
+                                       <p class="nds-text-body_regular nds-text-align_center"><span if:true={lang.amountflag} class="c-field-output_large">{lang.amount}</span>{lang.value}</p>
+                                    </div>
+                                 </template>
+                                 <div if:true={it.value.inNetworkLanguage.limitflag} key={benefit.type}>
+                                    <p class="nds-text-body_regular nds-text-align_center">{it.value.inNetworkLanguage.limit}</p>
+                                 </div>
+                              </template>
+                           </template>
+                        </div>
+                        <!-- Out Network-->
+                        <div key={it.value.BSDL} class="nds-p-horizontal_small nds-m-bottom_x-small nds-size_1-of-2 nds-medium-size_3-of-8">
+                           <h3 class="nds-text-title nds-text-align_center nds-m-bottom_x-small">Out-of-Network</h3>
+                           <template if:true={it.value.outOfNetworkLanguage.moreThanOne}>
+                              <table>
+                                 <tr>
+                                    <td>
+                                       <div class="nds-grid nds-grid_align-center">
+                                          <template iterator:benefit={it.value.outOfNetworkLanguage.benefit}>
+                                             <div key={benefit.value.type} class="nds-col nds-size_1-of-2 nds-show_inline-block nds-p-left_large">
+                                                <template for:each={benefit.value.language} for:item="lang">
+                                                   <div key={lang.id}>
+                                                      <p class="nds-text-body_regular nds-text-align_center">
+                                                         <span if:true={lang.amountflag} class="c-field-output_large">{lang.amount}</span>{lang.value}
+                                                      </p>
+                                                   </div>
+                                                </template>
+                                             </div>
+                                             <div if:false={benefit.last} key={benefit.value.type} class="nds-grid nds-grid_vertical-align-center c-field-output_large amp-font">&amp;</div>
+                                          </template>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr if:true={it.value.outOfNetworkLanguage.limitflag}>
+                                    <td><p class="nds-text-body_regular nds-text-align_center">{it.value.outOfNetworkLanguage.limit}</p></td>
+                                 </tr>
+                              </table>
+                           </template>
+                           <template if:false={it.value.outOfNetworkLanguage.moreThanOne}>
+                              <template for:each={it.value.outOfNetworkLanguage.benefit} for:item="benefit">
+                                 <template for:each={benefit.language} for:item="lang">
+                                    <div key={lang.id}>
+                                       <p class="nds-text-body_regular nds-text-align_center"><span if:true={lang.amountflag} class="c-field-output_large">{lang.amount}</span>{lang.value}</p>
+                                    </div>
+                                 </template>
+                                 <div if:true={it.value.outOfNetworkLanguage.limitflag} key={benefit.type}>
+                                    <p class="nds-text-body_regular nds-text-align_center">{it.value.outOfNetworkLanguage.limit}</p>
+                                 </div>
+                              </template>
+                           </template>
+                        </div>
+                     </template>
+                     <hr if:false={it.last} key={it.value.BSDL} class="nds-align_absolute-center nds-m-bottom_small nds-size_1-of-1 nds-medium-size_3-of-3" />
+                  </template>
+               </div>
+            </div>
+         </template>
+         <!-- Desktop End -->
+         <!-- Mobile Start -->
+         <template for:each={benefitCategories} for:item="category">
+            <div key={category.CategoryName} class="nds-p-horizontal_small nds-size_1-of-1 nds-hide_medium">
+               <p class="nds-text-body_regular nds-p-bottom_small"><strong>{category.CategoryName}</strong></p>
+               <div class="nds-grid nds-wrap nds-box nds-m-bottom_small nds-p-bottom_none nds-hide_medium">
+                  <template iterator:it={category.SubCategory}>
+                     <div key={it.value.BSDL} class="nds-m-bottom_x-small nds-size_1-of-1 nds-medium-size_1-of-3">
+                        <p class="nds-text-body_regular"><b>{it.value.serviceName}</b></p>
+                     </div>
+                     <template if:true={category.LinkFlag}>
+                        <div key={it.value.BSDL} class="nds-m-bottom_x-small nds-size_2-of-2 nds-medium-size_3-of-3">
+                           <p if:true={category.showVisionInfo} class="nds-text-body_regular nds-p-top_xx-small">
+                              Your vision benefits are managed by our partner,
+                              <a tabindex="0" data-id="vision" class="nds-text-body_regular nds-text-align_center nds-m-bottom_x-small nds-text-link" onclick={openExternalDisclaimer}>EyeMed</a>. To
+                              learn about your benefits and coverage, visit their site.
+                           </p>
+                           <p if:true={category.showVisionInfoNonSSO} class="nds-text-body_regular nds-p-top_xx-small">
+                              Your vision benefits are managed by our partner,
+                              <a tabindex="0" data-id="visionnonsso" class="nds-text-body_regular nds-text-align_center nds-m-bottom_x-small nds-text-link" onclick={openExternalDisclaimer}>EyeMed</a>.
+                              To learn about your benefits and coverage, visit their site.
+                           </p>
+                           <p if:true={category.showDentalInfo} class="nds-text-body_regular nds-p-top_xx-small">
+                              Your dental benefits are managed by our partner,
+                              <a tabindex="0" data-id="dental" class="nds-text-body_regular nds-text-align_center nds-m-bottom_x-small nds-text-link" onclick={openExternalDisclaimer}>HealthPlex</a>.
+                              To learn about your benefits and coverage, visit their site.
+                           </p>
+                           <p if:true={category.showPharmacyInfo} class="nds-text-body_regular nds-p-top_xx-small">
+                              Your pharmacy benefits are managed by our partner,
+                              <a tabindex="0" data-id="pharmacy" class="nds-text-body_regular nds-text-align_center nds-m-bottom_x-small nds-text-link" onclick={openExternalDisclaimer}
+                                 >Express Scripts, Inc., (ESI)</a
+                              >. To learn about your benefits and coverage, visit their site.
+                           </p>
+                        </div>
+                     </template>
+                     <template if:false={category.LinkFlag}>
+                        <!-- In Network-->
+                        <div key={it.value.BSDL} class="nds-m-bottom_x-small nds-size_1-of-2 nds-medium-size_1-of-3">
+                           <h3 class="nds-text-title">In-Network</h3>
+                           <template for:each={it.value.inNetworkLanguage.benefit} for:item="benefit">
+                              <template for:each={benefit.language} for:item="lang">
+                                 <div key={lang.id}>
+                                    <template if:true={lang.headflag}>
+                                       <p class="nds-text-body_regular nds-p-top_xx-small"><b>{lang.amount}</b>{lang.value}</p>
+                                    </template>
+                                    <template if:false={lang.headflag}>
+                                       <p class="nds-text-body_regular"><b>{lang.amount}</b>{lang.value}</p>
+                                    </template>
+                                 </div>
+                              </template>
+                           </template>
+                           <p if:true={it.value.inNetworkLanguage.limitflag} class="nds-text-body_regular nds-p-top_xx-small">{it.value.inNetworkLanguage.limit}</p>
+                        </div>
+                        <!-- Out Network-->
+                        <div key={it.value.BSDL} class="nds-m-bottom_x-small nds-size_1-of-2 nds-medium-size_1-of-3">
+                           <h3 class="nds-text-title">Out-of-Network</h3>
+                           <template for:each={it.value.outOfNetworkLanguage.benefit} for:item="benefit">
+                              <template for:each={benefit.language} for:item="lang">
+                                 <div key={lang.id}>
+                                    <template if:true={lang.headflag}>
+                                       <p class="nds-text-body_regular nds-p-top_xx-small"><b>{lang.amount}</b>{lang.value}</p>
+                                    </template>
+                                    <template if:false={lang.headflag}>
+                                       <p class="nds-text-body_regular"><b>{lang.amount}</b>{lang.value}</p>
+                                    </template>
+                                 </div>
+                              </template>
+                           </template>
+                           <p if:true={it.value.outOfNetworkLanguage.limitflag} class="nds-text-body_regular nds-p-top_xx-small">{it.value.outOfNetworkLanguage.limit}</p>
+                        </div>
+                     </template>
+                     <hr if:false={it.last} key={it.value.BSDL} class="nds-align_absolute-center nds-m-bottom_small nds-size_1-of-1 nds-medium-size_3-of-3" />
+                  </template>
+               </div>
+            </div>
+         </template>
+         <!-- Mobile End -->
+         <div class="nds-grid nds-m-bottom_small slds-align_absolute-center">
+            <c-custom-icon icon-name="Information_Tool_Tip" size="small" variant="information" title="Info" alternative-text="Info" class="nds-m-right_x-small"></c-custom-icon>
+            <p class="c-text-body_regular">
+               The information on this page shows highlights of your plan’s coverage. For a complete list of benefits, exclusions and/or limitations, please review your plan materials. Coverage is
+               based on your plan’s terms and conditions.
+            </p>
+         </div>
+      </template>
+      <!-- External Disclaimer Popup -->
+      <template if:true={isExternalDisclaimerModalOpen}>
+         <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-fade-in-open">
+            <div class="nds-modal__container modalAccessibility">
+               <!-- Modal/Popup Box LWC header here -->
+
+               <!-- Modal/Popup Box LWC body starts here -->
+               <div style="border-radius: 5px" class="nds-modal__content nds-p-around_medium" id="modal-content-id-1">
+                  <div class="nds-grid nds-m-around_medium">
+                     <!-- ESI pop up content/message for Commercial -->
+                     <div if:true={isCommercialESI} class="nds-col nds-m-top_small">
+                        <p class="nds-text-color_default">You are leaving the {companyName} website and going to {vendorName}’s website.</p>
+                        <br />
+
+                        <p>
+                           {companyName} does not accept responsibility for the information, accuracy, or completeness of the {vendorName} website. Please consult your doctor about any medical or
+                           treatment information you may find on the {vendorName} site. This is general information and should not be relied upon without speaking with your doctor about your
+                           individual needs. The opinions and information are not necessarily those of {companyName}.
+                        </p>
+                        <br />
+
+                        <p>The Privacy Statement of {vendorName} may be different from ours. Review this statement when you get to their site.</p>
+                     </div>
+                     <!-- ESI pop up content/message for Medicare -->
+                     <div if:true={isMedicareESI} class="nds-col nds-m-top_small">
+                        <p class="nds-text-color_default">You are leaving the {companyName} website and going to {vendorName}’s website.</p>
+                        <br />
+
+                        <p>We encourage you to read the privacy statement on the {vendorName} website.</p>
+                        <br />
+
+                        <p>Please consult your doctor about any medical advice or treatment information you may find on the {vendorName} site.</p>
+                     </div>
+                  </div>
+
+                  <!-- Pop up butons for Desktop -->
+                  <div class="nds-grid nds-wrap nds-align_absolute-center">
+                     <div class="nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_3-of-12 nds-m-bottom_small nds-m-right_xx-small">
+                        <!-- To close External Disclaimer Message pop up -->
+                        <button class="nds-button nds-button_neutral nds-button_stretch" onclick={closeEDM} title="Go Back">Cancel</button>
+                     </div>
+                     <div class="nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_3-of-12 nds-m-bottom_small">
+                        <!-- To go to External link -->
+                        <button class="nds-button nds-button_brand nds-button_stretch" onclick={ssoLink} title="Proceed to the site">
+                           Continue <lightning-button-icon variant="bare" icon-name="utility:link"></lightning-button-icon>
+                        </button>
+                     </div>
+                  </div>
+
+                  <!-- The code below is not needed for mobile as nds-size_1-of-1 class handles it  -->
+
+                  <!-- Pop up for buttons mobile 
+                      <div class="nds-grid nds-wrap nds-align_absolute-center nds-hide_medium">
+                          <div class="nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_3-of-12 nds-m-bottom_small">
+      
+                              <button class="nds-button nds-button_brand nds-button_stretch" title="Continue">Continue</button>
+                          </div>
+                          <div class="nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_3-of-12 nds-m-bottom_small nds-m-right_xx-small">
+                              
+                              <button class="nds-button nds-button_neutral nds-button_stretch" onclick={closeEDM} title="Cancel">Cancel</button>
+                          </div>
+                      </div>-->
+               </div>
+            </div>
+         </section>
+         <div class="nds-backdrop nds-backdrop_open"></div>
+      </template>
+   </template>
+   <!-- External Disclaimer Popup ends here-->
+</template>

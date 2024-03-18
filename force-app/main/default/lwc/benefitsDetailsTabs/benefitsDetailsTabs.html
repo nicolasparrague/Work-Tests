@@ -1,0 +1,282 @@
+<template>
+   <template if:true={loading}>
+      <lightning-spinner alternative-text="Loading" size="medium" theme="nds"> </lightning-spinner>
+   </template>
+   <template if:false={loading}>
+      <template if:true={showTabs}>
+            <div class="nds-text-align_center nds-p-top_medium" style="overflow: auto">
+               <div class="c-tab-button-group" role="tablist">
+                  <button role="tab" data-id="0" class="detailtab nds-button nds-button_neutral nds-nowrap-whitespace" onclick={handlePlanDetails} aria-selected={selectedBenefits}>Benefits</button>
+                  <button if:true={showBenefitUseTab} role="tab" data-id="1" class="detailtab nds-button nds-button_neutral nds-nowrap-whitespace" onclick={handleUseDetails} aria-selected={selectedBenefitUse}>Benefit Use</button>
+                  <button if:true={showUseSpendingTabs} role="tab" data-id="2" class="detailtab nds-button nds-button_neutral nds-nowrap-whitespace" onclick={handleSpendingDetails} aria-selected={selectedSpending}>Spending</button>
+               </div>
+            </div>
+      </template>
+   </template>
+   <template if:false={loading}>
+      <div class="nds-p-top_x-large content-max-width">
+         <div if:true={showPlanDetails}>
+            <c-benefits-plan-details parent-data="true" plan-id={_planId} ></c-benefits-plan-details>
+         </div>
+         <div if:true={showBenefits}>
+            <c-benefits-dental-plan-benefits planid={_planId} planname={_planName}></c-benefits-dental-plan-benefits>
+         </div>
+         <div if:true={showSpendingDetails} class="nds-m-bottom_large">
+            <template if:true={showPharmacySpendingInfo}>
+               <div
+                  class="nds-grid nds-p-vertical_large"
+                  style="background-color: rgb(255, 255, 255); background-repeat: repeat; border-width: 1px; border-style: solid; border-color: rgb(204, 204, 204); border-radius: 5px"
+               >
+                  <div class="nds-col nds-size_3-of-3 nds-p-horizontal_large">
+                     <span>
+                        <p>
+                           Your Pharmacy benefits are managed by our partner,<a onclick={openPharmacyModal}>&nbsp;Express Scripts, Inc., (ESI).</a> To learn about your benefits and spending, visit
+                           their site.
+                        </p>
+                        <p>&nbsp;</p>
+                        <p>&nbsp;</p>
+                     </span>
+                  </div>
+               </div>
+               <!-- Pharmacy Health Modal Window-->
+               <template if:true={isModalPharmacy}>
+                  <!-- Modal/Popup Box LWC starts here -->
+                  <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-fade-in-open">
+                     <div class="nds-modal__container modalAccessibility">
+                        <!-- Modal/Popup Box LWC body starts here -->
+                        <div class="nds-modal__content nds-p-around_x-large" id="modal-content-id-2">
+                           <div class="nds-grid nds-m-bottom_large">
+                              <template if:true={isCommercial}>
+                                 <div class="nds-col">
+                                    <p class="nds-text-color_default">
+                                       You are leaving the ConnectiCare website and going to Express Scripts’s website.<br /><br />ConnectiCare does not accept responsibility for the information,
+                                       accuracy, or completeness of the Express Scripts website. Please consult your doctor about any medical or treatment information you may find on the [vendor]
+                                       site. This is general information and should not be relied upon without speaking with your doctor about your individual needs. The opinions and information
+                                       are not necessarily those of ConnectiCare.<br /><br />The Privacy Statement of Express Scripts may be different from ours. Review this statement when you get
+                                       to their site.
+                                    </p>
+                                 </div>
+                              </template>
+
+                              <template if:true={isMedicare}>
+                                 <div class="nds-col">
+                                    <p class="nds-text-color_default">
+                                       You are leaving the ConnectiCare website and going to Express Scripts’s website.<br /><br />We encourage you to read the privacy statement on the Express
+                                       Scripts website. Please consult your doctor about any medical advice or treatment information you may find on the Express Scripts site.
+                                    </p>
+                                 </div>
+                              </template>
+                           </div>
+                           <div class="nds-grid nds-text-align_center">
+                              <div class="nds-size_1-of-1">
+                                 <div class="nds-col c-reverse-button-stack_small">
+                                    <!-- Go Back option -->
+                                    <button class="nds-m-right_large nds-button nds-button_neutral modal-color-1" onclick={closeModal} title="Go Back">Cancel</button>
+                                    <!-- Pharmacy  -->
+                                    <button class="nds-button nds-button_brand modal-color-2" onclick={ssoLink} title="Click here to continue">
+                                       Continue<lightning-button-icon variant="bare" icon-name="utility:link"></lightning-button-icon>
+                                    </button>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </section>
+                  <div class="nds-backdrop nds-backdrop_open"></div>
+               </template>
+            </template>
+            <template if:false={showPharmacySpendingInfo}>
+               <!-- Family Spending -->
+               <div if:true={showFamilySpending} class="nds-box c-box-shadow nds-m-bottom_large">
+                  <!-- Family Spendings Header -->
+                  <p class="nds-text-heading_small nds-p-bottom_medium nds-p-top_x-small nds-p-left_x-small"><b>Family Spending</b></p>
+                  <hr class="line-css nds-m-bottom_large nds-m-horizontal_x-small nds-m-top_none" />
+                  <!-- Buttons In-Network/Out-of-Network -->
+                  <div class="nds-text-align_left" style="overflow: auto">
+                     <div class="c-tab-button-group nds-p-left_x-small nds-m-bottom_large" role="tablist">
+                        <button
+                           data-id="3"
+                           data-btn-id="0"
+                           class="family_in active nds-button nds-button_neutral nds-nowrap-whitespace nds-p-right_xx-large nds-p-left_xx-large nds-button_last"
+                           style="border-radius: 4px"
+                           onclick={dynamicNetworkLabelFamily}
+                           role="tab"
+                           aria-selected={selectedInNetwork}
+                           disabled={disableINFamilyButton}
+                        >
+                           In-Network
+                        </button>
+                        <button
+                           data-id="4"
+                           if:true={showOutOfNetworkButtonFamily}
+                           data-btn-id="1"
+                           class="family_oon nds-button nds-button_neutral nds-nowrap-whitespace nds-p-right_xx-large nds-p-left_xx-large nds-button_last"
+                           onclick={dynamicNetworkLabelFamily}
+                           role="tab"
+                           aria-selected={selectedOutNetwork}
+                        >
+                           Out-of-Network
+                        </button>
+                     </div>
+                  </div>
+                  <!-- In-Network Spendings -->
+                  <div class="nds-p-left_x-small">
+                     <p if:true={inNetworkFamily} class="nds-text-body_regular nds-p-bottom_medium"><strong>In-Network Spendings</strong></p>
+                     <p if:true={outNetoworkFamily} class="nds-text-body_regular nds-p-bottom_medium"><strong>Out-of-Network Spendings</strong></p>
+                  </div>
+                  <!-- Spending Graphs for Family Spending -->
+
+                  <!-- <div if:true={showGraphs} class="nds-grid nds-wrap"> -->
+                  <!-- <lightning-progress-bar class="vendorListHeading" value={familySpending.progress} size="large" variant="circular"></lightning-progress-bar>-->
+                  <div class="nds-grid nds-wrap">
+                     <template if:true={showFamilyGraphContainer}>
+                        <template for:each={familySpendings} for:item="familySpending">
+                           <div key={familySpending.coverageLevel} data-id={familySpending.coverageLevel} class="nds-col nds-large-size_6-of-12 nds-p-right_medium nds-p-bottom_x-small">
+                              <div class="nds-p-horizontal_x-small nds-text-align_center">
+                                 <p class="nds-text-align_left nds-p-bottom_x-small">
+                                    {familySpending.coverageType} - $<lightning-formatted-number
+                                       value={familySpending.totalAmount}
+                                       maximum-fraction-digits="2"
+                                       minimum-fraction-digits="2"
+                                    ></lightning-formatted-number>
+                                 </p>
+
+                                 <template if:true={familySpending.showGraph}>
+                                    <lightning-progress-bar
+                                       class="deductibles-progress-bar"
+                                       theme="nds"
+                                       transition="0.5"
+                                       progress={familySpending.progress}
+                                       success
+                                       size="large"
+                                    ></lightning-progress-bar>
+
+                                    <div class="nds-size_1-of-1 nds-p-top_x-small">
+                                       <span class="nds-float_left"
+                                          >$<lightning-formatted-number value={familySpending.spent} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number
+                                          >&nbsp;Spent</span
+                                       >
+                                       <span class="nds-float_right"
+                                          >$<lightning-formatted-number value={familySpending.remaining} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number
+                                          >&nbsp;Remaining</span
+                                       >
+                                    </div>
+                                 </template>
+                                 <template if:false={familySpending.showGraph}>
+                                    <p>{message}</p>
+                                 </template>
+                              </div>
+                           </div>
+                        </template>
+                     </template>
+                  </div>
+               </div>
+               <!-- If there are no records -->
+               <!-- <template if:true={}>
+                  <div>
+                     <p class="nds-align_absolute-center">You have no records at this time</p>
+                  </div>
+               </template> -->
+
+               <!-- Individual Spending -->
+               <div if:true={showIndividualData} class="nds-box c-box-shadow nds-m-bottom_large">
+                  <!-- Individual Spendings Header -->
+                  <p class="nds-text-heading_small nds-p-bottom_medium nds-p-top_x-small nds-p-left_x-small"><b>Individual Spending</b></p>
+                  <hr class="line-css nds-m-bottom_large nds-m-horizontal_x-small nds-m-top_none" />
+
+                  <!-- Buttons In-Network/Out-of-Network -->
+                  <div class="nds-text-align_left" style="overflow: auto">
+                     <div class="c-tab-button-group nds-p-left_x-small nds-m-bottom_large" role="tablist">
+                        <button
+                           data-id="5"
+                           data-btn-id="0"
+                           class="active nds-button nds-button_neutral nds-nowrap-whitespace nds-p-right_xx-large nds-p-left_xx-large nds-button_last"
+                           style="border-radius: 4px"
+                           onclick={dynamicNetworkLabelIndividual}
+                           role="tab"
+                           aria-selected={selectedInNetworkIndividual}
+                           disabled={disableINIndividualButton}
+                        >
+                           In-Network
+                        </button>
+
+                        <button
+                           data-id="6"
+                           if:true={showOutOfNetworkButtonIndividual}
+                           data-btn-id="1"
+                           class="individual_oon nds-button nds-button_neutral nds-nowrap-whitespace nds-p-right_xx-large nds-p-left_xx-large nds-button_last"
+                           onclick={dynamicNetworkLabelIndividual}
+                           role="tab"
+                           aria-selected={selectedOutNetworkIndividual}
+                        >
+                           Out-of-Network
+                        </button>
+                     </div>
+                  </div>
+
+                  <!-- In-Network Spendings -->
+                  <div class="nds-p-left_x-small">
+                     <p if:true={inNetworkIndividual} class="nds-text-body_regular nds-p-bottom_medium"><strong>In-Network Spendings</strong></p>
+                     <p if:true={outNetoworkIndividual} class="nds-text-body_regular nds-p-bottom_medium"><strong>Out-of-Network Spendings</strong></p>
+                  </div>
+                  <!-- Spending Graphs for Individual Spending -->
+                  <div class="nds-grid nds-wrap">
+                     <template if:true={showIndiGraphContainer}>
+                        <template for:each={individualSpendings} for:item="individualSpending">
+                           <!-- <div key={individualSpending.coverageLevel} data-id={individualSpending.coverageLevel} class="nds-col nds-large-size_5-of-12 nds-p-right_medium nds-p-bottom_medium"> -->
+                           <div key={individualSpending.coverageLevel} data-id={individualSpending.coverageLevel} class="nds-col nds-large-size_6-of-12 nds-p-right_medium nds-p-bottom_x-small">
+                              <div class="nds-p-horizontal_x-small nds-text-align_center">
+                                 <p class="nds-text-align_left nds-p-bottom_x-small">
+                                    {individualSpending.coverageType} - $<lightning-formatted-number
+                                       value={individualSpending.totalAmount}
+                                       maximum-fraction-digits="2"
+                                       minimum-fraction-digits="2"
+                                    ></lightning-formatted-number>
+                                 </p>
+                                 <!-- <lightning-progress-bar value={individualSpending.progress} size="large" variant="circular"></lightning-progress-bar>-->
+                                 <template if:true={individualSpending.showGraph}>
+                                    <lightning-progress-bar
+                                       class="deductibles-progress-bar"
+                                       theme="nds"
+                                       transition="0.5"
+                                       progress={individualSpending.progress}
+                                       success
+                                       size="large"
+                                    ></lightning-progress-bar>
+
+                                    <div class="nds-size_1-of-1 nds-p-top_x-small">
+                                       <span class="nds-float_left"
+                                          >$<lightning-formatted-number value={individualSpending.spent} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number
+                                          >&nbsp;Spent</span
+                                       >
+                                       <span class="nds-float_right"
+                                          >$<lightning-formatted-number value={individualSpending.remaining} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number
+                                          >&nbsp;Remaining</span
+                                       >
+                                    </div>
+                                 </template>
+                                 <template if:false={individualSpending.showGraph}>
+                                    <p key={individualSpending.coverageLevel}>{message}</p>
+                                 </template>
+                              </div>
+                           </div>
+                        </template>
+                     </template>
+                  </div>
+               </div>
+            </template>
+         </div>
+         <template if:true={showUseDetails}>
+            <c-cf-a-m-p_-benefit-spending-benefits-use if:true={showUseDetails} parent-data="true" records={benefitUseRecord}></c-cf-a-m-p_-benefit-spending-benefits-use> 
+            <div class="nds-grid nds-m-bottom_small">
+               <c-custom-icon icon-name="Information_Tool_Tip" size="small" variant="information" title="Info" alternative-text="Info" class="nds-m-right_x-small"></c-custom-icon>
+               <p class="c-text-body_regular">
+                  Some benefits have limits that cover more time than just your plan year. For example, you may have a life time maximum for some services. In these cases, the information above is
+                  your overall total.
+               </p>
+            </div>
+         </template>
+         <c-cf-a-m-p_-footer-ask-question></c-cf-a-m-p_-footer-ask-question>
+      </div>
+   </template>
+</template>

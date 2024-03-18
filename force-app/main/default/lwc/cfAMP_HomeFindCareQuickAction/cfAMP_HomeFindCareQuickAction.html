@@ -1,0 +1,79 @@
+<template>
+            <div class="nds-grid nds-wrap nds-is-relative ">
+            <div style="position: fixed;z-index: 999999;top: 0;right: 0;">
+  <omnistudio-toast class="flexcard-toast-element" theme="nds" title="" message="" styletype=""> </omnistudio-toast>
+</div>
+            <div if:true={showLoader} class="nds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: transparent; z-index: 99;">
+  <div>
+   <omnistudio-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="small"
+      theme="nds"
+      ></omnistudio-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <omnistudio-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state nds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="nds-grid nds-wrap  nds-m-around_none " style="background-color:#fff;      
+         ">
+          <div data-style-id="state0element0" class="nds-col    nds-p-around_x-small  nds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"group":[],"id":"state-condition-object","isParent":true}' >
+    <omnistudio-block data-style-id="state0element0_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  data-conditions='\{"group":[],"id":"state-condition-object","isParent":true}'  label="Block"  theme="nds"  ><div class="nds-grid nds-wrap">
+          <div data-style-id="state0element0block_element0" class="nds-col  nds-text-align_right c-fc-action-text c-button_icon-right nds-grid nds-grid_align-end c-fc-action-text nds-show_medium nds-is-absolute c-hp-find-care-link-position nds-p-right_small nds-m-top_small  nds-size_12-of-12  condition-element" data-rindex={rindex} style="     : #ccc 1px solid; 
+         "  data-conditions='\{"group":[{"field":"Rule.PharmacyUser","id":"state-new-condition-201","operator":"!=","type":"custom","value":"true"},{"field":"Rule.DentalUser","id":"state-new-condition-0","logicalOperator":"&&","operator":"!=","type":"custom","value":"true"}],"id":"state-condition-object","isParent":true}' ><omnistudio-action data-style-id="state0element0block_element0_child"  tracking-obj={_childCardTrackingObj}   state-obj={record}  record={record}  card={card}  data-conditions='\{"group":[{"field":"Rule.PharmacyUser","id":"state-new-condition-201","operator":"!=","type":"custom","value":"true"},{"field":"Rule.DentalUser","id":"state-new-condition-0","logicalOperator":"&&","operator":"!=","type":"custom","value":"true"}],"id":"state-condition-object","isParent":true}'  icon-size="xx-small"  state-action='\{"Community Named Page":{"targetName":"Find_Care__c"},"displayName":"View Other Services","id":"flex-action-1638906058790","openUrlIn":"Current Window","targetType":"Community Named Page","type":"Custom","vlocityIcon":"utility:chevronright"}'  styles='\{"label":{"color":"","fontSize":"","textAlign":"right"}}'  theme="nds"  ></omnistudio-action>
+        </div><div data-style-id="state0element0block_element1" class="nds-col   nds-p-around_x-small nds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"group":[{"field":"Parent.isMobile","id":"state-new-condition-15","operator":"==","type":"custom","value":"N"},{"group":[{"field":"Rule.PharmacyUser","id":"state-new-condition-28","operator":"==","type":"custom","value":"true"},{"field":"Rule.DentalUser","id":"state-new-condition-53","logicalOperator":"||","operator":"==","type":"custom","value":"true"}],"id":"state-new-group-29","logicalOperator":"&&"}],"id":"state-condition-object","isParent":true}' >
+    <omnistudio-block data-style-id="state0element0block_element1_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  data-conditions='\{"group":[{"field":"Parent.isMobile","id":"state-new-condition-15","operator":"==","type":"custom","value":"N"},{"group":[{"field":"Rule.PharmacyUser","id":"state-new-condition-28","operator":"==","type":"custom","value":"true"},{"field":"Rule.DentalUser","id":"state-new-condition-53","logicalOperator":"||","operator":"==","type":"custom","value":"true"}],"id":"state-new-group-29","logicalOperator":"&&"}],"id":"state-condition-object","isParent":true}'  label="Block"  theme="nds"  ><div class="nds-grid nds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element2" class="nds-col   nds-size_12-of-12 " data-rindex={rindex} style="     : #ccc 1px solid; 
+         " >
+    <omnistudio-custom-lwc-wrapper class="" element-name="c-find-care-quick-action" property='\{"brand":"{MemberInfo.brand}","dentalUser":"{Rule.DentalUser}","pharmacyUser":"{Rule.PharmacyUser}","productGroup":"{DefaultPlan.productBrandGrouping}","selectedMemberId":"{MemberInfo.memberId}"}' data-rindex={rindex} records={records} record={record} record-id={recordId} card={card} ><c-find-care-quick-action  ></c-find-care-quick-action></omnistudio-custom-lwc-wrapper>
+    </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <omnistudio-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state nds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="nds-grid nds-wrap  nds-m-around_none " style="background-color:#fff;      
+         ">
+          <div data-style-id="state0element0" class="nds-col    nds-p-around_x-small  nds-size_12-of-12  condition-element" data-rindex={rindex} style="      
+         "  data-conditions='\{"group":[],"id":"state-condition-object","isParent":true}' >
+    <omnistudio-block data-style-id="state0element0_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  data-conditions='\{"group":[],"id":"state-condition-object","isParent":true}'  label="Block"  theme="nds"  ><div class="nds-grid nds-wrap">
+          <div data-style-id="state0element0block_element0" class="nds-col  nds-text-align_right c-fc-action-text c-button_icon-right nds-grid nds-grid_align-end c-fc-action-text nds-show_medium nds-is-absolute c-hp-find-care-link-position nds-p-right_small nds-m-top_small  nds-size_12-of-12  condition-element" data-rindex={rindex} style="     : #ccc 1px solid; 
+         "  data-conditions='\{"group":[{"field":"Rule.PharmacyUser","id":"state-new-condition-201","operator":"!=","type":"custom","value":"true"},{"field":"Rule.DentalUser","id":"state-new-condition-0","logicalOperator":"&&","operator":"!=","type":"custom","value":"true"}],"id":"state-condition-object","isParent":true}' ><omnistudio-action data-style-id="state0element0block_element0_child"  tracking-obj={_childCardTrackingObj}   state-obj={record}  record={record}  card={card}  data-conditions='\{"group":[{"field":"Rule.PharmacyUser","id":"state-new-condition-201","operator":"!=","type":"custom","value":"true"},{"field":"Rule.DentalUser","id":"state-new-condition-0","logicalOperator":"&&","operator":"!=","type":"custom","value":"true"}],"id":"state-condition-object","isParent":true}'  icon-size="xx-small"  state-action='\{"Community Named Page":{"targetName":"Find_Care__c"},"displayName":"View Other Services","id":"flex-action-1638906058790","openUrlIn":"Current Window","targetType":"Community Named Page","type":"Custom","vlocityIcon":"utility:chevronright"}'  styles='\{"label":{"color":"","fontSize":"","textAlign":"right"}}'  theme="nds"  ></omnistudio-action>
+        </div><div data-style-id="state0element0block_element1" class="nds-col   nds-p-around_x-small nds-size_12-of-12 condition-element" data-rindex={rindex} style=""  data-conditions='\{"group":[{"field":"Parent.isMobile","id":"state-new-condition-15","operator":"==","type":"custom","value":"N"},{"group":[{"field":"Rule.PharmacyUser","id":"state-new-condition-28","operator":"==","type":"custom","value":"true"},{"field":"Rule.DentalUser","id":"state-new-condition-53","logicalOperator":"||","operator":"==","type":"custom","value":"true"}],"id":"state-new-group-29","logicalOperator":"&&"}],"id":"state-condition-object","isParent":true}' >
+    <omnistudio-block data-style-id="state0element0block_element1_child"  record={record}  card={card}  collapsed-by-default="false"  collapsible="false"  data-conditions='\{"group":[{"field":"Parent.isMobile","id":"state-new-condition-15","operator":"==","type":"custom","value":"N"},{"group":[{"field":"Rule.PharmacyUser","id":"state-new-condition-28","operator":"==","type":"custom","value":"true"},{"field":"Rule.DentalUser","id":"state-new-condition-53","logicalOperator":"||","operator":"==","type":"custom","value":"true"}],"id":"state-new-group-29","logicalOperator":"&&"}],"id":"state-condition-object","isParent":true}'  label="Block"  theme="nds"  ><div class="nds-grid nds-wrap">
+          
+        </div></omnistudio-block>
+    </div><div data-style-id="state0element0block_element2" class="nds-col   nds-size_12-of-12 " data-rindex={rindex} style="     : #ccc 1px solid; 
+         " >
+    <omnistudio-custom-lwc-wrapper class="" element-name="c-find-care-quick-action" property='\{"brand":"{MemberInfo.brand}","dentalUser":"{Rule.DentalUser}","pharmacyUser":"{Rule.PharmacyUser}","productGroup":"{DefaultPlan.productBrandGrouping}","selectedMemberId":"{MemberInfo.memberId}"}' data-rindex={rindex} records={records} record={record} record-id={recordId} card={card} ><c-find-care-quick-action  ></c-find-care-quick-action></omnistudio-custom-lwc-wrapper>
+    </div>
+        </div></omnistudio-block>
+    </div>
+        </div>
+      </omnistudio-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <omnistudio-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+      
+      </omnistudio-action>
+  
+            <omnistudio-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction} onfireactionevent={actionEvtHandler}>
+            
+            </omnistudio-action>
+            </div>
+          </template>

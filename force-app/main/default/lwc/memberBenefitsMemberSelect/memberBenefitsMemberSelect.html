@@ -1,0 +1,8 @@
+<template>
+   <div if:true={showList} class="member-select">
+      <div class="nds-text-body_regular nds-form-element__label_toggle-text">
+         <lightning-combobox role="combobox" value={signedInMemberId} options={members} onchange={handleMemberSelect} theme="nds" read-only={readonly} disabled={disabled} label="Select Member">
+         </lightning-combobox>
+      </div>
+   </div>
+</template>

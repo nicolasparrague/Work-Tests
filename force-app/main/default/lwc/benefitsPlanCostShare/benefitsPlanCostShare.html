@@ -1,0 +1,228 @@
+<template>
+   <template if:true={_benefitspendingrecord}>
+      <template if:true={costShareRec} for:each={costShareRec} for:item="rec">
+         <div key={rec.coverageType} class="nds-box nds-m-bottom_large">
+            <p class="nds-text-heading_small nds-p-bottom_medium nds-p-left_x-small"><b>{rec.coverageType}</b></p>
+            <hr class="line-css nds-m-bottom_small nds-m-top_xxx-small" />
+            <!-- Buttons IN/OON -->
+            <template if:false={rec.both}>
+               <div class="nds-text-align_left" style="overflow: auto">
+                  <div class="c-tab-button-group nds-p-left_x-small" role="group">
+                     <button
+                        data-id={rec.INbtnID}
+                        if:true={rec.showINTab}
+                        class="family_in active nds-button nds-button_neutral nds-nowrap-whitespace nds-p-right_xx-large nds-p-left_xx-large nds-button_last"
+                        style="border-radius: 4px"
+                        onclick={makeINActive}
+                     >
+                        In-Network
+                     </button>
+                     <button
+                        data-id={rec.OONbtnID}
+                        if:true={rec.showOONTab}
+                        onclick={makeOONActive}
+                        class="family_oon nds-button nds-button_neutral nds-nowrap-whitespace nds-p-right_xx-large nds-p-left_xx-large nds-button_last"
+                     >
+                        Out-of-Network
+                     </button>
+                  </div>
+               </div>
+            </template>
+
+            <!-- InNetwork -->
+            <div if:false={rec.both} class="nds-show" key={rec.InDivID} data-id={rec.InDivID}>
+               <div class="nds-grid nds-wrap">
+                  <!-- Individual-->
+                  <template if:true={rec.IIN}>
+                     <!-- <p>IIN-</p> -->
+                     <div if:true={rec.IndIN.showGraph} class="nds-col nds-large-size_6-of-12 nds-p-right_medium nds-p-bottom_medium">
+                        <div class="nds-box_x-small nds-text-align_center">
+                           <p class="nds-text-align_left nds-p-bottom_x-small">
+                              {rec.IndIN.coverageLevel} {rec.coverageType} - $<lightning-formatted-number
+                                 value={rec.IndIN.totalAmount}
+                                 maximum-fraction-digits="2"
+                                 minimum-fraction-digits="2"
+                              ></lightning-formatted-number>
+                           </p>
+
+                           <lightning-progress-bar class="deductibles-progress-bar" theme="nds" transition="0.5" progress={rec.IndIN.progress} success size="large"></lightning-progress-bar>
+
+                           <div class="nds-size_1-of-1 nds-p-top_x-small">
+                              <span class="nds-float_left"
+                                 >$<lightning-formatted-number value={rec.IndIN.spent} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number> Spent</span
+                              >
+                              <span class="nds-float_right"
+                                 >$<lightning-formatted-number value={rec.IndIN.remaining} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number> Remaining</span
+                              >
+                           </div>
+                        </div>
+                     </div>
+                     <div class="nds-col nds-large-size_6-of-12 nds-p-right_medium nds-p-bottom_medium" if:false={rec.IndIN.showGraph}>
+                        <br />
+                        <p class="nds-box_x-small nds-text-align_left nds-p-bottom_x-small">{message}</p>
+                     </div>
+                  </template>
+                  <!-- Family-->
+                  <template if:true={rec.FIN}>
+                     <!-- <p>FIN-</p> -->
+                     <div if:true={rec.FamIN.showGraph} class="nds-col nds-large-size_6-of-12 nds-p-right_medium nds-p-bottom_medium">
+                        <div class="nds-box_x-small nds-text-align_center">
+                           <p class="nds-text-align_left nds-p-bottom_x-small">
+                              {rec.FamIN.coverageLevel} {rec.coverageType} - $<lightning-formatted-number
+                                 value={rec.FamIN.totalAmount}
+                                 maximum-fraction-digits="2"
+                                 minimum-fraction-digits="2"
+                              ></lightning-formatted-number>
+                           </p>
+
+                           <lightning-progress-bar class="deductibles-progress-bar" theme="nds" transition="0.5" progress={rec.FamIN.progress} success size="large"></lightning-progress-bar>
+
+                           <div class="nds-size_1-of-1 nds-p-top_x-small">
+                              <span class="nds-float_left"
+                                 >$<lightning-formatted-number value={rec.FamIN.spent} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number> Spent</span
+                              >
+                              <span class="nds-float_right"
+                                 >$<lightning-formatted-number value={rec.FamIN.remaining} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number> Remaining</span
+                              >
+                           </div>
+                        </div>
+                     </div>
+                     <div class="nds-col nds-large-size_6-of-12 nds-p-right_medium nds-p-bottom_medium" if:false={rec.FamIN.showGraph}>
+                        <br />
+                        <p class="nds-box_x-small nds-text-align_left nds-p-bottom_x-small">{message}</p>
+                     </div>
+                  </template>
+               </div>
+            </div>
+
+            <!-- Out-of-network -->
+            <div if:false={rec.both} class="nds-hide" key={rec.OONDivID} data-id={rec.OONDivID}>
+               <div class="nds-grid nds-wrap">
+                  <!-- Individual-->
+                  <template if:true={rec.IOON}>
+                     <div if:true={rec.IndOON.showGraph} class="nds-col nds-large-size_6-of-12 nds-p-right_medium nds-p-bottom_medium">
+                        <div class="nds-box_x-small nds-text-align_center">
+                           <p class="nds-text-align_left nds-p-bottom_x-small">
+                              {rec.IndOON.coverageLevel} {rec.coverageType} - $<lightning-formatted-number
+                                 value={rec.IndOON.totalAmount}
+                                 maximum-fraction-digits="2"
+                                 minimum-fraction-digits="2"
+                              ></lightning-formatted-number>
+                           </p>
+
+                           <lightning-progress-bar class="deductibles-progress-bar" theme="nds" transition="0.5" progress={rec.IndOON.progress} success size="large"></lightning-progress-bar>
+
+                           <div class="nds-size_1-of-1 nds-p-top_x-small">
+                              <span class="nds-float_left"
+                                 >$<lightning-formatted-number value={rec.IndOON.spent} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number> Spent</span
+                              >
+                              <span class="nds-float_right"
+                                 >$<lightning-formatted-number value={rec.IndOON.remaining} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number> Remaining</span
+                              >
+                           </div>
+                        </div>
+                     </div>
+                     <div class="nds-col nds-large-size_6-of-12 nds-p-right_medium nds-p-bottom_medium" if:false={rec.IndOON.showGraph}>
+                        <br />
+                        <p class="nds-box_x-small nds-text-align_left nds-p-bottom_x-small">{message}</p>
+                     </div>
+                  </template>
+                  <!--Family -->
+                  <template if:true={rec.FOON}>
+                     <div if:true={rec.FamOON.showGraph} class="nds-col nds-large-size_6-of-12 nds-p-right_medium nds-p-bottom_medium">
+                        <div class="nds-box_x-small nds-text-align_center">
+                           <p class="nds-text-align_left nds-p-bottom_x-small">
+                              {rec.FamOON.overageLevel} {rec.coverageType} - $<lightning-formatted-number
+                                 value={rec.FamOON.totalAmount}
+                                 maximum-fraction-digits="2"
+                                 minimum-fraction-digits="2"
+                              ></lightning-formatted-number>
+                           </p>
+
+                           <lightning-progress-bar class="deductibles-progress-bar" theme="nds" transition="0.5" progress={rec.FamOON.progress} success size="large"></lightning-progress-bar>
+
+                           <div class="nds-size_1-of-1 nds-p-top_x-small">
+                              <span class="nds-float_left"
+                                 >$<lightning-formatted-number value={rec.FamOON.spent} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number> Spent</span
+                              >
+                              <span class="nds-float_right"
+                                 >$<lightning-formatted-number value={rec.FamOON.remaining} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number> Remaining</span
+                              >
+                           </div>
+                        </div>
+                     </div>
+                     <div class="nds-col nds-large-size_6-of-12 nds-p-right_medium nds-p-bottom_medium" if:false={rec.FamOON.showGraph}>
+                        <br />
+                        <p class="nds-box_x-small nds-text-align_left nds-p-bottom_x-small">{message}</p>
+                     </div>
+                  </template>
+               </div>
+            </div>
+
+            <!-- both-->
+            <div if:true={rec.both} class="nds-show" key={rec.BothDivID} data-id={rec.BothDivID}>
+               <div class="nds-grid nds-wrap">
+                  <!-- Individual-->
+                  <template if:true={rec.IBoth}>
+                     <div if:true={rec.IndBoth.showGraph} class="nds-col nds-large-size_6-of-12 nds-p-right_medium nds-p-bottom_medium">
+                        <div class="nds-box_x-small nds-text-align_center">
+                           <p class="nds-text-align_left nds-p-bottom_x-small">
+                              {rec.IndBoth.coverageLevel} {rec.coverageType} - $<lightning-formatted-number
+                                 value={rec.IndBoth.totalAmount}
+                                 maximum-fraction-digits="2"
+                                 minimum-fraction-digits="2"
+                              ></lightning-formatted-number>
+                           </p>
+
+                           <lightning-progress-bar class="deductibles-progress-bar" theme="nds" transition="0.5" progress={rec.IndBoth.progress} success size="large"></lightning-progress-bar>
+
+                           <div class="nds-size_1-of-1 nds-p-top_x-small">
+                              <span class="nds-float_left"
+                                 >$<lightning-formatted-number value={rec.IndBoth.spent} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number> Spent</span
+                              >
+                              <span class="nds-float_right"
+                                 >$<lightning-formatted-number value={rec.IndBoth.remaining} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number> Remaining</span
+                              >
+                           </div>
+                        </div>
+                     </div>
+                     <div class="nds-col nds-large-size_6-of-12 nds-p-right_medium nds-p-bottom_medium" if:false={rec.IndBoth.showGraph}>
+                        <br />
+                        <p class="nds-box_x-small nds-text-align_left nds-p-bottom_x-small">{message}</p>
+                     </div>
+                  </template>
+                  <!--Family -->
+                  <template if:true={rec.FBoth}>
+                     <div if:true={rec.FamBoth.showGraph} class="nds-col nds-large-size_6-of-12 nds-p-right_medium nds-p-bottom_medium">
+                        <div class="nds-box_x-small nds-text-align_center">
+                           <p class="nds-text-align_left nds-p-bottom_x-small">
+                              {rec.FamBoth.coverageLevel} {rec.coverageType} - $<lightning-formatted-number
+                                 value={rec.FamBoth.totalAmount}
+                                 maximum-fraction-digits="2"
+                                 minimum-fraction-digits="2"
+                              ></lightning-formatted-number>
+                           </p>
+
+                           <lightning-progress-bar class="deductibles-progress-bar" theme="nds" transition="0.5" progress={rec.FamBoth.progress} success size="large"></lightning-progress-bar>
+
+                           <div class="nds-size_1-of-1 nds-p-top_x-small">
+                              <span class="nds-float_left"
+                                 >$<lightning-formatted-number value={rec.FamBoth.spent} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number> Spent</span
+                              >
+                              <span class="nds-float_right"
+                                 >$<lightning-formatted-number value={rec.FamBoth.remaining} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number> Remaining</span
+                              >
+                           </div>
+                        </div>
+                     </div>
+                     <div class="nds-col nds-large-size_6-of-12 nds-p-right_medium nds-p-bottom_medium" if:false={rec.FamBoth.showGraph}>
+                        <br />
+                        <p class="nds-box_x-small nds-text-align_left nds-p-bottom_x-small">{message}</p>
+                     </div>
+                  </template>
+               </div>
+            </div>
+         </div>
+      </template>
+   </template>
+</template>

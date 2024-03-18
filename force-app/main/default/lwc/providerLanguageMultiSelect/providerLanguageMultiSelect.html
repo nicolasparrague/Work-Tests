@@ -1,0 +1,78 @@
+<template>
+   <div class="nds-form-element nds-form-container">
+      <div class="nds-form-element__control">
+         <div class="nds-combobox_container">
+            <div class="nds-combobox nds-dropdown-trigger nds-dropdown-trigger_click nds-is-open" aria-haspopup="listbox">
+               <template if:true={showSuccess}>
+                  <span class="visuallyHidden" role="alert">Successfully added {selectedLang}</span>
+               </template>
+               <template if:true={showError}>
+                  <span class="visuallyHidden" role="alert">{selectedLang} has already been added</span>
+               </template>
+               <template if:true={allSelected}>
+                  <span class="visuallyHidden" role="alert">All languages selected</span>
+               </template>
+               <template if:true={itemRemoved}>
+                  <span class="visuallyHidden" role="alert">{itemToRemove} removed</span>
+               </template>
+               <div class="nds-combobox__form-element nds-input-has-icon nds-input-has-icon_right">
+                  <!-- Default Search Box -->
+                  <div class="defaultClass">
+                     <input
+                        type="text"
+                        class="nds-input nds-combobox__input nds-has-focus searchvalue"
+                        id="langcombo-id-3"
+                        aria-autocomplete="list"
+                        aria-controls="comboListbox"
+                        autocomplete="off"
+                        role="combobox"
+                        placeholder={placeholderText}
+                        onfocus={handleFocusIn}
+                        onkeyup={handleKeyUp}
+                        onblur={handleFocusOut}
+                        value={selectedItemsNum}
+                        onkeydown={handleKeyDown}
+                        aria-required="true"
+                        aria-expanded="false"
+                     />
+                     <span class="nds-icon_container" onclick={handleClickArrow}>
+                        <lightning-icon theme="nds" id="langcombo_icon" icon-name="utility:chevrondown" class="nds-icon-utility-search nds-input__icon nds-input__icon_right nds-searchIcon nds-show nds-p-right_large" alternative-text="Approved" size="x-small">
+                        </lightning-icon>
+                     </span>
+                  </div>
+               </div>
+               <div class="selected-items-div">
+                  <template for:each={selectedItemArr} for:item="item" for:index="index">
+                     <div key={item.key} class="selected-item c-multiselect-bubble" onclick={handleRemoveSelection} data-selectedname={item.value}>
+                        {item.value}
+                        <template if:false={allSelected}>
+                           <button aria-labelledby={index} class="remove-item">X</button>
+                           <label id={index} class="visuallyHidden">Remove {item.value}</label>
+                        </template>
+                     </div>
+                  </template>
+               </div>
+               <!-- To display all items for the drop down -->
+               <div id="listbox-id-3" class="item_list nds-hide">
+                  <ul id="comboListbox" class="nds-listbox nds-listbox_vertical nds-dropdown nds-dropdown_length-with-icon-7 nds-dropdown_fluid" role="listbox" onmousedown={mousedownScrollBar} onmouseup={mouseupScrollBar}>
+                     <template if:true={_options}>
+                        <template for:each={_options} for:item="item">
+                           <li id={item.code} aria-label={item.description} aria-selected="false" role="option" class="item-style" key={item.code} onmousedown={handleOptionSelect} data-id={item.code}>
+                              <div class="nds-media nds-listbox__option nds-listbox__option_entity nds-listbox__option_has-meta">
+                                 <span class="nds-media__body">
+                                    <span class="nds-listbox__option-text nds-listbox__option-text_entity">{item.description}</span>
+                                 </span>
+                              </div>
+                           </li>
+                        </template>
+                     </template>
+                     <template if:false={options}>
+                        <div>Error</div>
+                     </template>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</template>

@@ -1,0 +1,51 @@
+.modal-close-btn {
+  border: none;
+  border-radius: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 1rem;
+}
+.btn-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.modal-header-confirmation {
+  background: #1a2779;
+  color: white;
+  text-align: left;
+}
+.nds-text-heading_medium {
+  color: white !important;
+}
+
+.modal-padding-1 {
+  padding: 5%;
+}
+
+.modal-text-align {
+  text-align: center;
+}
+
+.modal-padding-2 {
+  padding-top: 2%;
+}
+
+.modal-padding-3 {
+  text-align: center;
+  padding-bottom: 3%;
+}
+
+.modal-color-1 {
+  border-radius: 15px;
+  color: black;
+  border-color: black;
+}
+
+.modal-color-2 {
+  border-radius: 15px;
+  background: #1564bf;
+}

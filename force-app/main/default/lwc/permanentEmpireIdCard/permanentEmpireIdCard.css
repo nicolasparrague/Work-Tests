@@ -1,0 +1,167 @@
+/*@import "community-branding-eh";*/
+
+/*.vlocity{*/
+
+    .id-card-container {
+        max-width: 1200px;
+    }
+    
+    .id-card {
+        border: 3px solid;
+        border-radius: 20px;
+        padding: 28px 40px;
+        max-width: 616px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        background: white;
+        font-size: 14px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .id-card-cta {
+        width: 180px;
+        margin-bottom: 22px;
+    }
+    
+    .id-card-top {
+        margin-bottom: 30px;
+    }
+    
+    .id-card-logo-container {
+        width: 40%;
+    }
+    
+    .id-card-logo {
+        max-width: 200px;
+        width: 100%;
+    }
+    
+    .id-card-top .nds-text-align_right {
+        text-align: right;
+    }
+    
+    .id-card-body-extra {
+        display: table-row;
+    }
+    
+    .id-card-body-extra-field {
+        display: table-cell;
+        padding: 40px 40px 40px 0;
+        color: #343741;
+        /*font-family: $font-family-light;*/
+        /*font-size: 14px;*/
+        font-weight: 300;
+        letter-spacing: 0;
+        line-height: 20px;
+        text-align: left;
+    }
+    
+    .id-card-body-main {
+        padding-left: 16px;
+        /*font-family: $font-family-regular;*/
+        /*font-size: 18px;*/
+        letter-spacing: 0;
+        line-height: 20px;
+        color: #343741;
+        display: table;
+        max-width: 75%;
+        width: 100%;
+    }
+    
+    .id-card-body-main-data {
+        margin-bottom: 15px;
+        display: table-row;
+        /*font-size: 14px;*/
+    }
+    
+    .id-card-body-main-label {
+        display: table-cell;
+        padding-right: 15px;
+        /*font-size: 14px;*/
+    }
+    
+    .id-card-body-main-value {
+        display: table-cell;
+        /*font-size: 14px;*/
+    }
+    
+    .id-card-bottom {
+        display: table-row;
+        margin-top: 10px;
+    }
+    
+    .id-card-bottom-field {
+        display: table-cell;
+        padding-right: 20px;
+        color: #343741;
+        /*font-family: $font-family-light*/
+        ;
+        font-size: 13px;
+        font-weight: 300;
+        letter-spacing: 0;
+        line-height: 20px;
+        text-align: left;
+    }
+
+    .id-card-bottom-right{
+        text-align: right;
+        width: 100%;
+        display: table-cell;
+        color: #343741;
+        font-size: 13px;
+        font-weight: 300;
+        letter-spacing: 0;
+        line-height: 20px;
+        text-align: right;
+    }
+    
+    .id-card-bottom div:last-child {
+        padding: 0;
+    }
+    
+    @media only screen and (max-width: 1023px) {
+        .id-button-container {
+            padding-left: 0;
+        }
+        .id-button-container div:last-child {
+            padding-left: 20px;
+        }
+    }
+    
+    @media only screen and (max-width: 768px) {
+        .id-card {
+            font-size: 2vw;
+            padding: 4% 7%;
+        }
+        .id-card-top {
+            font-size: 2vw;
+            margin-bottom: 6%;
+        }
+        .id-card-body-extra-field {
+            padding: 7% 7% 7% 0;
+        }
+        .id-card-bottom-field {
+            font-size: 1.9vw;
+        }
+        .id-button-container div:last-child {
+            padding-left: 0;
+        }
+    }
+    
+    .hr-bold {
+        height: 8px;
+        border-width: 0;
+        color: rgb(59, 59, 59);
+        background-color: rgb(59, 59, 59);
+    }
+    
+    .id-card-body-p{
+        font-size: 16px;
+    }
+    
+    .c-color-border-brand-blue{
+        border-color: #206DB5;
+    }
+    /*}*/

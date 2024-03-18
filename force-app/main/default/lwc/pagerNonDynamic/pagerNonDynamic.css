@@ -1,0 +1,101 @@
+:host {
+    --white: rgb(255, 255, 255);
+    --active: #f5edcc;
+}
+
+.page-data-container {
+    background-color: var(--white);
+    max-height: max-content;
+    overflow: hidden;
+}
+
+button {
+    background-color: var(--white);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 5px 10px;
+}
+
+.active {
+    background-color: var(--active);
+}
+
+.print {
+    display: flex;
+}
+.totalEntries {
+    font-size: 15px;
+    font-weight: initial;
+    text-align: initial;
+    text-decoration: solid;
+    margin: 5px;
+}
+.labelPrint {
+    padding-left: 5px;
+    color: #0070d2;
+    font-size: 15px;
+    font-weight: initial;
+    text-decoration: solid;
+    margin: 5px;
+}
+.pagination {
+    text-align: left;
+    font-size: 13px;
+    font-weight: 400;
+    margin: -17px;
+}
+
+.prevButton {
+    padding-right: 5px;
+}
+
+.nextButton {
+    padding-left: 5px;
+}
+
+
+.pagerange span {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.pagerange span[data-id="ph"] {
+    cursor: default;
+}
+
+input {
+    text-align: center;
+}
+.gotopage-input {
+    position: relative;
+}
+.iconright {
+position: absolute;
+top: 6px;
+right: 0
+
+}
+.iconrightmobile {
+    position: absolute;
+    top: 3px;
+    right: 0
+    
+    }
+.inputlabel{
+position: absolute;
+bottom: 24px;
+right: 17px;
+}
+.pagerview {
+    margin-top: 10px;
+
+}
+
+.mobilepagerview{
+    margin-top: 20px;
+
+}
+
+.selected-page {
+    border: 1px solid rgb(221, 219, 218);
+}

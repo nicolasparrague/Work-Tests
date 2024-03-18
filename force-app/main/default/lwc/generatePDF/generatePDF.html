@@ -1,0 +1,85 @@
+<template>
+    <template if:true={loading}>
+        <lightning-spinner alternative-text="Loading" size="medium"> </lightning-spinner>
+    </template>
+    <!-- Provider/Facility PDF -->
+    <template if:false={isMultipleOffice}>
+        <a><span tabindex="0" role="button" aria-label={messagePDF} class="nds-text-link nds-show_medium" onclick={modalHandler}>Save Search as PDF</span></a>
+        <a><span class="nds-hide_medium nds-text-link" onclick={modalHandler}>Save Search</span></a>
+        <table id="mytable" class="myTable" style="display: none;">
+            <thead>
+              <tr>
+                <th>Provider Information</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Network Status</th>
+              </tr>
+            </thead>
+            <tbody class="recordList">
+                <template for:each={ipFormattedList} for:item="record">
+                    <tr key={record.Id}>
+                        <td>{record.FullName}{record.primarySpecialty}
+                            <img if:true={record.wheelchairAccessible} src={wheelchairIcon} alt="Wheelchair">
+                            <img if:true={record.isPCP} src={pcpIcon} alt="PCP">
+                        </td>
+                        <td>{record.Address}</td>
+                        <td>{record.PhoneNumber}</td>
+                        <td>{record.networkStatus}
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+
+        <table id="mytableFacility" class="myTableFacility" style="display: none;">
+         <thead>
+           <tr>
+             <th>Facility Name</th>
+             <th>Address</th>
+             <th>Phone Number</th>
+           </tr>
+         </thead>
+         <tbody class="recordListFacility">
+             <template for:each={ipFormattedList} for:item="record">
+                 <tr key={record.Id}>
+                     <td>{record.FacilityName}
+                         <img if:true={record.isVision} src={visionIcon} alt="Eyewear">
+                     </td>
+                     <td>{record.Address}</td>
+                     <td>{record.PhoneNumber}</td>
+                 </tr>
+             </template>
+         </tbody>
+     </table>
+    </template>
+    <!-- Multiple Office PDF -->
+    <template if:true={over200}>
+      <!-- Modal/Popup Box LWC starts here -->
+      <section role="dialog" tabindex="0" aria-labelledby="modal-heading-05" aria-modal="true" aria-describedby="modal-content-id-5" class="nds-modal nds-fade-in-open">
+         <div class="nds-modal__container modalAccessibility">
+            <!-- Modal/Popup Box LWC header here -->
+            <!-- Modal/Popup Box LWC body starts here -->
+            <div class="nds-modal__content nds-p-around_x-large" id="modal-content-id-5">
+               <div class="nds-grid nds-m-bottom_large">
+                  <div class="nds-col nds-align_absolute-center"></div>
+                  <div class="nds-col">
+                     <p class="nds-text-color_default nds-text-body_regular">Your search returned more results than what is currently supported for saving or printing. Continue below to save the first 200 results as a pdf or cancel to go back and refine your search.</p>
+                  </div>
+               </div>
+
+               <div class="nds-grid nds-text-align_center">
+                  <div class="nds-size_1-of-1">
+                     <div class="nds-col c-reverse-button-stack_small">
+                        <!-- Go Back option -->
+                        <button class="nds-m-right_large nds-button nds-button_neutral modal-color-1" onclick={closeModal} title="Cancel">Cancel</button>
+                        <button class="nds-m-right_large nds-button nds-button_brand modal-color-2" onclick={generatePDF} title="Continue">Continue</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <div class="nds-backdrop nds-backdrop_open"></div>
+   </template>
+    
+</template>

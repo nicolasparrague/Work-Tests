@@ -1,0 +1,424 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 12-27-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+   <template if:true={jsonDef.bAccordionActive}>
+      <div class="wrapper ">
+         <!-- previous button as chevron icon -->
+         <div class="main-navi nds-p-top_large">
+            <template if:true={showPreviousButton}>
+               <div class="slds-no-print" if:false={pageWithoutPrevious}>
+                  <button
+                     onclick={handlePreviousClick}
+                     aria-label={previousButtonAriaLabel}
+                     aria-pressed
+                     data-id="prevButton"
+                     class="nds-button nds-is-absolute nds-button_icon nds-button_icon-inverse"
+                  >
+                     <lightning-icon icon-name="utility:chevronleft" alternative-text="previous" size="small"></lightning-icon>
+                     <span class="nds-assistive-text">Previous</span>
+                  </button>
+               </div>
+            </template>
+<!-- step name -->
+<!--<h1 class="nds-page-header_title nds-align_absolute-center nds-text-align_center nds-medium-size nds-p-horizontal_large">{jsonDef.propSetMap.label}</h1>-->
+<c-main-content styleclass="nds-page-header_title nds-align_absolute-center nds-text-align_center nds-medium-size nds-p-horizontal_large" heading={jsonDef.propSetMap.label}></c-main-content>
+</div>
+</div>
+
+<!-- step body -->
+<div class="nds-medium-size_12-of-12 nds-aligh_absolute-center">
+    <div class="nds-grid nds-wrap nds-col_padded nds-size_1-of-1 omniscript-step_body-nds ">
+        <!-- Validation/ Error message Modal conditionally -->
+        <template if:true={ariaInvalid}>
+               <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-01" class="nds-modal nds-modal__error nds-fade-in-open">
+                  <div class="nds-modal__container modalAccessibility">
+                     <!-- <header class="nds-modal__header">
+								<button data-id="modalButton" class="nds-button nds-button_icon nds-modal__close nds-button_icon-inverse" aria-pressed aria-label="Close" onclick={closeModal}>
+									<lightning-icon icon-name="utility:close"
+										alternative-text="close"
+										variant="inverse"
+										size="small" ></lightning-icon>
+									<span class="nds-assistive-text">Close</span>
+								</button>
+								<h2 id="modal-heading-01" class="modal-title nds-hyphenate">{errorMsg}</h2>
+							</header> -->
+                     <div class="nds-modal__content" id="modal-content-id-01">
+                        <div class="nds-modal__error-title">
+                           <c-custom-icon icon-name="Error" size="medium" variant="error"></c-custom-icon>
+                           <h2><strong>{errorSubMsg}</strong></h2>
+                        </div>
+                        <ol class="nds-modal__error-list">
+                           <template for:each={errorLog} for:item="error">
+                              <li class="nds-modal__error-list-item" key={error}>{error}</li>
+                           </template>
+        </ol>
+
+        <div class="nds-grid modal-padding-3 nds-m-top_large hide-print">
+            <div class="nds-size_1-of-1">
+                <div class="nds-col nds-align_absolute-center">
+                    <button class="nds-button nds-button_brand modal-color-2 nds-medium-size_4-of-12" aria-pressed aria-label="Ok Button" onclick={closeModal} onblur={trapFocus}>
+                                    OK
+                                 </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<div class="nds-backdrop nds-backdrop_open"></div>
+</template>
+<!--End Validation modal-->
+
+<!-- Beginning Cancel Modal-->
+<template if:true={cancelClicked}>
+               <section
+                  role="dialog"
+                  tabindex="-1"
+                  aria-labelledby="modal-heading-02"
+                  aria-modal="true"
+                  aria-describedby="modal-content-id-02"
+                  class="nds-modal nds-modal__confirmation nds-fade-in-open"
+               >
+                  <div class="nds-modal__container modalAccessibility">
+                     <!--<header class="nds-modal__header mp-modal-header-brand">
+								<h2 id="modal-heading-02" class="nds-color__text_gray-3 modal-title nds-text-heading_medium nds-hyphenate nds-text-align_left nds-text-color_default nds-text-align_left">Warning</h2>
+								<button data-id="modalButton2" class="nds-button nds-button_icon nds-modal__close nds-button_icon-inverse"  aria-pressed aria-label="Close" onclick={closeCancelModal}>
+									<lightning-icon icon-name="utility:close"
+										alternative-text="close"
+										variant="inverse"
+										size="small" ></lightning-icon>
+									<span class="nds-assistive-text">Close</span>
+								</button>
+							</header>-->
+
+                     <!-- Modal/Popup Box LWC body starts here -->
+                     <div class="nds-modal__content" id="modal-content-id-02">
+                        <div class="nds-grid">
+                           <!--<div class="nds-col nds-align_absolute-center">
+									<lightning-icon
+									class="info nds-icon nds-icon-text-default nds-icon_small nds-m-right_small"
+									icon-name="utility:info_alt"
+									alternative-text="image"
+									variant="warning"
+									size="small"
+									title="Confirmation Required"
+									>
+									</lightning-icon>
+								</div>-->
+                           <div class="nds-col nds-p-bottom_large">
+                              <p class="nds-text-color_default nds-m-bottom_large"><strong>Cancel {title}</strong></p>
+                              <p class="nds-text-color_default slds-float_left">{CancelText}</p>
+                           </div>
+                        </div>
+
+                        <!-- cancel modal  buttons -->
+                        <div class="nds-grid modal-padding-3">
+                           <div class="nds-size_1-of-1">
+                              <div class="nds-col nds-align_absolute-center c-reverse-button-stack_small">
+                                 <!-- <a
+                                    href={url}
+                                    target="_self"
+                                    role="button"
+                                    tabindex="0"
+                                    class="nds-button nds-button_neutral nds-medium-size_4-of-12 nds-m-right_medium"
+                                    onclick={exitOS}
+                                    aria-pressed
+                                    aria-label="Yes, Cancel"
+                                    >{cancelYes}</a
+                                 > -->
+                                 <button class="nds-button nds-button_neutral nds-medium-size_4-of-12 nds-m-right_medium" onclick={exitOS} aria-label="Yes, Cancel">Yes, I am Sure</button>
+                                 <button data-id="modalButton2" class="nds-button nds-button_brand nds-medium-size_4-of-12" onclick={closeCancelModal} aria-pressed aria-label="No, don't cancel">
+                                    {cancelNo}
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </section>
+               <div class="nds-backdrop nds-backdrop_open"></div>
+            </template>
+<!--end cancel modal-->
+
+<!-- slot for OOB part of step -->
+<slot class="input-slot"></slot>
+</div>
+
+<!-- Next Button Desktop-->
+<template if:false={CancelOnSide}>
+            <template if:false={pageWithoutNextBtn}>
+               <!-- class="nds-show_medium nds-grid" Orignal Line -->
+               <div class="nds-show_small nds-grid">
+                  <div class="nds-size_1-of-1">
+                     <div class="nds-col nds-align_absolute-center nds-m-top_x-large">
+                        <!-- <button if:false={disabled} class=" nds-button nds-button_brand nds-button_stretch nds-medium-size_3-of-12 nds-small-size_12-of-12 nds-xsmall-size_12-of-12" onclick={handleNextClick} 
+								data-id='nextBtn' role="button" aria-pressed aria-label={nextButtonLabel} >{nextButtonLabel}</button>
+							<button if:true={disabled} class="disabled-look nds-button nds-button_brand nds-button_stretch nds-m-around_xx-small nds-medium-size_4-of-12 nds-small-size_12-of-12 nds-xsmall-size_12-of-12" onclick={handleNextClick} 
+							data-id='nextBtn' role="button" aria-pressed aria-label={nextButtonLabel} >{nextButtonLabel}</button> -->
+                        <button
+                           if:false={disabled}
+                           class="nds-button nds-button_brand nds-button_stretch nds-medium-size_3-of-12 nds-small-size_12-of-12 nds-xsmall-size_12-of-12"
+                           onclick={handleNextClick}
+                           data-id="nextBtn"
+                           role="button"
+                           aria-pressed
+                           aria-label={nextButtonAriaLabel}
+                        >
+                           {nextButtonLabel}
+                        </button>
+                        <button
+                           if:true={disabled}
+                           class="disabled-look nds-button nds-button_brand nds-button_stretch nds-m-around_xx-small nds-medium-size_4-of-12 nds-small-size_12-of-12 nds-xsmall-size_12-of-12"
+                           onclick={handleNextClick}
+                           data-id="nextBtn"
+                           role="button"
+                           aria-pressed
+                           aria-label={nextButtonAriaLabel}
+                        >
+                           {nextButtonLabel}
+                        </button>
+                     </div>
+                  </div>
+               </div>
+            </template>
+</template>
+<!-- next button end -->
+
+<!-- Next Button mobile-->
+<template if:false={CancelOnSide}>
+            <template if:false={pageWithoutNextBtn}>
+               <!-- nds-hide_medium nds-grid sticky stickyZoomed -->
+               <div class={getStickyClass}>
+                  <div class="nds-size_1-of-1">
+                     <div class="nds-col nds-align_absolute-center nds-m-top_medium">
+                        <!-- <button if:false={disabled} class=" nds-button nds-button_brand nds-button_stretch nds-m-around_xx-small  nds-medium-size_4-of-12 nds-small-size_12-of-12 nds-xsmall-size_12-of-12" onclick={handleNextClick}  
+							data-id='nextBtn' role="button" aria-pressed aria-label={nextButtonLabel} >{nextButtonLabel}</button>
+							<button if:true={disabled} class="disabled-look nds-button nds-button_brand nds-button_stretch nds-m-around_xx-small  nds-medium-size_4-of-12 nds-small-size_12-of-12 nds-xsmall-size_12-of-12" onclick={handleNextClick}  
+							data-id='nextBtn' role="button" aria-pressed aria-label={nextButtonLabel} >{nextButtonLabel}</button> -->
+
+                        <button
+                           if:false={disabled}
+                           class="nds-button nds-button_brand nds-button_stretch nds-m-around_xx-small nds-medium-size_4-of-12 nds-small-size_12-of-12 nds-xsmall-size_12-of-12"
+                           onclick={handleNextClick}
+                           data-id="nextBtn"
+                           role="button"
+                           aria-pressed
+                           aria-label={nextButtonAriaLabel}
+                        >
+                           {nextButtonLabel}
+                        </button>
+                        <button
+                           if:true={disabled}
+                           class="disabled-look nds-button nds-button_brand nds-button_stretch nds-m-around_xx-small nds-medium-size_4-of-12 nds-small-size_12-of-12 nds-xsmall-size_12-of-12"
+                           onclick={handleNextClick}
+                           data-id="nextBtn"
+                           role="button"
+                           aria-pressed
+                           aria-label={nextButtonAriaLabel}
+                        >
+                           {nextButtonLabel}
+                        </button>
+                     </div>
+                  </div>
+               </div>
+            </template>
+</template>
+<!-- next button end -->
+
+<!-- cancel button -->
+<template if:false={CancelOnSide}>
+            <template if:true={cancelButtons}>
+               <!-- to not have cancel buttons at all, set in set values as "cancelButtons": "hide"-->
+               <template if:false={pageWithoutCancel}>
+				  <!-- to not have a cancel button on a specific page-->
+				  <!-- <div class={cancelBtnClass}></div> -->
+                  <div class="nds-grid nds-show_medium showCancelZoomed">
+                     <div class="nds-size_1-of-1 nds-medium-size_12-of-12">
+                        <div class="nds-col nds-align_absolute-center nds-p-top_large">
+                           <!-- <div class="nds-col nds-align_absolute-center"> -->
+                           <!-- <lightning-button  theme="nds" class="nds-p-around_large nds-align_absolute-center nds-size_full" onclick={handleCancelClick}  variant="outline-brand"
+                              label={cancelButtonLabel} role="button" aria-label={cancelButtonLabel} aria-pressed>{cancelButtonLabel}</lightning-button> -->
+
+                           <button
+                           class="nds-p-around_large nds-align_absolute-center nds-size_full vlocity-btn nds-button nds-button_outline-brand"
+                           role="button"
+                           onclick={handleCancelClick}
+                           aria-label={cancelButtonAriaLabel}
+                           aria-pressed
+                           >
+                           
+                           <span class="nds-button_outline-brand btnLabel">{cancelButtonLabel}</span>
+                           </button>
+                        </div>
+                     </div>
+                  </div>
+               </template>
+			</template>
+</template>
+
+<!-- Cancel and Submit Button Desktop with cancel on side before Submit-->
+<template if:true={cancelButtons}>
+            <!-- to not have cancel buttons at all, set in set values as "cancelButtons": "hide"-->
+            <template if:false={pageWithoutCancel}>
+               <!-- to not have a cancel button on a specific page-->
+               <template if:true={CancelOnSide}>
+                  <div class="nds-show_large nds-col nds-align_absolute-center"> <!-- Accessbility / replace show_medium for show_large-->
+                     <!-- Original Cancel Button   -->
+                     <lightning-button
+                        theme="nds"
+                        class="nds-button nds-button_neutral nds-medium-size_2-of-12 nds-m-right_medium"
+                        onclick={handleCancelClick}
+                        label={cancelButtonLabel}
+                        role="none"
+                        aria-label={cancelButtonLabel}
+                        aria-pressed
+                        >{cancelButtonLabel}</lightning-button
+                     >
+
+                     <!-- <button class="nds-button nds-button_neutral nds-medium-size_2-of-12 nds-m-right_medium" 
+							role="button" 
+							onclick={handleCancelClick}
+							aria-label={cancelButtonAriaLabel} 
+							aria-pressed><span class="nds-button_outline-brand btnLabel">{cancelButtonLabel}</span>
+						</button> -->
+
+                     <template if:false={pageWithoutNextBtn}>
+                        <template if:true={CancelOnSide}>
+                           <!-- Original next button -->
+                           <!-- <button if:false={submitnotclickable} class="nds-button nds-button_brand nds-medium-size_2-of-12" onclick={handleNextClick} 
+									data-id='nextBtn' role="button" aria-pressed aria-label={nextButtonLabel} >{nextButtonLabel}</button>
+									<button if:true={submitnotclickable} class="nds-button nds-button_brand nds-medium-size_2-of-12" 
+									data-id='nextBtn' role="button" aria-pressed aria-label={nextButtonLabel} >{nextButtonLabel}</button> -->
+
+                           <button
+                              if:false={submitnotclickable}
+                              class="nds-button nds-button_brand nds-medium-size_2-of-12"
+                              onclick={handleNextClick}
+                              data-id="nextBtn"
+                              role="button"
+                              aria-pressed
+                              aria-label={nextButtonAriaLabel}
+                           >
+                              {nextButtonLabel}
+                           </button>
+                           <button
+                              if:true={submitnotclickable}
+                              class="nds-button nds-button_brand nds-medium-size_2-of-12"
+                              data-id="nextBtn"
+                              role="button"
+                              aria-pressed
+                              aria-label={nextButtonAriaLabel}
+                           >
+                              {nextButtonLabel}
+                           </button>
+                        </template>
+</template>
+</div>
+</template>
+</template>
+</template>
+
+<!-- Next Button mobile-->
+<template if:true={CancelOnSide}>
+            <template if:false={pageWithoutNextBtn}>
+               <!-- nds-hide_medium nds-grid sticky -->
+               <div class={getStickyClass}>
+                  <div class="nds-size_1-of-1">
+                     <div class="nds-col nds-align_absolute-center nds-m-top_medium">
+                        <!-- <button if:false={disabled} class=" nds-button nds-button_brand nds-button_stretch nds-m-around_xx-small  nds-medium-size_4-of-12 nds-small-size_12-of-12 nds-xsmall-size_12-of-12" onclick={handleNextClick}  
+							data-id='nextBtn' role="button" aria-pressed aria-label={nextButtonLabel} >{nextButtonLabel}</button>
+							<button if:true={disabled} class="disabled-look nds-button nds-button_brand nds-button_stretch nds-m-around_xx-small  nds-medium-size_4-of-12 nds-small-size_12-of-12 nds-xsmall-size_12-of-12" onclick={handleNextClick}  
+							data-id='nextBtn' role="button" aria-pressed aria-label={nextButtonLabel} >{nextButtonLabel}</button> -->
+
+                        <button
+                           if:false={submitnotclickable}
+                           class="nds-button nds-button_brand nds-button_stretch nds-m-around_xx-small nds-medium-size_4-of-12 nds-small-size_12-of-12 nds-xsmall-size_12-of-12"
+                           onclick={handleNextClick}
+                           data-id="nextBtn"
+                           role="button"
+                           aria-pressed
+                           aria-label={nextButtonAriaLabel}
+                        >
+                           {nextButtonLabel}
+                        </button>
+                        <button
+                           if:true={submitnotclickable}
+                           class="disabled-look nds-button nds-button_brand nds-button_stretch nds-m-around_xx-small nds-medium-size_4-of-12 nds-small-size_12-of-12 nds-xsmall-size_12-of-12"
+                           data-id="nextBtn"
+                           role="button"
+                           aria-pressed
+                           aria-label={nextButtonAriaLabel}
+                        >
+                           {nextButtonLabel}
+                        </button>
+                     </div>
+                  </div>
+               </div>
+            </template>
+</template>
+<!-- cancel button  mobile below submit only for cancel on side -->
+<template if:true={CancelOnSide}>
+            <template if:true={cancelButtons}>
+               <!-- to not have cancel buttons at all, set in set values as "cancelButtons": "hide"-->
+               <template if:false={pageWithoutCancel}>
+                  <!-- to not have a cancel button on a specific page-->
+                  <div class="nds-grid nds-hide_medium">
+                     <div class="nds-size_1-of-1 nds-medium-size_12-of-12">
+                        <div class="nds-col nds-align_absolute-center">
+                           <!-- <lightning-button  theme="nds" class="nds-p-around_large nds-align_absolute-center nds-size_full" onclick={handleCancelClick}  variant="outline-brand"
+								label={cancelButtonLabel} role="button" aria-label={cancelButtonLabel} aria-pressed>{cancelButtonLabel}</lightning-button> -->
+                           <lightning-button
+                              theme="nds"
+                              class="nds-p-around_large nds-align_absolute-center nds-size_full"
+                              onclick={handleCancelClick}
+                              variant="outline-brand"
+                              label={cancelButtonLabel}
+                              role="button"
+                              aria-label={cancelButtonAriaLabel}
+                              aria-pressed
+                              >{cancelButtonLabel}</lightning-button
+                           >
+                        </div>
+                     </div>
+                  </div>
+               </template>
+</template>
+</template>
+
+<!-- To display cancel button on mobile - ISSUE FIX-->
+<template if:false={CancelOnSide}>
+   <template if:true={cancelButtons}>
+      <!-- to not have cancel buttons at all, set in set values as "cancelButtons": "hide"-->
+      <template if:false={pageWithoutCancel}>
+         <!-- to not have a cancel button on a specific page-->
+         <div class="nds-grid nds-hide_medium">
+            <div class="nds-size_1-of-1 nds-medium-size_12-of-12">
+               <div class="nds-col nds-align_absolute-center">
+                  <!-- <lightning-button  theme="nds" class="nds-p-around_large nds-align_absolute-center nds-size_full" onclick={handleCancelClick}  variant="outline-brand"
+               label={cancelButtonLabel} role="button" aria-label={cancelButtonLabel} aria-pressed>{cancelButtonLabel}</lightning-button> -->
+                  <lightning-button
+                     theme="nds"
+                     class="nds-p-around_large nds-align_absolute-center nds-size_full"
+                     onclick={handleCancelClick}
+                     variant="outline-brand"
+                     label={cancelButtonLabel}
+                     role="button"
+                     aria-label={cancelButtonAriaLabel}
+                     aria-pressed
+                     >{cancelButtonLabel}</lightning-button
+                  >
+               </div>
+            </div>
+         </div>
+      </template>
+</template>
+</template>
+
+</div>
+</template>
+</template>

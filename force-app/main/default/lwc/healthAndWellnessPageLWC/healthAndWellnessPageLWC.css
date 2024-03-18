@@ -1,0 +1,121 @@
+.attentisExtraHeight {
+    height: 206.632px;
+}
+
+.wellnessProgram {
+    background-color: #F0D4F5 ;
+}
+
+.fitnessBenefits {
+    background-color: #D6EFEA;
+}
+
+.healthRiskAssessment  {
+    background-color: #F1F0E7 ;
+}
+
+.knowYouBenefitsVideo {
+    background-color: #F1F0E7 ;
+}
+
+.careManagement {
+    background-color: #F4F3F1 ;
+}
+
+.care-management-height{
+    height: 300px
+
+}
+
+.care-management-image{
+    background: url("/memberportal/resource/Member_CareManagement");
+    height: 362px;
+    background-size: cover;
+    background-repeat: no-repeat
+}
+
+.rightButton{
+    float: right;
+  }
+
+.box {
+   border-radius: 0.25rem;
+   border: 1px solid #dddbda;
+ }
+
+ .box-min-height{
+    min-height: 250px;
+ }
+
+ .link-bottom{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 61px;
+    padding-bottom: 7px !important;      
+ }
+
+ .health-card-title{
+    font-size: 28px;
+    font-weight: 200;
+}
+
+.terms-unaccepted .wellness-modal.nds-modal__confirmation .nds-modal__content {
+    padding-top: 0;
+    padding-bottom: 24px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    overflow-y: hidden;
+}
+
+.terms-unaccepted .wellness-modal .nds-modal__container {
+    max-width: 1200px!important;
+}
+
+.modal-header {
+    background: #fff;
+    padding: 24px 32px 16px 32px;
+    border-top-right-radius: .5rem;
+    border-top-left-radius: .5rem;
+}
+div.nds-modal__footer, 
+.nds-modal__container div.nds-modal__content {
+    box-shadow: none;
+}
+
+.elementHoldingHTMLContent {
+    overflow-y: scroll;
+}
+
+.children-height-100 div {
+    height: 100%;
+}
+
+.button-m-right_large {
+    margin-right: 1.5rem;
+}
+
+@media (min-width: 48em) {
+    .terms-unaccepted .wellness-modal .nds-modal__container {
+        max-width: 1200px;
+        width: 65%;
+    }
+}
+
+@media (max-width: 30rem) {
+    .button-m-right_large {
+        margin-right: 0;
+    }
+    .c-reverse-button-stack_small .nds-button_brand {
+        margin-bottom: 1.5rem;;
+    }
+}
+
+.modal-button-section{
+    justify-content: center;
+    width: 100%;
+}
+
+.terms-unaccepted .modal-button-section{
+    justify-content: space-between;
+}

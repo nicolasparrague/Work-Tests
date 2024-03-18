@@ -1,0 +1,833 @@
+<template>
+   <template if:true={loading}>
+      <lightning-spinner alternative-text="Loading" size="medium" theme="nds"> </lightning-spinner>
+   </template>
+   <div class="slds-card">
+      <!-- Inputs / Filters -->
+   <lightning-accordion active-section-name={RefineSearchResults} allow-multiple-sections-open class="nds-show_medium">
+      <lightning-accordion-section name="RefineSearchResults" label="Refine Search Results">
+         <!-- Wheelchair Accessible, Center of Excellence -->
+         <div class="nds-grid nds-wrap tags">
+            <div class="nds-col nds-size_1-of-1 nds-medium-size_3-of-12 nds-large-size_3-of-12 nds-m-bottom_medium">
+               <div class="nds-form-element">
+                  <div class="nds-form-element__control">
+                     <label class="nds-checkbox checkbox-nds-wheel">
+                        <input type="checkbox" class="filter_WA_Desktop" name="options" id="WA-ID" value="WA" />
+                        <span class="nds-checkbox_faux"></span>
+                        <label class="nds-checkbox__label">
+                           <span class="nds-form-element__label">Wheelchair Accessible</span>
+                        </label>
+                     </label>
+                  </div>
+               </div>
+            </div>
+            <div if:true={dynamicCOE} class="nds-col nds-size_1-of-1 nds-medium-size_4-of-12 nds-large-size_3-of-12 nds-m-bottom_medium">
+               <div class="nds-form-element">
+                  <div class="nds-form-element__control">
+                     <label class="nds-checkbox">
+                        <input type="checkbox" class="filter_COE_Desktop" name="options" id="COE-ID" value="COE" />
+                        <span class="nds-checkbox_faux"></span>
+                        <label class="nds-checkbox__label">
+                           <span class="nds-form-element__label">Center of Excellence</span>
+                        </label>
+                     </label>
+                  </div>
+               </div>
+            </div>
+            <div class="nds-col nds-size_1-of-1 nds-medium-size_4-of-12 nds-large-size_3-of-12">
+               <div class="nds-col nds-size_12-of-12">
+                  <div class="nds-form-element nds-form-container">
+                     <div class="nds-form-element__control nds-form-element__control-animated-label">
+                        <div class="nds-select_container">
+                           <select aria-label="Accreditation" class="nds-select nds-has-value filter_accreditation_Desktop" id="select-03" required="">
+                              <option value="All" selected>All</option>
+                              <template for:each={accreditations} for:item="listViewItem">
+                                 <option key={listViewItem.description} value={listViewItem.code}>{listViewItem.description}</option>
+                              </template>
+                           </select>
+                           <label class="nds-form-element__label" for="select-01">Accreditation</label>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- Clear and Apply Filters -->
+         <div class="nds-grid nds-wrap">
+            <div class="nds-size_3-of-12">
+               <div class="nds-box_x-small nds-text-align_center nds-m-around_x-small">
+                  <button class="nds-button nds-button_neutral nds-button_stretch" onclick={clearFiltersDesktop}>Clear Filters</button>
+               </div>
+            </div>
+            <div class="nds-size_3-of-12">
+               <div class="nds-box_x-small nds-text-align_center nds-m-around_x-small">
+                  <button class="nds-button nds-button_brand nds-button_stretch" onclick={filterDesktop}>Apply Filters</button>
+               </div>
+            </div>
+         </div>
+      </lightning-accordion-section>
+   </lightning-accordion>
+   </div>
+
+   <!-- Alert -->
+   <template if:true={elementsLoaded}>
+      <!-- Compare & Reset button, list icon, map icon -->
+      <div class="nds-grid nds-wrap nds-m-vertical_large">
+         <div class="nds-order_1 nds-large-order_2 nds-col nds-size_1-of-1 nds-medium-size_12-of-12 nds-large-size_2-of-12">
+            <div class="nds-grid">
+               <!-- Reset Button -->
+               <div class="nds-size_12-of-12 nds-medium-size_12-of-12 nds-show_medium">
+                  <button class="nds-button nds-button_neutral nds-m-bottom_small nds-button_stretch" onclick={goToChooseServiceType}>Start Over</button>
+               </div>
+               <!-- Toggle buttons - only for mobile -->
+               <div class="nds-size_6-of-12 nds-medium-size_12-of-12 nds-large-size_12-of-12 nds-hide_medium"></div>
+            </div>
+         </div>
+         <div class="nds-order_1 nds-large-order_1 nds-col nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_10-of-12">
+            <div class="nds-grid nds-wrap">
+               <!-- View Menu - only for desktop -->
+               <div class="nds-size_6-of-12 nds-medium-size_6-of-12 nds-large-size_4-of-12 nds-show_medium">
+                  <div class="nds-form-element nds-form-container">
+                     <div class="nds-form-element__control nds-form-element__control-animated-label">
+                        <div class="nds-select_container nds-p-top_small">
+                           <select class="pageview nds-select nds-has-value" id="select-05" name="view" required="" onchange={handleViewSelect}>
+                              <option value="5">5</option>
+                              <option value="10" selected>10</option>
+                              <option value="25">25</option>
+                              <option value="50">50</option>
+                           </select>
+                           <label class="nds-form-element__label" for="select-05">Results Per Page</label>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <!-- New Desktop Sort By -->
+               <div class="nds-size_5-of-12 nds-medium-size_5-of-12 nds-large-size_5-of-12 nds-show_large nds-m-bottom_x-small nds-is-relative">
+                  <label class="c-input-label_not-empty" for="combobox-unique-id" aria-label="Sort By">
+                     <div class="nds-m-left_xx-small">Sort By</div>
+                  </label>
+
+                  <div class="nds-combobox__form-element nds-input-has-icon nds-input-has-icon_right nds-m-left_xx-small nds-p-bottom_none nds-m-bottom_none" role="none">
+                     <!-- Default Search Box -->
+                     <div class="SortyByClass nds-text-body_regular">
+                        <input
+                           type="text"
+                           class="nds-input nds-combobox__input sort_input"
+                           id="combobox-id-5"
+                           aria-activedescendant="option1"
+                           aria-autocomplete="list"
+                           list="listbox-id-5"
+                           aria-controls="listbox-id-5"
+                           autocomplete="off"
+                           role="combobox"
+                           aria-label="Sort By"
+                           placeholder="Distance - Closest"
+                           onclick={sortFocusIn}
+                           readonly
+                           value={sortBy}
+                           onfocusout={sortWindlowClose}
+                        />
+                        <span class="nds-icon_container" onclick={sortFocusIn}>
+                           <lightning-icon theme="nds" icon-name="utility:chevrondown" class="nds-icon-utility-down nds-input__icon nds-input__icon_right nds-m-right_medium" size="x-small">
+                           </lightning-icon>
+                        </span>
+                     </div>
+                  </div>
+                  <div id="listbox-id-5" class="sort_list nds-hide" role="listbox">
+                     <!-- Sort Options -->
+                     <ul class="nds-listbox nds-listbox_vertical nds-dropdown nds-dropdown_large" role="presentation">
+                        <template if:true={sortOptions}>
+                           <template for:each={sortOptions} for:item="item">
+                              <li role="presentation" class="nds-dropdown__item" key={item.key} onmousedown={sortSelect}>
+                                 <div
+                                    aria-selected="true"
+                                    id={item.key}
+                                    data-badge-id={item.key}
+                                    data-badge-value={item.value}
+                                    class="badge nds-media nds-listbox__option nds-listbox__option_entity nds-listbox__option_has-meta"
+                                    role="option"
+                                    tabindex="0"
+                                 >
+                                    <span id={item.ascBadgeId} class="nds-media__body nds-m-vertical_x-small">
+                                       <span
+                                          data-badge-id={item.key}
+                                          data-badge-value={item.value}
+                                          onmousedown={sortSelect}
+                                          class="nds-listbox__option-text nds-listbox__option-text_entity nds_optiontxt"
+                                          id={item.key}
+                                          >{item.value}</span
+                                       >
+                                    </span>
+                                 </div>
+                                 <hr class="nds-align_absolute-center nds-m-bottom_xx-small" />
+                              </li>
+                           </template>
+                        </template>
+                        <template if:false={sortOptions}>
+                           <div>Error</div>
+                        </template>
+                     </ul>
+                  </div>
+               </div>
+               <!--New Sort By-->
+            </div>
+         </div>
+         <div class="nds-grid nds-wrap nds-order_2 nds-large-order_3 nds-col nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_12-of-12 badge-align">
+            <div class="nds-grid">
+               <!-- Distance From Tag -->
+               <div class="nds-p-right_small">
+                  <button class="nds-badge nds-button_stretch nds-button_neutral nds-m-vertical_x-small filter-badge" onclick={goToLocation}>{formattedDistanceFrom} of {userZipCode}</button>
+               </div>
+               <!-- FacilityType Tag -->
+               <div>
+                  <button class="nds-badge nds-button_stretch nds-button_neutral nds-m-vertical_x-small filter-badge" onclick={goToChooseFacilityType}>{selectedFacilityType}</button>
+               </div>
+            </div>
+            <template if:true={elementsToDisplayMobile}>
+               <div class="nds-grid nds-grid_align-end nds-show_large nds-m-vertical_x-small">
+                  <div class="can-toggle">
+                     <div class="can-toggle toggle-brand">
+                        <input aria-label="Show Map" aria-checked="false" id="mapToggle" type="checkbox" data-target-id="map-toggle" onclick={handleMapToggle} />
+                        <label for="mapToggle">
+                           <div class="can-toggle__switch" data-checked="Map" data-unchecked="List"></div>
+                        </label>
+                     </div>
+                  </div>
+               </div>
+            </template>
+         </div>
+      </div>
+      <!--Count of facilities Selected for compare -->
+   </template>
+
+   <!-- Only for Mobile filters start-->
+
+   <div class="nds-form-element nds-hide_medium">
+      <hr />
+      <div class="nds-form-element__control nds-hide_medium">
+         <div class="nds-combobox_container nds-hide_medium">
+            <div class="nds-combobox nds-dropdown-trigger nds-dropdown-trigger_click nds-is-open" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+               <lightning-layout theme="nds">
+                  <lightning-layout-item flexibility="auto" size="6" alignment-bump="left">
+                     <div class="nds-combobox__form-element nds-input-has-icon nds-input-has-icon_right nds-m-right_xx-small" role="none">
+                        <!-- Default Search Box -->
+                        <div onclick={mobileIsOpen} class="FilterByClass nds-text-body_regular nds-text-link">
+                           <input
+                              type="text"
+                              class="nds-input nds-combobox__input filter_input"
+                              id="combobox-id-3"
+                              aria-activedescendant="option1"
+                              aria-autocomplete="list"
+                              list="listbox-id-3"
+                              aria-controls="listbox-id-3"
+                              autocomplete="off"
+                              role="textbox"
+                              placeholder={placeholderText}
+                              readonly
+                              value={filterBy}
+                           />
+                           <span class="nds-icon_container">
+                              <lightning-icon theme="nds" icon-name="utility:down" class="nds-icon-utility-down nds-input__icon nds-input__icon_right nds-m-right_x-small" size="x-small">
+                              </lightning-icon>
+                           </span>
+                        </div>
+                     </div>
+                  </lightning-layout-item>
+                  <lightning-layout-item flexibility="auto" size="6" alignment-bump="right">
+                     <div class="nds-combobox__form-element nds-input-has-icon nds-input-has-icon_right nds-m-left_xx-small" role="none">
+                        <!-- Mobile Sort Box -->
+                        <div class="SortyByClass nds-text-body_regular nds-text-link" onclick={mobileSortFocusIn}>
+                           <input
+                              type="text"
+                              class="nds-input nds-combobox__input sort_input"
+                              id="combobox-id-4"
+                              aria-activedescendant="option1"
+                              aria-autocomplete="list"
+                              list="listbox-id-4"
+                              aria-controls="listbox-id-4"
+                              autocomplete="off"
+                              role="textbox"
+                              placeholder={placeholderText}
+                              readonly
+                              value={sortBy}
+                              onfocusout={mobileSortWindlowClose}
+                           />
+                           <span class="nds-icon_container" onclick={mobileSortFocusIn}>
+                              <lightning-icon theme="nds" icon-name="utility:down" class="nds-icon-utility-down nds-input__icon nds-input__icon_right nds-m-right_x-small" size="x-small">
+                              </lightning-icon>
+                           </span>
+                        </div>
+                     </div>
+                  </lightning-layout-item>
+               </lightning-layout>
+               <!-- To display all items for the drop down -->
+               <div id="listbox-id-3" class="item_list nds-hide" role="listbox">
+                  <ul class="nds-listbox nds-listbox_vertical nds-dropdown nds-dropdown_fluid" role="presentation">
+                     <li role="presentation" class="nds-listbox__item nds-p-around_small">
+                        <lightning-button theme="nds" variant="base" label="" class="nds-float_right" icon-name="utility:close" onclick={mobileCloseFilterWindow}></lightning-button>
+                        <!-- Dropdowns -->
+
+                        <!-- Checkboxes nds-gutters-->
+                        <div class="nds-grid nds-wrap tags">
+                           <div class="nds-col nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_3-of-12 nds-m-bottom_x-small">
+                              <div class="nds-form-element">
+                                 <div class="nds-form-element__control">
+                                    <label class="nds-checkbox checkbox-nds-wheel">
+                                       <input type="checkbox" name="options" class="filter_WA" id="filter-WA" value="WheelchairMobile" />
+                                       <span class="nds-checkbox_faux"></span>
+                                       <label class="nds-checkbox__label">
+                                          <span class="nds-form-element__label">Wheelchair Accessible</span>
+                                       </label>
+                                    </label>
+                                 </div>
+                              </div>
+                           </div>
+                           <div if:true={dynamicCOE} class="nds-col nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_3-of-12 nds-m-bottom_x-small">
+                              <div class="nds-form-element">
+                                 <div class="nds-form-element__control">
+                                    <label class="nds-checkbox">
+                                       <input type="checkbox" class="filter_COE" name="options" id="filter-COE" value="COE" />
+                                       <span class="nds-checkbox_faux"></span>
+                                       <label class="nds-checkbox__label">
+                                          <span class="nds-form-element__label">Center of Excellence</span>
+                                       </label>
+                                    </label>
+                                 </div>
+                              </div>
+                           </div>
+
+                           <div class="nds-grid nds-wrap tags">
+                              <div class="nds-col nds-size_1-of-1 nds-medium-size_4-of-12 nds-large-size_3-of-12">
+                                 <div class="nds-col nds-size_12-of-12">
+                                    <div class="nds-form-element nds-form-container">
+                                       <div class="nds-form-element__control nds-form-element__control-animated-label">
+                                          <div class="nds-select_container">
+                                             <select aria-label="Accreditation" class="nds-select nds-has-value filter_accreditation" id="filter-accreditation" required="">
+                                                <option value="All" selected>All</option>
+                                                <template for:each={accreditations} for:item="listViewItem">
+                                                   <option key={listViewItem.description} value={listViewItem.code}>{listViewItem.description}</option>
+                                                </template>
+                                             </select>
+                                             <label class="nds-form-element__label" for="filter-accreditation">Accreditation</label>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- Clear filters and apply filters -->
+                        <div class="nds-grid nds-gutters nds-p-top_large">
+                           <div class="nds-col nds-p-top_xx-small">
+                              <span>
+                                 <a class="nds-text-body_regular nds-text-link nds-button_stretch" onclick={mobileClearFilters}>Clear Filters</a>
+                              </span>
+                           </div>
+                           <div class="nds-col">
+                              <span>
+                                 <button class="nds-button nds-button_brand nds-button_stretch" onclick={filterMobile}>Apply Filters</button>
+                              </span>
+                           </div>
+                        </div>
+                     </li>
+                  </ul>
+               </div>
+               <!-- To display all Sort Mobile Items for the drop down -->
+               <div id="listbox-id-4" class="sort_list_mo nds-hide" role="listbox">
+                  <!-- Sort Mobile Options -->
+                  <ul class="nds-listbox nds-listbox_vertical nds-dropdown nds-dropdown_fluid" role="presentation">
+                     <template if:true={sortMoOptions}>
+                        <template for:each={sortMoOptions} for:item="item">
+                           <li role="presentation" class="nds-listbox__item" key={item.key}>
+                              <div
+                                 aria-selected="true"
+                                 id={item.key}
+                                 data-badge-id={item.key}
+                                 data-badge-value={item.value}
+                                 onmousedown={sortSelect}
+                                 class="nds-media nds-listbox__option nds-listbox__option_entity nds-listbox__option_has-meta"
+                                 role="option"
+                                 tabindex="0"
+                              >
+                                 <span id={item.ascBadgeId} class="nds-media__body">
+                                    <span
+                                       data-badge-id={item.key}
+                                       data-badge-value={item.value}
+                                       onmousedown={sortSelect}
+                                       class="nds-listbox__option-text nds-listbox__option-text_entity nds_optiontxt nds-m-vertical_x-small"
+                                       id={item.key}
+                                       >{item.value}</span
+                                    >
+                                 </span>
+                              </div>
+                              <hr class="nds-align_absolute-center nds-m-vertical_xxx-small" />
+                           </li>
+                        </template>
+                     </template>
+                     <template if:false={sortMoOptions}>
+                        <div>Error</div>
+                     </template>
+                  </ul>
+               </div>
+               <!--end of sort drop down-->
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- Only for mobile filters END-->
+   <template if:true={elementsToDisplayMobile}>
+      <div class="nds-grid nds-grid_align-end nds-m-vertical_medium nds-hide_large">
+         <div class="can-toggle">
+            <div class="can-toggle toggle-brand">
+               <input id="mapToggleMobile" type="checkbox" data-target-id="map-toggle" onclick={handleMapToggle} />
+               <label for="mapToggleMobile">
+                  <div class="can-toggle__switch" data-checked="Map" data-unchecked="List"></div>
+               </label>
+            </div>
+         </div>
+      </div>
+   </template>
+
+   <!-- No Result for Facility -->
+   <template if:true={noElementsMsg}>
+      <div>
+         <p>&nbsp;</p>
+         <p role="alert">No results were found. Please check your search criteria and try again. Did you enter the facility name incorrectly?</p>
+         <p>&nbsp;</p>
+      </div>
+   </template>
+   <template if:true={systemErrorMsg}>
+      <div>
+         <p>&nbsp;</p>
+         <p>
+            Unfortunately, An internal system error has occurred. Please try again. If the problem countinues, please contact the &nbsp;
+            <a href="https://www.emblemhealth.com/resources/member-support" target="_blank" aria-label="Help and Support link opens a new tab">Help and Support</a> or <a href="#" onclick={goToChooseServiceType}>start over</a>.
+         </p>
+         <p>&nbsp;</p>
+      </div>
+   </template>
+   <template if:false={elementsLoaded}>
+      <div class="nds-order_3 nds-large-order_2 nds-col nds-size_1-of-1 nds-medium-size_8-of-12 nds-large-size_8-of-12">
+         <div class="nds-grid nds-show_medium">
+            <div class="nds-size_12-of-12 nds-medium-size_6-of-12 nds-m-right_small">
+               <button class="nds-button nds-button_neutral nds-m-bottom_small nds-button_stretch" onclick={goToLocation}>{formattedDistanceFrom} of {userZipCode}</button>
+            </div>
+            <div class="nds-size_12-of-12 nds-medium-size_6-of-12 nds-m-right_small">
+               <button class="nds-button nds-button_neutral nds-m-bottom_small nds-button_stretch" onclick={goToChooseFacilityType}>{selectedFacilityType}</button>
+            </div>
+         </div>
+         <div class="nds-col nds-hide_medium">
+            <div class="nds-size_12-of-12 nds-medium-size_6-of-12 nds-m-right_small">
+               <button class="nds-button nds-button_neutral nds-m-bottom_small nds-button_stretch" onclick={goToLocation}>{formattedDistanceFrom} of {userZipCode}</button>
+            </div>
+            <div class="nds-size_12-of-12 nds-medium-size_6-of-12 nds-m-right_small">
+               <button class="nds-button nds-button_neutral nds-m-bottom_small nds-button_stretch" onclick={goToChooseFacilityType}>{selectedFacilityType}</button>
+            </div>
+         </div>
+      </div>
+   </template>
+
+   <!-- Facilities -->
+   <template if:true={elementsLoaded}>
+      <div class="nds-grid">
+         <div class={getListWrapClass}>
+            <c-pager
+               class="pager"
+               pagedata={facilities}
+               jsondata={facJsonData}
+               criteria={facilityParams}
+               elements-per-page={selectedViewNumber}
+               total-elements={totalProviderNum}
+               first-element={pagerFirstEle}
+               show-save-search="true"
+               title=""
+               onpagerchanged={handleNewPage}
+            >
+               <template for:each={facilitiesTracked} for:item="facility">
+                  <!-- Facilities - Desktop -->
+                  <div key={facility.facetsProviderId} class="nds-grid nds-wrap nds-box nds-m-bottom_large nds-show_medium" data-target-id={facility.facetsProviderId} tabindex="0">
+                     <!-- Facility Details -->
+
+                     <div class="nds-col nds-medium-order_1 nds-large-order_1 nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_3-of-12 nds-p-horizontal_x-small c-brand-border_right">
+                        <div class="nds-col nds-size_12-of-12 nds-text-title nds-p-bottom_x-small">
+                           <h3>{facility.organizationName}</h3>
+                        </div>
+                        <div class="nds-col nds-size_12-of-12 nds-text-body_regular nds-p-bottom_x-small">
+                           <p>{selectedFacilityType}</p>
+                        </div>
+                        <div class="nds-col nds-size_12-of-12 nds-text-body_regular nds-p-bottom_x-small">&nbsp;</div>
+                        <div class="nds-col nds-size_12-of-12 nds-text-body_regular nds-p-bottom_x-small">&nbsp;</div>
+                     </div>
+                     <!-- Facility Address -->
+                     <div class="nds-col nds-medium-order_3 nds-large-order_2 nds-size_1-of-1 nds-medium-size_4-of-12 nds-large-size_4-of-12 m-top">
+                        <!-- Desktop Design -->
+                        <div class="nds-col nds-size_12-of-12 nds-text-body_regular nds-p-left_large">
+                           <div class="nds-col nds-size_12-of-12 nds-text-title nds-m-bottom_x-small">
+                              <h4>Address</h4>
+                           </div>
+                           <div class="nds-col nds-size_12-of-12 nds-text-body_regular nds-m-bottom_medium nds-media">
+                              <!-- Map Icon -->
+                              <div class="nds-col nds-size_1-of-12">
+                                 <span>
+                                    <lightning-icon icon-name="utility:checkin" alternative-text="checkin" size="x-small" title="Map" class="mapIcon"></lightning-icon>
+                                 </span>
+                              </div>
+                              <!-- Address  -->
+                              <div class="nds-col nds-size_11-of-12 content">
+                                 <p>
+                                    {facility.facilityAddress.addressLine1}, {facility.facilityAddress.addressLine2} <br />{facility.facilityAddress.city}, {facility.facilityAddress.state}
+                                    {facility.zip}<br />
+                                 </p>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- Miles / Get Directions - Shows up for desktop -->
+                        <div class="nds-col nds-size_12-of-12 nds-text-body_regular nds-p-left_large nds-media">
+                           <!-- Directions Icon-->
+                           <div class="nds-col nds-size_1-of-12">
+                              <span>
+                                 <c-custom-icon icon-name="Directions" size="small" alternative-text="Directions" variant="information"></c-custom-icon>
+                              </span>
+                           </div>
+
+                           <div class="nds-col nds-size_11-of-12">
+                              <div style="display: contents" class="nds-text-link nds-show_inline-block">
+                                 <a href={facility.directionsUrl} target="_blank" aria-label="Get Directions opens a new tab">{facility.distanceFromZip} Miles</a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Phone Number -->
+                     <div class="nds-col nds-medium-order_4 nds-large-order_3 nds-size_1-of-1 nds-medium-size_4-of-12 nds-large-size_3-of-12 m-top">
+                        <div class="nds-col nds-size_12-of-12 nds-text-title nds-m-bottom_x-small">
+                           <h4>Phone Number</h4>
+                        </div>
+                        <div class="nds-col nds-size_12-of-12 nds-text-body_regular nds-media nds-media_center">
+                           <!-- Phone Icon - Shows up for desktop -->
+                           <div class="nds-col nds-size_1-of-12">
+                              <span>
+                                 <lightning-icon icon-name="utility:call" alternative-text="call" size="x-small" title="Phone Number" class="phoneIcon"></lightning-icon>
+                              </span>
+                           </div>
+                           <!-- Phone Number -->
+                           <div class="nds-col nds-size_11-of-12 content">
+                              <p>{facility.Phone}</p>
+                           </div>
+                        </div>
+                     </div>
+
+                     <!-- Review Details & Compare Buttons -->
+                     <div class="nds-grid nds-medium-order_2 nds-large-order_5 nds-wrap nds-col nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_2-of-12">
+                        <div class="nds-col nds-size_1-of-1 nds-medium-size_12-of-12 nds-large-size_12-of-12">
+                           <div class="nds-col nds-size_12-of-12 nds-m-bottom_small">
+                              <!-- <button name="View Profile" class="nds-button nds-button_brand nds-button_stretch" data-btn-id={facility.ProviderId} onclick={goToReviewProvDetails}>View Details</button> -->
+                              <button
+                                 name="View Details"
+                                 data-btn-id={facility.facetsProviderId}
+                                 onclick={goToDetails}
+                                 class="nds-button nds-button_brand nds-button_stretch"
+                                 aria-label="View Details will take you to Facility Information Page"
+                              >
+                                 View Details
+                              </button>
+                           </div>
+                           <div class="nds-col nds-size_12-of-12">
+                              <div class="nds-large-size_12-of-12 nds-show_medium nds-align_absolute-center">
+                                 <div class="nds-form-element">
+                                    <div class="nds-form-element__control">
+                                       <label class="nds-checkbox checkbox-nds-wheel">
+                                          <input
+                                             type="checkbox"
+                                             class="compare_Desktop"
+                                             name="options"
+                                             id={facility.facetsProviderId}
+                                             value={facility.facetsProviderId}
+                                             onclick={handleComparision}
+                                             checked={facility.added}
+                                             disabled={facility.isBtnDisabled}
+                                          />
+                                          <span class="nds-checkbox_faux"></span>
+                                          <label class="nds-checkbox__label">
+                                             <span class="nds-form-element__label">Compare</span>
+                                          </label>
+                                       </label>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <!-- Extra Icons -->
+                     <div class="nds-col nds-medium-order_6 nds-large-order_6 nds-wrap nds-size_1-of-1 nds-medium-size_12-of-12 nds-m-top_large nds-m-horizontal_x-small nds-border_top nds-show_medium" if:true={facility.FHN}>
+                           <div class="nds-grid nds-grid_align-center">
+                              <!-- FHN -->
+                              <div class="nds-col nds-m-top_x-small">
+                                 <div class="nds-col nds-size_1-of-1">
+                                    <div class="nds-grid nds-grid_vertical-align-center nds-m-horizontal_medium">
+                                       <c-custom-icon
+                                          custom-label="First Health Network"
+                                          title="FHN"
+                                          alternative-text="FHN"
+                                          class="nds-p-right_x-small nds-p-top_xx-small"
+                                          show-tooltip="true"
+                                          tooltip-position="defult"
+                                          tooltip-content="This facility is part of the First Health Network (FHN). When you call to make an appointment, let the office know you have access to First Health Network."
+                                       >
+                                       </c-custom-icon>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     
+                  </div>
+                  <!-- Facilities - Mobile -->
+                  <div key={facility.facetsProviderId} class="nds-hide_medium nds-m-top_x-small nds-m-bottom_medium nds-box">
+                     <!-- Facility Details -->
+                     <div class="nds-col nds-size_12-of-12 nds-text-body_regular nds-p-bottom_small nds-p-horizontal_x-small">
+                        <div class="nds-col nds-size_12-of-12 nds-text-title">
+                           <span>{facility.organizationName}</span>
+                        </div>
+                        <div class="nds-col nds-size_12-of-12 nds-text-body_regular">
+                           <span>{selectedFacilityType}</span>
+                        </div>
+                     </div>
+                     <!-- Address   Map Icon - Shows up for mobile -->
+                     <div class="nds-col nds-size_12-of-12 nds-text-body_regular nds-media">
+                        <div class="nds-col nds-size_7-of-12">
+                           <div class="nds-media">
+                              <!-- Map Icon -->
+                              <div class="nds-col nds-size_1-of-12">
+                                 <span>
+                                    <lightning-icon theme="nds" icon-name="utility:checkin" alternative-text="checkin" size="x-small" title="Map" class="mapIcon"></lightning-icon>
+                                 </span>
+                              </div>
+                              <!-- Address -->
+                              <div class="nds-col nds-size_11-of-12 nds-p-left_x-small">
+                                 {facility.facilityAddress.addressLine1}, {facility.facilityAddress.addressLine2} <br />
+                                 {facility.facilityAddress.city}, {facility.facilityAddress.state} {facility.zip}<br />
+                              </div>
+                           </div>
+                        </div>
+                        <!-- Miles -->
+                        <div class="nds-col nds-size_5-of-12">
+                           <div class="nds-media">
+                              <div class="nds-col nds-size_1-of-12">
+                                 <span>
+                                    <c-custom-icon icon-name="Directions" size="small" alternative-text="Directions" variant="information"></c-custom-icon>
+                                 </span>
+                              </div>
+
+                              <div class="nds-col nds-size_11-of-12 nds-p-left_small">
+                                 <div style="display: contents" class="nds-text-link nds-show_inline-block">
+                                    <a href={facility.directionsUrl} target="_blank" aria-label="Get Directions opens a new tab">{facility.distanceFromZip} Miles</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Phone -->
+                     <div class="nds-col nds-size_12-of-12 nds-text-body_regular nds-media nds-media_center">
+                        <!-- Phone Icon -->
+                        <div class="nds-col nds-size_1-of-12 nds-hide_medium nds-m-top_small">
+                           <span>
+                              <lightning-icon icon-name="utility:call" alternative-text="call" size="x-small" title="Phone Number" class="phoneIcon"></lightning-icon>
+                           </span>
+                        </div>
+                        <!-- Phone Number -->
+                        <div class="nds-col nds-size_10-of-12 content nds-hide_medium nds-m-top_small">
+                           <p>
+                              <lightning-formatted-phone value={facility.Phone}></lightning-formatted-phone>
+                           </p>
+                        </div>
+                     </div>
+                     <!-- View Profile -->
+                     <div class="nds-col nds-size_12-of-12 nds-p-top_medium">
+                        <!-- onclick={goToReviewProvDetails} data-btn-id={facility.ProviderId} -->
+                        <button name="View Profile" data-btn-id={facility.facetsProviderId} onclick={goToDetails} class="nds-button nds-button_brand nds-button_stretch">View Details</button>
+                     </div>
+                  </div>
+               </template>
+            </c-pager>
+
+            <!--MPV-1071: Footer for Facility Type Hospital-->
+            <div if:true={facilityTypeHospital} class="nds-col nds-size_1-of-1 nds-small-size_12-of-12 nds-medium-size_12-of-12 nds-large-size_12-of-12 nds-text-body_regular">
+               <p>
+                  See the Medicare.gov <a href="http://www.medicare.gov/hospitalcompare/search.html" target="_blank" aria-label="Hospital compare link opens a new tab">Hospital compare</a>
+                  <lightning-icon theme="nds" icon-name="utility:new_window" size="xx-small" class="nds-p-left_xx-small nds-m-right_xxx-small nds-brand c-fc-action-icon_right"></lightning-icon>
+                  tool for information on hospital quality, safety and patient experience.
+               </p>
+            </div>
+            <!-- Comparision Footer Start-->
+            <template if:true={showCompareFooter}>
+               <div class="nds-grid nds-wrap nds-box nds-m-top_medium compare-footer-border nds-show_medium">
+                  <div class="nds-col compare-providers-div nds-size_10-of-12">
+                     <div class="nds-col nds-p-horizontal_small nds-size_1-of-1 nds-medium-size_12-of-12 nds-large-size_12-of-12"><p>Select 2 or 3 facilities to compare.</p></div>
+                     <template for:each={facilitiesToCompare} for:item="facility">
+                        <div key={facility.facilityId} class="nds-col compare-facility c-bg-brand_medium">
+                           <p class="compare-facility-name">{facility.name}</p>
+                           <button class="compare-remove-item compare-close-icon" data-facilityid={facility.facilityId} onclick={handleRemoveCompare}>
+                              <lightning-icon theme="nds" icon-name="utility:close" alternative-text={facility.label} size="x-small" title={facility.label} class="close-icon"></lightning-icon>
+                           </button>
+                        </div>
+                     </template>
+                  </div>
+                  <div class="nds-size_2-of-12">
+                     <div class="nds-text-align_center">
+                        <button
+                           name="CompareFooter"
+                           disabled={isCompareDisabled}
+                           aria-label={messageCompare}
+                           class="nds-button nds-button_brand compare-button-padding nds-button_stretch"
+                           onclick={openFacilityComparison}
+                        >
+                           Compare
+                        </button>
+                     </div>
+
+                     <div class="nds-text-align_center nds-m-vertical_x-small">
+                        <button type="button" class="vlocity-btn nds-button nds-button_outline-brand" aria-label={messageCancel} onclick={removeAllComparison}>
+                           <span class="btnLabel">Cancel</span>
+                        </button>
+                     </div>
+                  </div>
+               </div>
+            </template>
+            <!-- Comparision Footer End-->
+         </div>
+         <div class={getMapWrapClass}>
+            <template if:true={showMobileMapDetails}>
+               <div class="nds-wrap nds-box nds-m-top_medium txtCenter mapMobilePinDetail nds-size_12-of-12">
+                  <div class="nds-grid nds-m-bottom_large nds-hide_medium">
+                     <div class="nds-size_11-of-12">
+                        <span class="nds-text-title">{pinnedFacilityFullName}</span>
+                     </div>
+                     <div class="nds-size_1-of-12">
+                        <lightning-button-icon
+                           variant="bare"
+                           icon-name="utility:close"
+                           onclick={handleClosePinDetail}
+                           alternative-text="Close Map Pin Details"
+                           title="Close Map Pin Details"
+                        ></lightning-button-icon>
+                     </div>
+                  </div>
+                  <div class="nds-size_12-of-12">
+                     <a href={pinDetailDirLink} target="_blank" class="nds-button nds-button_brand nds-button_stretch nds-m-left_none">Get Directions</a>
+                  </div>
+               </div>
+            </template>
+
+            <!-- <template if:false={isMapLoading}>
+               <lightning-map
+                  map-markers={mapMarkers}
+                  onmarkerselect={handleMapMarkerSelect}
+                  selected-marker-value={selectedMapMarkerValue}
+                  list-view="hidden"
+                  zoom-level={zoomLevel}
+                  class={mapMarginClass}
+               >
+               </lightning-map>
+            </template> -->
+         </div>
+      </div>
+   </template>
+
+   <!-- Modal Window - Provider Comparison -->
+   <template if:true={modalFacilityComparison}>
+      <!-- Modal/Popup Box LWC starts here -->
+      <section
+         role="dialog"
+         tabindex="0"
+         aria-label="Facility Comparison"
+         aria-labelledby="modal-heading-03"
+         aria-modal="true"
+         aria-describedby="modal-content-id-3"
+         class="nds-modal nds-modal_large nds-fade-in-open modalAccessibility"
+      >
+         <div class="nds-modal__container" id="facilityComparisonModal">
+            <!-- MODAL TO COMPARE FACILITIES -->
+            <div class="nds-modal__content nds-p-around_medium" id="modal-content-id-3">
+               <div align="right" style="padding: 0.5rem">
+                  <div onclick={closeModalFacilityComparison} class="c-close-icon_container">
+                     <lightning-icon theme="nds" icon-name="utility:close" alternative-text="Close" size="x-small" title="Close" class="c-close-icon"></lightning-icon>
+                  </div>
+               </div>
+
+               <table class="nds-table nds-table_cell-buffer nds-table_bordered nds-table_striped">
+                  <thead class="">
+                     <tr class="nds-line-height_reset nds-text-title">
+                        <td class="nds-large-size_3-of-12" scope="col">
+                           <div class="nds-truncate nds-p-vertical_small" title="Provider Name"></div>
+                        </td>
+                        <template for:each={facilityComparison} for:item="facility">
+                           <th key={facility.facetsProviderId} class="nds-large-size_3-of-12" scope="col">
+                              <div id={facility.facetsProviderId} class="nds-truncate nds-p-vertical_small" title={facility.firstName}>{facility.facilityName}</div>
+                           </th>
+                        </template>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <!-- Address -->
+                     <tr class="nds-hint-parent">
+                        <th data-label="Facility Address" scope="row">
+                           <div class="nds-truncate nds-text-title" title="Facility Address">Facility Address</div>
+                        </th>
+                        <template for:each={facilityComparison} for:item="facility">
+                           <td key={facility.facetsProviderId} class="" scope="col">
+                              <div class="nds-truncate" title={facility.facilityaddress.addressLine1}>
+                                 {facility.address.addressLine1}, {facility.address.addressLine2} <br />{facility.address.city}, {facility.address.state} {facility.zip}<br />
+                              </div>
+                           </td>
+                        </template>
+                     </tr>
+
+                     <!-- Facility Type -->
+                     <tr class="nds-hint-parent">
+                        <th data-label="Facility Type " scope="row">
+                           <div class="nds-truncate nds-text-title" title="Facility Type ">Facility Type</div>
+                        </th>
+                        <template for:each={facilityComparison} for:item="facility">
+                           <td key={facility.facetsProviderId} class="" scope="col">
+                              <div class="nds-truncate" title={selectedFacilityType}>{selectedFacilityType}</div>
+                           </td>
+                        </template>
+                     </tr>
+
+                     <!-- Phone Number -->
+                     <tr class="nds-hint-parent">
+                        <th data-label="Phone" scope="row">
+                           <div class="nds-truncate nds-text-title" title="Phone">Phone Number</div>
+                        </th>
+                        <template for:each={facilityComparison} for:item="facility">
+                           <td key={facility.facetsProviderId} class="" scope="col">
+                              <div class="nds-truncate" title={facility.phone}>{facility.phone}</div>
+                           </td>
+                        </template>
+                     </tr>
+                     <tr class="nds-hint-parent" if:true={dynamicCOE}>
+                        <th data-label="Center of Excellence" scope="row">
+                           <div class="nds-truncate nds-text-title" title="Center of Excellence">Center of Excellence</div>
+                        </th>
+                        <template for:each={facilityComparison} for:item="facility">
+                           <td key={facility.facetsProviderId} class="" scope="col">
+                              <div class="nds-truncate" title={facility.isCOE}>{facility.isCOE}</div>
+                           </td>
+                        </template>
+                     </tr>
+                     <!-- Repeat here -->
+                  </tbody>
+               </table>
+               <div class="nds-grid nds-wrap">
+                  <div class="nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_3-of-12 nds-align_absolute-center nds-m-bottom_small nds-m-top_large">
+                     <button class="nds-button nds-button_brand nds-button_stretch" onclick={closeModalFacilityComparison} title="Done">Done</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <div class="nds-backdrop nds-backdrop_open"></div>
+   </template>
+</template>

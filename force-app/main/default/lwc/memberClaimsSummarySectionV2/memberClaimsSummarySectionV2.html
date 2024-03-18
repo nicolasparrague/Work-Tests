@@ -1,0 +1,350 @@
+<template>
+    <div if:true={loading}>
+        <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+    </div>
+    <div class="nds-grid">
+        <h2 class="c-subheader_medium-b">Claims summary</h2>
+        <lightning-helptext if:true={_showPrivacyTooltip}
+            content="To protect the privacy of health information, some claims details are not shared with anyone other than the member themselves"></lightning-helptext>
+        <!-- <lightning-tooltip if:true={_showPrivacyTooltip} class="nds-m-left_x-small" content="To protect the privacy of health information, some claims details are not shared with anyone other than the member themselves" arrowposition="bottom-left" icon-name="utility:info"  ></lightning-tooltip> -->
+    </div>
+    <p class="c-text-body_regular">View up to 24 months of claims history from today’s date. It may take up to 5 days to
+        see the Explanation of Benefits (EOB) document for some finalized claims.</p>
+
+    <div class="nds-grid nds-wrap claimsSection">
+        <section class="nds-col nds-size_1-of-1">
+            <div class="nds-grid nds-wrap nds-grid_align-spread">
+                <div class="nds-show_large empty-space nds-col nds-medium-size_4-of-12 nds-large-size_3-of-12"></div>
+
+                <!-- Filter By -->
+                <section
+                    class="c-filter-section nds-col nds-size_1-of-2 nds-large-size_3-of-12 nds-order_1 nds-large-order_3">
+                    <!-- Header-->
+                    <div class="nds-m-top_xx-small nds-show_large">
+                        <div class="nds-media">
+                            <div class="nds-text-body_regular nds-m-top_small">Filter By</div>
+                            <div class="nds-m-left_x-small nds-m-top_x-small">
+                                <!-- <lightning-tooltip
+                                content="Please scroll down to apply."
+                                arrowposition="top-left"
+                                icon-name="utility:info"
+                                 
+                                ></lightning-tooltip> -->
+                                <lightning-helptext content="Please scroll down to apply."></lightning-helptext>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nds-combobox__form-element nds-input-has-icon nds-input-has-icon_right nds-m-right_xx-small nds-p-bottom_medium nds-hide_large"
+                        role="none">
+                        <!-- Default Search Box -->
+                        <div data-type="open" onclick={triggerFilter}
+                            class="FilterByClass nds-text-body_regular nds-text-link">
+                            <input data-type="open" type="text" class="nds-input nds-combobox__input filter_input"
+                                id="combobox-id-3" aria-activedescendant="option1" aria-autocomplete="list"
+                                list="listbox-id-3" aria-controls="listbox-id-3" autocomplete="off" role="textbox"
+                                readonly value="Filter By" />
+                            <span data-type="open" class="nds-icon_container">
+                                <lightning-icon data-type="open" icon-name="utility:down"
+                                    class="nds-icon-utility-down nds-input__icon nds-input__icon_right nds-m-right_x-small"
+                                    size="x-small">
+                                </lightning-icon>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="nds-large-size_10-of-12 c-filter_dropdown c-hide_small">
+                        <div class="nds-hide_large nds-p-horizontal_small nds-text-align_right">
+                            <lightning-button data-type="close" variant="base" label="" icon-name="utility:close"
+                                onclick={triggerFilter}></lightning-button>
+                        </div>
+                        <!-- Search by Provider or Facility -->
+                        <div class="nds-box radio-box c-claims-radio-box nds-m-bottom_large nds-m-top_small" role="list"
+                            aria-label="Provider or Facility">
+                            <div class="nlds-col nds-size_12-of-12">
+                                <h4 class="c-field-label_medium nds-m-bottom_x-small">Provider or Facility</h4>
+                                <c-claims-by-provider-search if:true={showProvAndFacOption}
+                                    options={providersAndFacilities} class="nds-text-body_regular"
+                                    placeholder="Search..." default-value={filterObject.providerName}
+                                    aria-label={referringAriaLabel} aria-label-combobox={referringAriaCombobox}>
+                                </c-claims-by-provider-search>
+
+                                <!-- <div class="member-select via-nds">
+                                    <div class="nds-text-body_regular nds-form-element__label_toggle-text">
+                                        <lightning-combobox
+                                            if:true={showProvAndFacOption}
+                                            options={providersAndFacilities}
+                                              
+                                            class="nds-text-body_regular nds-is-open"
+                                            placeholder="Search..."
+                                            default-value={filterObject.providerName}
+                                            aria-label={referringAriaLabel}
+                                            required=""
+                                            >
+                                        </lightning-combobox>
+
+                                        <lightning-combobox
+                                            if:true={showProvAndFacOption}
+                                            options={providersAndFacilities}                                            
+                                              
+                                            class="nds-text-body_regular nds-is-open"
+                                            placeholder="Search..."
+                                            default-value={filterObject.providerName}
+                                            aria-label={referringAriaLabel}
+                                            searchable={searchable}
+                                            read-only={readonly}
+                                            data-show-lookup={dataShowLookup}>
+                                        </lightning-combobox>
+
+                                        <lightning-combobox
+                                            label="Select Option"
+                                            options={options}
+                                            placeholder="Select an Option"
+                                            onselectoption={handleOptionChange}
+                                            >
+                                        </lightning-combobox>
+
+                                    </div>
+                                </div>                                -->
+                            </div>
+                        </div>
+
+                        <!-- Claim Type -->
+                        <div class="nds-box radio-box nds-m-bottom_large" role="radiogroup" aria-label="Claim Type">
+                            <h4 class="c-field-label_medium nds-m-bottom_medium">Claim Type</h4>
+                            <template  if:true={showFilters} for:each={viewClaimsWithinArrayType} for:item="vrw" for:index="index">
+                                <div key={vrw.id}>
+                                    <span class="nds-radio nds-size_1-of-1 nds-medium-size_4-of-12 nds-large-size_12-of-12 nds-m-top_small">
+                                        <input type="radio" id={vrw.id} name="claimType" class="filter_viewclaimswithin" value={vrw.value} onchange={handleRadioButton} checked={vrw.checked}>
+                                        <label class="nds-radio__label" for={vrw.id}>
+                                            <span class="nds-radio_faux"></span>
+                                            <span class="nds-text-body_regular">{vrw.label}</span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </template>
+                        </div>
+
+                        <!-- Claim Status -->
+                        <div class="nds-box radio-box nds-m-bottom_large" role="radiogroup" aria-label="Status">
+                            <h4 class="c-field-label_medium nds-m-bottom_medium">Status</h4>
+                            <template  if:true={showFilters} for:each={viewClaimsWithinArrayStatus} for:item="vrw" for:index="index">
+                                <div key={vrw.id}>
+                                    <span class="nds-radio nds-size_1-of-1 nds-medium-size_4-of-12 nds-large-size_12-of-12 nds-m-top_small">
+                                        <input type="radio" id={vrw.id} name="claimStatus" class="filter_viewclaimswithin" value={vrw.value} onchange={handleRadioButton} checked={vrw.checked} label={vrw.label}>
+                                        <label class="nds-radio__label" for={vrw.id}>
+                                            <span class="nds-radio_faux"></span>
+                                            <span class="nds-text-body_regular">{vrw.label}</span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </template>
+                        </div>
+
+                        <!-- Claim Dates -->
+                        <div class="nds-box radio-box nds-m-bottom_large" role="radiogroup" aria-label="Date">
+                            <h4 class="c-field-label_medium nds-m-bottom_medium">Date</h4>
+                                <template if:true={showFilters} for:each={viewClaimsWithinArrayDate} for:item="vrw" for:index="index">
+                                    <div key={vrw.id}>
+                                        <span class="nds-radio nds-size_1-of-1 nds-medium-size_4-of-12 nds-large-size_12-of-12 nds-m-top_small">
+                                            <input type="radio" id={vrw.id} name="serviceStartDate" class="filter_viewclaimswithin" value={vrw.value} onchange={handleRadioButton} checked={vrw.checked}>
+                                            <label class="nds-radio__label" for={vrw.id}>
+                                                <span class="nds-radio_faux"></span>
+                                                <span class="nds-text-body_regular">{vrw.label}</span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </template>
+
+                            <div if:true={showCustomDateRange}>
+                                <div class="nds-grid nds-wrap nds-media nds-m-bottom_x-small">
+                                    <div class="nds-size_2-of-12 nds-medium-size_4-of-12 nds-large-size_2-of-12">
+                                        <!-- <lightning-tooltip
+                                            content="You may search as far back as 24 months from today."
+                                            icon-name="utility:info"
+                                             
+                                            arrowposition="top-left"
+                                        ></lightning-tooltip> -->
+                                        <lightning-helptext
+                                            content="You may search as far back as 24 months from today."></lightning-helptext>
+                                    </div>
+                                    <div class="nds-size_10-of-12 nds-medium-size_10-of-12 nds-large-size_10-of-12">
+                                        <div class="nds-text-body_regular">From *</div>
+                                        <lightning-input type="date" label="" name="from"
+                                            value={filterObject.customDateRange.from} hide-icon=false 
+                                            format="MM/DD/YYYY" onchange={setCustomDate}
+                                            class="c-hide-ootb-error-message c-datepicker-filter-display"
+                                            select-date-label="Date Picker" required></lightning-input>
+                                    </div>
+                                    <div if:true={fromDateMessage}
+                                        class="nds-size_1-of-1 nds-medium-size_12-of-12 nds-large-size_12-of-12">
+                                        <p class="nds-text-body_small c-color-text_red" tabindex="0">You have searched
+                                            for dates outside of the available range.</p>
+                                    </div>
+                                </div>
+                                <div class="nds-grid nds-wrap nds-media nds-m-bottom_x-small">
+                                    <div class="nds-size_2-of-12 nds-medium-size_4-of-12 nds-large-size_2-of-12">
+                                        <!-- <lightning-tooltip
+                                            content="This date can’t be a future date"
+                                            arrowposition="top-left"
+                                            icon-name="utility:info"
+                                             
+                                        ></lightning-tooltip> -->
+                                        <lightning-helptext
+                                            content="This date can’t be a future date"></lightning-helptext>
+                                    </div>
+                                    <div class="nds-size_10-of-12 nds-medium-size_10-of-12 nds-large-size_10-of-12">
+                                        <div class="nds-text-body_regular">To *</div>
+                                        <lightning-input type="date" label="" name="to"
+                                            value={filterObject.customDateRange.to} 
+                                            format="MM/DD/YYYY" 
+                                            onchange={setCustomDate}
+                                            required></lightning-input>
+                                    </div>
+                                    <div if:true={toDateMessage}
+                                        class="nds-size_1-of-1 nds-medium-size_12-of-12 nds-large-size_12-of-12">
+                                        <p class="nds-text-body_small c-color-text_red" tabindex="0">You have searched
+                                            for dates outside of the available range.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Apply Filter -->
+                        <div class="nds-m-bottom_large">
+                            <button onclick={applyFilter} class="nds-button nds-button_neutral nds-button_stretch nds-button_brand">
+                                <span class="btnLabel">Apply</span>
+                             </button>
+                        </div>
+
+                        <!-- Clear Filter -->
+                        <div class="nds-m-bottom_large">
+                            <button onclick={clearFilters} class="nds-button nds-button_neutral nds-button_stretch">
+                                <span class="btnLabel">Reset</span>
+                             </button>
+                        </div>
+
+                        <!-- EOB Documents -->
+                        <c-quarterly-monthly-e-o-b if:true={isMemberSet} claims={claimsTracked}
+                            member-id={_memberId.memberId} brand={_memberId.brand}
+                            member-type={_memberId.memberType}></c-quarterly-monthly-e-o-b>
+                    </div>
+                </section>
+
+                <!-- Sort By -->
+                <div class="nds-col nds-size_1-of-2 nds-large-size_7-of-12 nds-order_2 nds-large-order_1">
+                    <div class="nds-media">
+                        <div class="nds-combobox__form-element nds-input-has-icon nds-input-has-icon_right nds-large-size_3-of-12 nds-p-bottom_medium"
+                            role="none">
+                            <!-- Default Search Box -->
+                            <div class="SortyByClass nds-text-body_regular">
+                                <input onclick={openSortDropdown} type="button"
+                                    class="nds-input nds-combobox__input sort_input sortClaims" id="combobox-id-1"
+                                    aria-activedescendant="option1" aria-autocomplete="list" list="listbox-id-1"
+                                    aria-controls="listbox-id-1" autocomplete="off" role="combobox" readonly
+                                    value="Sort By" style="padding-right: 100%;" />
+                                <span class="nds-icon_container" onclick={openSortDropdown}>
+                                    <!-- <lightning-icon   icon-name="utility:down" class="nds-icon-utility-down nds-input__icon nds-input__icon_right nds-m-right_x-small" size="x-small">
+                                    </lightning-icon> -->
+                                    <lightning-icon icon-name="utility:chevrondown"
+                                        class="nds-icon-utility-search nds-input__icon nds-input__icon_right nds-searchIcon"
+                                        alternative-text="Approved" size="x-small">
+                                    </lightning-icon>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div id="listbox-id-1"
+                            class="sort_list nds-box radio-box nds-dropdown nds-dropdown_large nds-hide" role="listbox">
+                            <!-- Sort Options -->
+                            <ul class="nds-dropdown__list" role="presentation">
+                                <li role="presentation" class="nds-dropdown__item nds-clearfix nds-p-right_small">
+                                    <!-- <lightning-button   variant="base" label="" class="nds-float_right" icon-name="utility:close" onclick={closeSortDropdown}></lightning-button> -->
+                                    <lightning-button-icon aria-label="Close" icon-name="utility:close" variant="bare"
+                                        alternative-text="Close" title="Close" onclick={closeSortDropdown}
+                                        class="nds-float_right">
+                                    </lightning-button-icon>
+                                </li>
+                                <template if:true={sortOptions}>
+                                    <template for:each={sortOptions} for:item="item">
+                                        <li role="presentation" class="nds-dropdown__item" key={item.key}>
+                                            <div aria-selected="true" id={item.key} data-badge-id={item.key}
+                                                data-badge-value={item.value}
+                                                class="nds-media nds-listbox__option nds-listbox__option_entity nds-listbox__option_has-meta"
+                                                role="option" tabindex="0" onclick={handleSortBy}>
+                                                <span class="nds-media__body nds-m-vertical_x-small">
+                                                    <span data-badge-id={item.key} data-badge-value={item.value}
+                                                        class="nds-listbox__option-text nds-listbox__option-text_entity nds_optiontxt"
+                                                        id={item.key} tabindex="0">
+                                                        {item.label}
+                                                    </span>
+                                                </span>
+                                                <!-- Badge -->
+                                                <span if:true={item.showBadge} style="pointer-events: none;">
+                                                    <span if:true={item.ascendingDirection}
+                                                        class="nds-m-vertical_xx-small nds-badge nds-p-around_none"
+                                                        style="pointer-events: none;" tabindex="0"
+                                                        onclick={handleSortBy}>
+                                                        Ascending
+                                                        <span class="nds-icon_container nds-m-right_xx-small"
+                                                            style="pointer-events: none;">
+                                                            <lightning-icon icon-name="utility:arrowup"
+                                                                class="nds-icon-utility-arrowup nds-m-right_xx-small"
+                                                                size="xx-small">
+                                                            </lightning-icon>
+                                                        </span>
+                                                    </span>
+                                                    <span if:false={item.ascendingDirection}
+                                                        class="nds-m-vertical_xx-small nds-badge nds-p-around_none"
+                                                        style="pointer-events: none;" tabindex="0"
+                                                        onclick={handleSortBy}>
+                                                        Descending
+                                                        <span class="nds-icon_container nds-m-right_xx-small"
+                                                            style="pointer-events: none;">
+                                                            <lightning-icon icon-name="utility:arrowdown"
+                                                                class="nds-icon-utility-arrowup nds-m-right_xx-small"
+                                                                size="xx-small">
+                                                            </lightning-icon>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <hr class="nds-align_absolute-center nds-m-bottom_xx-small" />
+                                        </li>
+                                    </template>
+                                </template>
+                                <template if:false={sortOptions}>
+                                    <div>Error</div>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Export To Excel -->
+                <div class="nds-col nds-size_1-of-1 nds-large-size_2-of-12 nds-m-bottom_medium nds-text-align_right nds-order_3 nds-large-order_2 slds-p-vertical_medium"
+                    role="main" aria-label="Export Claims to Excel">
+                    <c-export-to-excel button-label="Export to Excel" table-data={claimsTracked}
+                        table-structure={claimsTableStructure} file-name="Claims"></c-export-to-excel>
+                </div>
+
+
+                <!-- Claims List -->
+                <div class="nds-col nds-size_1-of-1 nds-large-size_9-of-12 nds-order_4 nds-large-order_4">
+                    <c-pager-non-dynamic if:true={showClaims} class="pager" pagedata={claimsTracked} title=""
+                        onpagerchanged={handlePagerChange} selected-page={pagerObject.currentPage} error-message="We were unable to find any results based on your filter. Please check your criteria and
+                        try again">
+                        <div>
+                            <c-cf-a-m-p_-claims-summary-list if:true={showList} parent-data="true"
+                                records={currentlyShown} parent-attribute={_memberId}></c-cf-a-m-p_-claims-summary-list>
+                        </div>
+                    </c-pager-non-dynamic>
+                    <div
+                        class="nds-border_top nds-border_right nds-border_bottom nds-border_left nds-p-around_large nds-m-top_medium c-box-style">
+                        <h3 class="c-subheader_small nds-m-bottom_x-small">Looking for Claim Forms?</h3>
+                        <c-cf-a-m-p_-claims-looking-forms></c-cf-a-m-p_-claims-looking-forms>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</template>

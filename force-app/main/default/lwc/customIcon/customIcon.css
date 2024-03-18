@@ -1,0 +1,81 @@
+.nds-icon{
+    fill: none;
+    
+}
+/* Tooltip container */
+.customTooltip {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Hover position text*/
+  /* TOP CENTER */
+  .customTooltip .customTooltipTextTop{
+    position: absolute;
+    z-index: 6000;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    box-shadow: 0 2px 3px 0 rgb(0 0 0 / 16%);
+  }
+  /* TOP LEFT */
+  .customTooltip .customTooltipTextLeft{
+    position: absolute;
+    z-index: 6000;
+    margin-left: 0;
+    right: 125%;
+    bottom: 125%;
+    box-shadow: 0 2px 3px 0 rgb(0 0 0 / 16%);
+  }
+  /* TOP RIGHT */
+  .customTooltip .customTooltipTextRight{
+    position: absolute;
+    z-index: 6000;
+    margin-left: 0;
+    left: 125%;
+    bottom: 125%;
+    box-shadow: 0 2px 3px 0 rgb(0 0 0 / 16%);
+  }
+  /* BOTTOM CENTER */
+  .customTooltip .customTooltipTextBottom{
+    position: absolute;
+    z-index: 6000;
+    top: 125%;
+    margin-left: -60px;
+    box-shadow: 0 2px 3px 0 rgb(0 0 0 / 16%);
+  }
+  
+  /* Tooltip text */
+  .customTooltip .customTooltipText {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 20px;
+    visibility: hidden;
+    width: max-content;
+    max-width: 23rem;
+    background-color: #fff;
+    text-align: left;
+    padding: 12px;
+    border-radius: 0.25rem;
+    border: 1px solid #63676B;
+    min-height: 2rem;
+  
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  /* Tooltip arrow */
+  .customTooltip .customTooltipText::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .customTooltip:hover .customTooltipText {
+    visibility: visible;
+    opacity: 1;
+  }

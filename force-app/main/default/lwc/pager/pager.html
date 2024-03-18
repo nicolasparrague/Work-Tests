@@ -1,0 +1,161 @@
+<template>
+   <section>
+      <div class="page-data-container">
+         <slot></slot>
+      </div>
+      <div class="nds-grid nds-wrap nds-m-bottom_medium nds-grid_align-spread">
+         <div class="nds-hide_medium nds-size_12-of-12">
+            <div class="nds-col nds-size_12-of-12 totalEntries">
+               <span class="nds-text-body_regular nds-float_left">Showing {from}-{to} of {totalEle}</span>
+               <span class="nds-text-body_regular nds-float_right">Page {currentPage} of {maxPages}</span>
+            </div>
+         </div>
+
+         <div class="nds-show_medium nds-col nds-order_3 nds-medium-order_1 nds-large-order_1 nds-size_12-of-12">
+            <div class="nds-col nds-size_7-of-12 nds-align_absolute-center">
+               <div class="nds-col nds-size_6-of-12 pagerange">
+                  <lightning-button-icon
+                     icon-name="utility:chevronleft"
+                     data-id="prevButton"
+                     alternative-text="Previous"
+                     class="nds-m-left_xx-small prevButton"
+                     title="Previous"
+                     onclick={handlePrevious}
+                     variant="bare">
+                  </lightning-button-icon>
+                  <template for:each={currentRange} for:item="page">
+                     <span key={page.id} data-id={page.id} data-pageid={page.id} onclick={handleGoToClick} class="nds-text-body_regular page-span">{page.value}</span>
+                  </template>
+                  <lightning-button-icon
+                     icon-name="utility:chevronright"
+                     data-id="nextButton"
+                     alternative-text="Go to next page"
+                     class="nds-m-left_xx-small nextButton"
+                     title="Go to next page"
+                     onclick={handleNext}
+                     variant="bare">
+                  </lightning-button-icon>
+               </div>
+
+               <div if:false={lessthan7pages} class="nds-col nds-size_3-of-12 gotopage-input">
+                  <div class="gotopage-input">
+                     <label class="nds-form-element__label inputlabel" for="combobox-unique-id">
+                        <div role="textbox" aria-label="Go to page">Go to page</div>
+                     </label>
+                     <input
+                        type="text"
+                        class="nds-input nds-combobox__input nds-has-focus pageinput"
+                        id="combobox-id-3"
+                        aria-autocomplete="list"
+                        list="listbox-id-3"
+                        aria-controls="listbox-id-3"
+                        autocomplete="off"
+                        aria-label="Go to page"
+                        role="textbox"
+                        placeholder={currentPage}
+                        onchange={handleGoToChange}
+                        onkeyup={handleKeyUp}
+                        value={goToValue}/>
+                     <lightning-button-icon
+                        icon-name="utility:chevronright"
+                        alternative-text="Go to page"
+                        class="nds-m-left_xx-small iconright"
+                        title="Go to page"
+                        variant="Go to page"
+                        onclick={handleGoToInput}>
+                     </lightning-button-icon>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="nds-hide_medium nds-col nds-order_3 nds-medium-order_1 nds-large-order_1 nds-size_12-of-12">
+            <div class="nds-col nds-size_12-of-12 nds-align_absolute-center">
+               <div class="nds-col nds-size_12-of-12 nds-align_absolute-center pagerange">
+                  <lightning-button-icon
+                     icon-name="utility:chevronleft"
+                     data-id="prevButton"
+                     alternative-text="Previous"
+                     class="nds-m-left_xx-small prevButton"
+                     title="Previous"
+                     onclick={handlePrevious}
+                     variant="bare"
+                  ></lightning-button-icon>
+                  <template for:each={currentRange} for:item="page">
+                     <span key={page.id} data-id={page.id} data-pageid={page.id} onclick={handleGoToClick} class="nds-text-body_regular page-span">{page.value}</span>
+                  </template>
+                  <lightning-button-icon
+                     icon-name="utility:chevronright"
+                     data-id="nextButton"
+                     alternative-text="Next"
+                     class="nds-m-left_xx-small nextButton"
+                     title="Next"
+                     onclick={handleNext}
+                     variant="bare"
+                  ></lightning-button-icon>
+               </div>
+            </div>
+         </div>
+
+         <div if:false={lessthan7pages} class="nds-hide_medium nds-col nds-order_3 nds-medium-order_1 nds-large-order_1 nds-size_12-of-12 mobilepagerview">
+            <div class="nds-col nds-size_12-of-12 nds-align_absolute-center">
+               <div class="nds-col nds-size_5-of-12 nds-align_absolute-center gotopage-input">
+                  <div class="gotopage-input">
+                     <label class="nds-form-element__label inputlabel">Go to page</label>
+                     <input
+                        type="text"
+                        class="nds-input nds-combobox__input nds-has-focus pageinput"
+                        id="combobox-id-4"
+                        aria-autocomplete="list"
+                        list="listbox-id-4"
+                        aria-controls="listbox-id-4"
+                        autocomplete="off"
+                        role="textbox"
+                        placeholder={currentPage}
+                        onchange={handleGoToChange}
+                        onkeyup={handleKeyUp}
+                        value={goToValue}
+                     />
+                     <lightning-button-icon
+                        icon-name="utility:chevronright"
+                        alternative-text="Next"
+                        class="nds-m-left_xx-small iconright"
+                        title="Next"
+                        variant="bare"
+                        onclick={handleGoToInput}
+                     ></lightning-button-icon>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- LINKS BOX  -->
+      <div if:true={_showSaveSearch} class="box nds-grid nds-wrap nds-col nds-order_1 nds-medium-order_2 nds-large-order_2 nds-small-size_12-of-12 print nds-m-bottom_xx-large links-box">
+         <div if:false={isPublic} class="nds-col nds-12-of-12 nds-medium-size_4-of-12 nds-large-size_2-of-12">
+            <c-navigation-action-encrypted
+               targettype="standard__namedPage"
+               targetname="create-message"
+               targetparams={askQuestionParams}
+               label="Ask a Question"
+               variant=""
+               iconposition="left"
+               iconname="utility:email"
+               class="c-fc-action-text"
+            ></c-navigation-action-encrypted>
+         </div>
+         <div class="nds-col nds-12-of-12 nds-medium-size_8-of-12 nds-large_size_8-of-12">
+            <div class="nds-col nds-size_12-of-12 nds-medium-size_6-of-12 nds-large-size_8-of-12 nds-mlabelPrint">
+               <template if:true={jsondata}>
+                  <span class="nds-show_medium">
+                     <c-custom-icon icon-name="Download" size="small" alternative-text="Print All Searched Results" class="nds-p-right_x-small" variant="information"> </c-custom-icon>
+                  </span>
+                  <span class="nds-hide_medium">
+                     <c-custom-icon icon-name="Download" size="small" alternative-text="Download" class="nds-p-right_x-small" variant="information"> </c-custom-icon>
+                  </span>
+                  <c-generate-p-d-f omni-data={jsondata} input-params={criteria} total-records={totalElements}> </c-generate-p-d-f>
+               </template>
+            </div>
+         </div>
+      </div>
+   </section>
+</template>

@@ -1,0 +1,40 @@
+<template>
+    <template if:true={loading}>
+        <div>
+            <lightning-spinner alternative-text="Loading" size="medium" > </lightning-spinner>
+        </div>
+</template>
+<div class="nds-grid nds-m-bottom_small nds-grid info-box">
+    <c-custom-icon icon-name="Information_Tool_Tip" size="small" variant="information" title="Info" alternative-text="Info" class="nds-m-right_small"></c-custom-icon>
+    <p if:false={isPublisherApp} class=" nds-text-body_regular">
+        The information you see here only applies to the ID number shown at the very top. If you want to see details and activity for your other accounts, click the ‘switch’ button to select a different ID number.
+    </p>
+    <p if:true={isPublisherApp} class=" nds-text-body_regular">
+        The information you see here only applies to the ID number you selected after you signed in. If you want to see details and activity for your other accounts, go to the menu and tap or click the ‘switch’ button to select a different ID number.
+    </p>
+</div>
+<template if:true={pageIsFindCare}>
+    <div class="main-navi nds-p-top_large">
+        <h1 class="mainContent nds-page-header_title nds-align_absolute-center nds-text-align_center nds-medium-size nds-p-horizontal_large" id="maincontent">Service Type</h1>
+    </div>
+    <div class="slds-align_absolute-center">
+        <p style="text-align: center;" class="c-text-intro-copy nds-show_medium">Select an option below to begin your search for providers and facilities in your network</p>
+    </div>
+    <template if:true={hasDentalInOther}>
+        <div class="nds-grid nds-m-bottom_small info-box">
+            <template if:true={hasDentalInOther}>
+                <c-custom-icon icon-name="Information_Tool_Tip" size="small" variant="information" title="Info" alternative-text="Info" class="nds-m-right_small"></c-custom-icon>
+                <p class=" nds-text-body_regular">
+                    Your plan includes some dental benefits. To find your complete dental coverage, Switch Accounts at the top of the screen and choose your Dental Plan.
+                </p>
+            </template>
+            <template if:true={hasDentalInCurrent}>
+                <c-custom-icon icon-name="Information_Tool_Tip" size="small" variant="information" title="Info" alternative-text="Info" class="nds-m-right_small"></c-custom-icon>
+                <p class=" nds-text-body_regular">
+                    Your plan includes some dental benefits. To find your complete dental coverage, choose your Dental Plan in the Plan Name drop down below.
+                </p>
+            </template>
+        </div>
+    </template>
+</template>
+</template>

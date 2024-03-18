@@ -1,0 +1,39 @@
+<template>
+   <div class="customPad" style="overflow: auto">
+
+      <div if:true={domRender} class={btnGroupClass} role="tablist">
+         
+         <!-- MPV-1099 : to show Referrals section as active by default-->
+         
+         <button if:true={showReferralsTab} data-id="0" class={referral} onclick={showReferrals} role="tab" selected={selectedReferral}>Referral</button>
+         
+         <button data-id="1" class={preAuth} onclick={showPreAuth} role="tab" selected={selectedPreauth}>Preauthorization</button>
+      
+         <!-- <button if:true={_showTabButton} data-id="2" class={dentalPred} onclick={showDentalPreDet} role="tab" aria-selected={selectedDental}>Dental Predetermination</button> -->
+      </div>
+   </div>
+   
+   <!-- user later to display referral, preauth and dental -->
+   <div if:true={_memberId} class="section-padding_top">
+
+      <template if:true={referralSummary}>
+         
+         <c-member-referrals-flex-card-pagination if:true={showlist} history-type="Referral" memberid={_memberId} brand={_brandd}></c-member-referrals-flex-card-pagination> 
+        
+      </template>
+
+      <template if:true={preAuthSummary} class="preAuth" >
+         
+          <c-member-referrals-flex-card-pagination if:true={showlist} history-type="Pre-Authorization" memberid={_memberId} brand={_brandd}></c-member-referrals-flex-card-pagination> 
+        
+      </template>
+      
+      <!-- <template if:true={dentalSummary} class="dentalTab">
+        
+         <c-member-referrals-flex-card-pagination if:true={showlist} history-type="DentalPreDetermination" memberid={_memberId} brand={_brandd}></c-member-referrals-flex-card-pagination> 
+        
+      </template> -->
+     
+   </div>  
+
+</template>

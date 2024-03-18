@@ -1,0 +1,50 @@
+<template>
+    <button         
+         aria-label="View Nearby Events"
+         class="nds-button nds-button_neutral nds-m-bottom_x-small nds-m-top_x-small nds-button_stretch"
+         onclick={goToExternalSite}>
+         <span class="btnLabel1">View Nearby Events</span>
+         <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small nds-m-left_x-small c-fc-action-icon_right"></lightning-icon>
+    </button>
+
+    <template if:true={isModalGlobal}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-modal__confirmation nds-fade-in-open">
+          <div class="nds-modal__container modalAccessibility">
+            <div class="nds-modal__content" id="modal-content-id-1">
+              <div class="nds-grid nds-m-bottom_large">
+                 <template if:false={ismobile}>
+                       <div class="nds-col nds-p-top_small">
+                          <p class="nds-text-color_default  nds-text-body_regular">
+                            This link will take to a new tab, but your Attentis Health session will remain active in this tab.
+                          </p>
+                       </div>
+                 </template>
+                 <template if:true={ismobile}>
+                       <div class="nds-col nds-p-top_small">
+                          <p class="nds-text-color_default  nds-text-body_regular">
+                            This link will open in your browser. You can come back to the app at any time to pick up where you left off.
+                          </p>
+                       </div>        
+                 </template>
+              </div>
+              <div class="nds-grid nds-text-align_center">
+                 <div class="nds-size_1-of-1">
+                    <div class="nds-col c-reverse-button-stack_small ">
+                       <!-- Go Back option -->
+                       <button class="nds-m-right_large nds-button nds-button_neutral modal-color-1 " onclick={closeModal} title="Go Back">
+                          Cancel
+                       </button>
+                       <!-- Pharmacy  -->
+                       <button class="nds-button nds-button_brand modal-color-2" onclick={openLink} title="Proceed to the site">
+                          Continue<lightning-button-icon variant="bare" icon-name="utility:link"></lightning-button-icon>
+                       </button>
+                    </div>
+                 </div>
+              </div>
+           </div>
+          </div>
+        </section>
+        <div class="nds-backdrop nds-backdrop_open"></div>
+      </template>
+</template>

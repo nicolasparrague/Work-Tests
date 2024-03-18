@@ -1,0 +1,182 @@
+<template>
+    <!--<div class="spinner">
+        <template if:true={isLoading}>
+             <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+             </lightning-spinner>
+        </template>
+    </div>-->
+    <section>
+        <div class="page-data-container">
+            <!-- <h1 class="nds-text-heading_large nds-align_absolute-center nds-m-top_small">
+                {title}
+            </h1> -->
+            <template if:true={noData}>
+                <div class="nds-grid nds-wrap nds-box nds-m-top_medium txtCenter" aria-describedby="cases-eror-content-id-01" role="alertdialog">
+                    <div id="cases-eror-content-id-01">
+                        <p if:false={errorMessage} class="txtCenter" role="alert">We couldn't find any providers matching your criteria.</p>
+                        <p if:true={errorMessage} class="txtCenter" role="alert">{errorMessage}</p>
+                    </div>
+                    
+                </div>
+            </template>
+            <template if:false={noData}>
+                <slot></slot>
+            </template>
+        </div>
+        <div class="nds-grid nds-wrap nds-m-top_small nds-grid_align-spread">
+
+            <div class="nds-hide_medium nds-size_12-of-12 ">
+                <div class="nds-col nds-size_12-of-12 totalEntries">
+                    <span class="nds-text-body_regular nds-float_left">Showing {currentElement}-{elementsLoaded} of {totalProv}</span>
+                    <span class="nds-text-body_regular nds-float_right nds-p-horizontal_small">Page {currentPage} of {maxPages}</span>
+                </div>
+            </div>
+
+            <div class=" nds-show_medium nds-col nds-order_3 nds-medium-order_1 nds-large-order_1 nds-size_12-of-12 pagerview">
+                <div class="nds-col nds-size_7-of-12 nds-align_absolute-center">
+                    <div class="nds-col nds-size_6-of-12 pagerange nds-text-align_center">
+                        <lightning-button-icon
+                            icon-name="utility:chevronleft"
+                            data-id="prevButton"
+                            alternative-text="Previous"
+                            class="nds-m-left_xx-small prevButton"
+                            title="Previous"
+                            onclick={handlePrevious}
+                            variant="bare"
+                        ></lightning-button-icon>
+                        <template for:each={currentRange} for:item="page">
+                            <span key={page.id} data-id={page.id} data-pageid={page.id} onclick={handleGoToClick} class="nds-text-body_regular page-span">{page.value}</span>
+                        </template>
+                        <lightning-button-icon 
+                            icon-name="utility:chevronright" 
+                            data-id="nextButton" 
+                            alternative-text="Next" 
+                            class="nds-m-left_xx-small nextButton" 
+                            title="Next" 
+                            onclick={handleNext}
+                            variant="bare"
+                        ></lightning-button-icon>
+                    </div>
+                    <div if:false={lessthan7pages} class="nds-col nds-size_2-of-12 gotopage-input">
+                        
+                        <div class="gotopage-input">
+                            <label class="nds-form-element__label inputlabel" >Go to page</label>
+                            <input
+                                type="text"
+                                class="nds-input nds-combobox__input nds-has-focus pageinput "
+                                id="combobox-id-3"
+                                aria-autocomplete="list"
+                                list="listbox-id-3"
+                                aria-controls="listbox-id-3"
+                                autocomplete="off"
+                                role="textbox"
+                                placeholder={currentPage}
+                                onchange={handleGoToChange}
+                                onkeyup={handleKeyUp}
+                                value={goToValue}
+                            />
+                            <lightning-button-icon 
+                            icon-name="utility:chevronright" 
+                            alternative-text="Next" 
+                            class="nds-m-left_xx-small iconright" 
+                            title="Next" 
+                            variant="bare"
+                            onclick={handleGoToInput}
+                        ></lightning-button-icon>
+                    </div>  
+                    </div>
+
+                    
+                </div>
+            </div>
+
+
+            <div class=" nds-hide_medium nds-col nds-order_3 nds-medium-order_1 nds-large-order_1 nds-size_12-of-12 pagerview">
+                <div class="nds-col nds-size_12-of-12 nds-align_absolute-center">
+                    <div class="nds-col nds-size_12-of-12  nds-align_absolute-center pagerange nds-text-align_center">
+                        <lightning-button-icon
+                            icon-name="utility:chevronleft"
+                            data-id="prevButton"
+                            alternative-text="Previous"
+                            class="nds-m-left_xx-small prevButton"
+                            title="Previous"
+                            onclick={handlePrevious}
+                            variant="bare"
+                        ></lightning-button-icon>
+                        <template for:each={currentRange} for:item="page">
+                            <span key={page.id} data-id={page.id} data-pageid={page.id} onclick={handleGoToClick} class="nds-text-body_regular page-span">{page.value}</span>
+                        </template>
+                        <lightning-button-icon 
+                            icon-name="utility:chevronright" 
+                            data-id="nextButton" 
+                            alternative-text="Next" 
+                            class="nds-m-left_xx-small nextButton" 
+                            title="Next" 
+                            onclick={handleNext}
+                            variant="bare"
+                        ></lightning-button-icon>
+                    </div>
+                </div>
+            </div>
+
+            <div if:false={lessthan7pages} class=" nds-hide_medium nds-col nds-order_3 nds-medium-order_1 nds-large-order_1 nds-size_12-of-12 mobilepagerview ">
+               
+                <div class="nds-col nds-size_12-of-12 nds-align_absolute-center ">
+                    <div class="nds-col nds-size_4-of-12 nds-align_absolute-center  gotopage-input">
+                        <div class="gotopage-input">
+                            <label class="nds-form-element__label inputlabel labelsize" >Go to page</label>
+                            <input
+                                type="text"
+                                class="nds-input nds-combobox__input nds-has-focus pageinput "
+                                id="combobox-id-4"
+                                aria-autocomplete="list"
+                                list="listbox-id-4"
+                                aria-controls="listbox-id-4"
+                                autocomplete="off"
+                                role="textbox"
+                                placeholder={currentPage}
+                                onchange={handleGoToChange}
+                                onkeyup={handleKeyUp}
+                                value={goToValue}
+                            />
+                            <lightning-button-icon 
+                            icon-name="utility:chevronright" 
+                            alternative-text="Next" 
+                            class="nds-m-left_xx-small iconrightmobile" 
+                            title="Next" 
+                            variant="bare"
+                            onclick={handleGoToInput}
+                        ></lightning-button-icon>
+                    </div>  
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        <!--#######################################-->
+            
+            <!-- <div if:true={_showSaveSearch} class="nds-col nds-order_1 nds-medium-order_2 nds-large-order_2 nds-size_6-of-12 nds-medium-size_6-of-12 nds-large-size_6-of-12 print nds-m-bottom_small">
+                
+                <div class="nds-medium-size_2-of-12 nds-large-size_1-of-12">
+                    <span class="nds-show_medium">
+                        <lightning-icon icon-name="doctype:pdf" alternative-text="Print All Searached Results" title="PDF Print All Searched Results"></lightning-icon>
+                    </span>
+                    <span class="nds-hide_medium">
+                        <lightning-icon icon-name="utility:download" alternative-text="Save Results" title="Save Results"></lightning-icon>
+                    </span>
+                </div>
+                
+                <div class="nds-col nds-size_11-of-12 labelPrint">
+                    <c-generate-p-d-f multiple-office-data={pdfToJson}>
+                    </c-generate-p-d-f>
+                </div>
+                
+                <div class="nds-col nds-size_11-of-12 labelPrint">
+                    <span class="nds-text-body_regular nds-show_medium">Save Search as PDF</span>
+                    <span class="nds-text-body_regular nds-hide_medium">Save Search</span>
+                </div>
+            </div> -->
+           
+        
+    </section>
+</template>

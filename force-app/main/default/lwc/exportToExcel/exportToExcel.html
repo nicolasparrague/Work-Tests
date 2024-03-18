@@ -1,0 +1,8 @@
+<template>
+   <div if:true={loading}>
+      <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+   </div>
+   <button onclick={generateExcel} class="nds-button nds-button_neutral nds-button_stretch">
+      <span class="btnLabel">{_buttonLabel}</span>
+   </button>
+</template>

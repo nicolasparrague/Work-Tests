@@ -1,0 +1,18 @@
+<template>
+    <div if:true={loading}>
+        <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+    </div>
+    <div if:true={_userId} class="member-select via-nds">
+        <div class="nds-text-body_regular nds-form-element__label_toggle-text">
+            <lightning-combobox
+                value={signedInMemberId}
+                options={members}
+                onchange={handleMemberSelect}
+                read-only={readonly}
+                disabled={disabled}
+                label="Select Member"
+                class="nds-is-open">
+            </lightning-combobox>
+        </div>
+    </div>  
+</template>

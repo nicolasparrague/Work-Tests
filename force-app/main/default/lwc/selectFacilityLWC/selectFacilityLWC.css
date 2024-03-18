@@ -1,0 +1,229 @@
+/* Main CSS */
+.compareAlert {
+    text-align: center;
+    height: 50px;
+    font-size: initial;
+}
+
+.slds-scope .slds-wrap {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-bottom: 2%;
+}
+
+.sorting {
+    position: static;
+    display: inline-flex;
+    text-align: start;
+}
+
+.compareMain {
+    padding-left: revert;
+    margin: 2px;
+    text-align: center;
+    border-radius: 92px;
+    background-color: #efb21a;
+    color: #343741;
+    font-size: 14px;
+    border-color: #fff;
+    width: 96%;
+    border: none;
+    height: 40px;
+    font-weight: 900;
+}
+
+.icons {
+    min-width: 9%;
+}
+
+.resetMain {
+    padding-left: revert;
+    margin: 2px;
+    text-align: center;
+    border-radius: 92px;
+    font-size: 14px;
+    border-color: #fff;
+    width: 96%;
+    border: none;
+    height: 40px;
+    font-weight: 900;
+    background-color: #efb21a;
+    color: #343741;
+    border-width: thin;
+    border: none;
+}
+.compareMain:focus {
+    outline: 0;
+    box-shadow: 0 0 5px #52247f;
+} 
+
+.resetMain:focus {
+    outline: 0;
+    box-shadow: 0 0 5px #52247f;
+}
+
+.borderLine{
+    border: 1px solid lightgray;
+    padding-left: 10px;
+    padding-top: 7px;
+}
+
+.columnTitle {
+    font-size: 16px;
+    font-weight: initial;
+}
+
+.providerNumber {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.addressInfo {
+    padding-left: 9px;
+    margin: 0px;
+    margin-bottom: 10px;
+    font-size: 10px;
+}
+
+.networkInfo{
+    font-size: 10px;
+}
+
+.planAcceptedInfo{
+    font-size: 10px;
+}
+
+.btn {
+    position: relative;
+    margin: 0px;
+    margin-top: 10px;
+    padding-right: 15%;
+}
+
+.mainAddContainer {
+    display: flex;
+}
+
+.infoIcon {
+    padding-left: 260px;
+}
+
+.compareText {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+/* Main grid for Provider Information - Add CSS here below */
+.providerInformation {
+    text-align: left;
+}
+.providerHeader {
+    font-size: 18px;
+    font-weight: inherit;
+}
+.borderLeft {
+    border-left: 1px solid #D4D4D4;
+}
+.greenDot {
+    height: 10px;
+    width: 10px;
+    background-color: #2d7c32;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.redSquare {
+    height: 10px;
+    width: 10px;
+    background-color: #a30404;
+    display: inline-block;
+}
+
+/* Main grid for Address Information - Add CSS here below */
+.addressInformation {
+    text-align: left;
+    padding-left: 10px;
+}
+.addressDetails {
+    font-size: 11px;
+}
+
+/* NOTE: This CSS class will be used for all the header in the card */
+.headers {
+    font-size: 15px;
+    font-weight: inherit;
+}
+
+.content {
+    font-size: 11px;
+}
+
+/* Main grid for Review Details & Compare Buttons - Add CSS here below */
+.reviewButton {
+    font-size: 14px;
+    display: initial;
+    transition-duration: .4s;
+    padding: 5px 16px;
+    margin: 2px;
+    width: 130px;
+    text-align: center;
+    background-color: #efb21a;
+    color: #343741;
+    border: none;
+    height: 36px;
+    border-radius: 60px;
+    font-weight: bold;
+    font-size: small;
+}
+
+.reviewButton:focus {
+    outline: 0;
+    box-shadow: 0 0 5px #52247f;
+}
+
+@media screen and (max-width: 500px) {
+    .infoIcon {
+        padding-left: 15px;
+    }
+    .sorting {
+        display: block;
+        position: static;
+        text-align: -webkit-center;
+    }
+    .compareText {
+        text-align: center;
+        font-size: 16px;
+        font-weight: 400;
+        height: 50px;
+    }
+    .providerInformation {
+        text-align: center;
+        border-top: 1px solid #D4D4D4;
+    }
+    .providerHeader {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .greenDot {
+        float: left;
+        margin-inline: 10px;
+        margin-top: 5px;
+    }
+    .addressInformation {
+        text-align: center;
+        border-left: none;
+    }
+    .slds-scope .slds-border_left, .slds-scope .slds-border--left {
+        border-left: none;
+    }
+    .headers {
+        font-size: 18px;
+        font-weight: bolder;
+        text-align: -webkit-center;
+    }
+    .content {
+        font-size: 13px;
+        text-align: center;
+    }
+}

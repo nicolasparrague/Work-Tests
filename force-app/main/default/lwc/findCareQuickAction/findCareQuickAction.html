@@ -1,0 +1,315 @@
+<template>
+   <!-- Cards PCP, Mental, and Urgent -->
+   <template if:true={pharmacyUser}>
+      <div class={pharamClass}>
+         <div class={pharamPosClass}>
+            <div class="nds-col tile-margin c-color-bg-homepage_service-icon">
+               <div>
+                  <div class="nds-align_absolute-center">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" class="dental-home-page-width nds-p-top_small">
+                        <g id="bd6ece11-ce57-41dc-a9c7-9fc3c36a0fd9" data-name="Pharmacy">
+                           <polygon
+                              id="b8a3fd31-742a-449a-8162-fb4bea21a9d8"
+                              data-name="layer2"
+                              class="e12ec4e4-62b8-4500-849f-3c065d0576cb"
+                              points="42.97 40.81 37.29 40.81 37.29 35.13 33.03 35.13 33.03 40.81 27.35 40.81 27.35 45.07 33.03 45.07 33.03 50.75 37.29 50.75 37.29 45.07 42.97 45.07 42.97 40.81"
+                           ></polygon>
+                           <path
+                              id="b42a715e-b0a6-4810-b95c-73652085e6b6"
+                              data-name="layer1"
+                              class="e12ec4e4-62b8-4500-849f-3c065d0576cb"
+                              d="M48.66,23.5,59.83,13.32a4,4,0,0,0-5.65-5.65L39.34,23.5"
+                           ></path>
+                           <rect id="bbbf09a8-d913-4853-ba7a-379c64106249" data-name="layer2" class="e12ec4e4-62b8-4500-849f-3c065d0576cb" x="5" y="23.5" width="60" height="6" rx="2"></rect>
+                           <path
+                              id="b44dd341-50ef-49c9-992c-cddefaca0e87"
+                              data-name="layer2"
+                              class="e12ec4e4-62b8-4500-849f-3c065d0576cb"
+                              d="M60,29.5v4a25.07,25.07,0,0,1-25,25h0a25.07,25.07,0,0,1-25-25v-4"
+                           ></path>
+                           <path
+                              id="acbc834a-7006-44d6-b3f8-75727bb53edf"
+                              data-name="layer2"
+                              class="e12ec4e4-62b8-4500-849f-3c065d0576cb"
+                              d="M26.49,57a25.1,25.1,0,0,0-8.94,5.65.5.5,0,0,0,.36.85H52.09a.5.5,0,0,0,.36-.85A25.1,25.1,0,0,0,43.51,57"
+                           ></path>
+                        </g>
+                     </svg>
+                  </div>
+                  <p class="nds-align_absolute-center nds-text-body_regular c-color-text_white nds-p-vertical_small line-height-1 nds-text-align_center">Pharmacy</p>
+               </div>
+            </div>
+         </div>
+         <div class="nds-col nds-size_2-of-3 nds-p-left_large">
+            <span
+               ><p>
+                  Find a Pharmacy near you, including 24 hour locations. View store services, hours, and information on
+                  <a onclick={openPharmacyModal}>&nbsp;Express Scripts (ESI)</a
+                  ><lightning-icon theme="nds" icon-name="utility:new_window" size="xx-small" variant="brand" class="nds-m-left_xx-small"></lightning-icon> website.
+               </p></span
+            >
+         </div>
+      </div>
+   </template>
+   <template if:true={dentalUser}>
+      <div class={dentalClass}>
+         <div class="nds-col nds-size_1-of-3">
+            <div class="nds-col tile-margin c-color-bg-homepage_service-icon cursor-pointer" onclick={goToDentalCare}>
+               <div class="">
+                  <div class="nds-align_absolute-center">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" class="dental-home-page-width find-care-home-page-cursor nds-p-top_medium">
+                        <g id="f03dfb15-5435-4aee-9f3f-2652a6f2b1de" data-name="Dental">
+                           <path id="b4ccccc9-6f93-43a9-b7c6-a1a4f7a0d1e0" data-name="layer1" class="be1ae447-9d58-4ba6-9a3f-60d2fde173cb" d="M42.87,15.8a13.6,13.6,0,0,0,7,0"></path>
+                           <path
+                              id="bd051514-c50a-41c8-9dd3-3b321bc56d6e"
+                              data-name="layer1"
+                              class="be1ae447-9d58-4ba6-9a3f-60d2fde173cb"
+                              d="M33.76,10.83C42,5.46,52.68,4.7,59.5,13.41s4.38,19.72,3.37,25.39-5.71,28-13.14,28c-3.87,0-5.86-2.27-5.86-8,0-6-2.08-15-9-15-9,0-10,11-10,15,0,3.55-.5,8-4.47,8s-8.22-5-10.46-14.08S5.87,34.69,5.87,29C5.87,18.78,8.3,10.08,20,7.33,29.62,5.08,32,10.86,38.87,13.8"
+                           ></path>
+                        </g>
+                     </svg>
+                  </div>
+                  <p class="nds-align_absolute-center nds-text-body_regular find-care-home-page-cursor c-color-text_white nds-p-vertical_medium line-height-1 nds-text-align_center">Dental</p>
+               </div>
+            </div>
+         </div>
+         <div class="nds-col nds-size_2-of-3 nds-p-around_large">
+            <span>To find a dentist near you, click here.</span>
+         </div>
+      </div>
+   </template>
+   <template if:true={_normalUser}>
+      <div class="nds-grid tile-container c-hp-find-care-container">
+         <!-- Primary Care Provider Card -->
+         <div class="nds-col tile-margin c-color-bg-homepage_service-icon cursor-pointer" onclick={goToFindCare}>
+            <div class="primaryCareTarget">
+               <div class="nds-align_absolute-center">
+                  <!-- Primary Care Provider (New Icon)-->
+                  <svg class="nds-p-bottom_x-small find-care-home-page-width find-care-home-page-cursor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+                     <g id="medicine">
+                        <circle id="layer1-1" class="icon-color" cx="51.03" cy="50.98" r="11.02" />
+                        <polyline id="layer1-2-1-1" data-name="layer1" class="icon-color" points="46.89 50.98 50.33 54.42 55.84 48.22"></polyline>
+                        <path
+                           id="layer2-1-1-1"
+                           class="icon-color"
+                           d="M2.46,6H22.18a.5.5,0,0,1,.5.45c.16,1.68,1.26,7.55,9,7.55s8.82-5.87,9-7.55a.51.51,0,0,1,.5-.45H60.84a.5.5,0,0,1,.45.73C59.5,10.09,51.65,24,31.65,24S3.8,10.09,2,6.73A.5.5,0,0,1,2.46,6Z"
+                        ></path>
+                        <line id="layer2-2-4" data-name="layer2" class="icon-color" x1="14.57" y1="11.46" x2="5.91" y2="11.38" />
+                        <line id="layer2-3" data-name="layer2" class="icon-color" x1="18.48" y1="16.35" x2="9.82" y2="16.26" />
+                        <line id="layer2-4" data-name="layer2" class="icon-color" x1="48.58" y1="11.46" x2="57.24" y2="11.38" />
+                        <line id="layer2-5" data-name="layer2" class="icon-color" x1="44.68" y1="16.35" x2="53.34" y2="16.26" />
+                        <circle id="layer1-3-1" data-name="layer1" class="icon-color" cx="31.65" cy="6" r="4" />
+                        <line id="layer1-4-1-1" data-name="layer1" class="icon-color" x1="31.65" y1="10" x2="31.65" y2="62" />
+                        <path id="layer1-5-1-1" data-name="layer1" class="icon-color" d="M37.08,50c.84,2.29-1.47,5-5.5,5"></path>
+                        <path id="layer1-6-1-1" data-name="layer1" class="icon-color" d="M24.59,40c-1.79,2.73,1.11,6.38,7,7"></path>
+                        <path id="layer1-7-1-1" data-name="layer1" class="icon-color" d="M38.58,26c4,2,4.53,10-7,11"></path>
+                        <path
+                           id="layer1-8-1-1"
+                           data-name="layer1"
+                           class="icon-color"
+                           d="M24.65,26c-4,2-4.53,10,7,11a13.6,13.6,0,0,1,5,1.29,5.19,5.19,0,0,1,2,1.68c1.78,2.73-1.11,6.38-7,7-8.54,1-6.51,8,0,8,6,0,4,5,0,6"
+                        ></path>
+                     </g>
+                  </svg>
+               </div>
+               <button
+                  onclick={goToFindCare}
+                  class="attentis-find-care-button nds-align_absolute-center find-care-home-page-cursor button-border-find-care"
+                  aria-label="Primary Care will take you to Provider Search Results Page">
+                  Primary<br />Care
+               </button>
+            </div>
+         </div>
+
+         <!-- Mental Health Card  -->
+         <div class="nds-col tile-margin c-color-bg-homepage_service-icon cursor-pointer" onclick={openModal}>
+            <div class="">
+               <div class="nds-align_absolute-center">
+                  <!-- Mental Health (New Icon) -->
+                  <svg class="nds-p-bottom_x-small find-care-home-page-width find-care-home-page-cursor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70">
+                     <g id="Behavioral_Health" data-name="Behavioral Health">
+                        <path
+                           id="layer2"
+                           class="icon-color"
+                           d="M35.73,64.89a.25.25,0,0,0,.37-.1c.74-1.72,4.66-10.73,5.88-10.73,2,0,5.94,2,9,2s2.49-7.08,3.45-10,1.55-4.58,1.55-6c3.83-.38,3.14-1.58,2.66-2.73S54,30.93,54,30.06s1-4.07,1-6c0-8.76-5-19-22-19-16.65,0-22,12.26-22,19s1.9,11.79,4,14,4,4.25,4,8a9.52,9.52,0,0,1-2,6Z"
+                        ></path>
+                        <path
+                           id="layer1-1-1"
+                           class="icon-color"
+                           d="M28,11.06c6-1.19,17.77-.47,20,10,.87,4.12,1.21,8.24-8,9s-13.29,1.22-14,3-1,6-3,6a1.79,1.79,0,0,1-2-2c0-1.85-1-4-2-6C18.15,29.4,13,14.06,28,11.06Z"
+                        ></path>
+                        <path id="layer1-2" data-name="layer1" class="icon-color" d="M37,25.06c2-2,6-2,6.84,1.39a2.64,2.64,0,0,1-1.7,3.35"></path>
+                        <path id="layer1-3" data-name="layer1" class="icon-color" d="M34,24.06c-3,1-3.83,4.27-2,6"></path>
+                        <path id="layer1-4" data-name="layer1" class="icon-color" d="M39.89,11.87c1.26,3.14.38,5.82-1.91,7.19"></path>
+                        <path id="layer1-5" data-name="layer1" class="icon-color" d="M45.39,15.67C46,19,45,21.06,42,21.06"></path>
+                        <path id="layer1-6" data-name="layer1" class="icon-color" d="M33.27,10.69A4.3,4.3,0,0,1,35,16.06"></path>
+                        <path id="layer1-7" data-name="layer1" class="icon-color" d="M33,20.06c-1-2-4.37-2-6,0"></path>
+                        <path id="layer1-8" data-name="layer1" class="icon-color" d="M24.83,12.06c3.4.46,6,3.1,5.13,6.51"></path>
+                        <path id="layer1-9" data-name="layer1" class="icon-color" d="M25,19.06c-3-.81-2.95-4.23-2.75-5.71"></path>
+                        <path id="layer1-10" data-name="layer1" class="icon-color" d="M22,22.06a2.56,2.56,0,0,0-4.42,0"></path>
+                        <path id="layer1-11" data-name="layer1" class="icon-color" d="M28,23.06c-2,0-4,3-1,5"></path>
+                        <path id="layer1-12" data-name="layer1" class="icon-color" d="M25.49,25.22c-2.69-.41-6.49,1.16-6.77,5"></path>
+                     </g>
+                  </svg>
+               </div>
+               <button
+                  onclick={openModal}
+                  class="attentis-find-care-button nds-align_absolute-center find-care-home-page-cursor button-border-find-care"
+                  aria-label="Mental Health opens a modal"
+               >
+                  Mental<br />Health
+               </button>
+            </div>
+         </div>
+
+         <!-- Urgent Care Card -->
+         <div class="nds-col tile-margin c-color-bg-homepage_service-icon cursor-pointer" onclick={goToFindCareFacility}>
+            <div class="">
+               <div class="nds-align_absolute-center">
+                  <!-- Urgent Care (New Icon) -->
+                  <svg class="nds-p-bottom_x-small find-care-home-page-width find-care-home-page-cursor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70">
+                     <g id="b52a5d6e-c2cd-44a3-ab0e-200d653588a6" data-name="Hospital, Facility, Urgent Care and other Facility">
+                        <rect id="b9066f72-d231-40bc-8f33-815b4a8c0679" data-name="layer2" class="icon-color" x="5" y="5" width="60" height="60" rx="4" />
+                        <polygon
+                           id="acce4b03-a19c-4011-b016-5cebd0088426"
+                           data-name="layer1"
+                           class="icon-color"
+                           points="41 16 41 29 29 29 29 16 17 16 17 54 29 54 29 41 41 41 41 54 53 54 53 16 41 16"
+                        ></polygon>
+                     </g>
+                  </svg>
+               </div>
+               <button
+                  onclick={goToFindCareFacility}
+                  class="attentis-find-care-button nds-align_absolute-center find-care-home-page-cursor button-border-find-care"
+                  aria-label="Urgent Care will take you to Facility Search Results Page">
+                  Urgent<br />Care
+               </button>
+            </div>
+         </div>
+      </div>
+   </template>
+
+   <!-- Modal for Terminated Users -->
+   <template if:true={terminatedModal}>
+      <!-- Modal/Popup Box LWC starts here -->
+      <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-3" class="nds-modal nds-fade-in-open">
+         <div class="nds-modal__container modalAccessibility">
+            <!-- Modal/Popup Box LWC header here -->
+            <!-- Modal/Popup Box LWC body starts here -->
+            <div class="nds-modal__content nds-p-around_x-large" id="modal-content-id-3">
+               <div class="nds-grid nds-m-bottom_large">
+                  <div class="nds-col nds-align_absolute-center"></div>
+                  <div class="nds-col">
+                     <p class="nds-text-color_default nds-text-body_regular">Your account is currently inactive. Some features may not be available.</p>
+                  </div>
+               </div>
+               <div class="nds-grid nds-text-align_center">
+                  <div class="nds-size_1-of-1">
+                     <div class="nds-col c-reverse-button-stack_small">
+                        <!-- Go Back option -->
+                        <button class="nds-m-right_large nds-button nds-button_neutral modal-color-1" onclick={closeTerminatedModal} title="Go Back">Close</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <div class="nds-backdrop nds-backdrop_open"></div>
+   </template>
+   <!-- Mental Health Modal Window-->
+   <template if:true={isModalGlobal}>
+      <!-- Modal/Popup Box LWC starts here -->
+      <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-fade-in-open">
+         <div class="nds-modal__container modalAccessibility">
+            <!-- Modal/Popup Box LWC body starts here -->
+            <div class="nds-modal__content nds-p-around_x-large" id="modal-content-id-1">
+               <div class="nds-grid nds-m-bottom_large">
+                  <div class="nds-col nds-align_absolute-center">
+                  </div>
+                  <div class="nds-col">
+                     <!-- MentalHealth -->
+                     <p if:true={isModalMentalHealthCCIComm} class="nds-text-color_default nds-text-body_regular">
+                        You are leaving the {provider} website and going to Optum’s website.<br /><br />{provider} does not accept responsibility for the information, accuracy, or completeness of the
+                        Optum website. Please consult your doctor about any medical or treatment information you may find on the Optum site. This is general information and should not be relied upon
+                        without speaking with your doctor about your individual needs. The opinions and information are not necessarily those of {provider}.<br /><br />The Privacy Statement of Optum
+                        may be different from ours. Review this statement when you get to their site.
+                     </p>
+                     <p if:true={isModalMentalHealthCCIMed} class="nds-text-color_default nds-text-body_regular">
+                        You are leaving the {provider} website and going to Optum’s website.<br />We encourage you to read the privacy statement on the Optum website.<br />Please consult your doctor
+                        about any medical advice or treatment information you may find on the Optum site.
+                     </p>
+                     <!-- Not Commercial or Medicare -->
+                     <p if:true={isModalMentalHealthOther} class="nds-text-color_default nds-text-body_regular">You are leaving the Website and entering the Mental Health Website.</p>
+
+                     <!-- <p class="nds-text-color_default nds-text-title">You are leaving the website and entering the Mental Health website.</p> -->
+                  </div>
+               </div>
+
+               <div class="nds-grid nds-text-align_center">
+                  <div class="nds-size_1-of-1">
+                     <div class="nds-col c-reverse-button-stack_small">
+                        <!-- Go Back option -->
+                        <button class="nds-m-right_large nds-button nds-button_neutral modal-color-1" onclick={closeModal} title="Go Back">Cancel</button>
+
+                        <!-- Mental Health  -->
+                        <button class="nds-button nds-button_brand modal-color-2" onclick={navigateToMentalHealthWebPage} title="Proceed to Mental Health website">
+                           Continue <lightning-button-icon variant="bare" icon-name="utility:link"></lightning-button-icon>
+                        </button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <div class="nds-backdrop nds-backdrop_open"></div>
+   </template>
+   <!-- Pharmacy Health Modal Window-->
+   <template if:true={isModalPharmacy}>
+      <!-- Modal/Popup Box LWC starts here -->
+      <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-fade-in-open">
+         <div class="nds-modal__container modalAccessibility">
+            <!-- Modal/Popup Box LWC header here -->
+            <!-- Modal/Popup Box LWC body starts here -->
+            <div class="nds-modal__content nds-p-around_x-large" id="modal-content-id-2">
+               <div class="nds-grid nds-m-bottom_large">
+                  <template if:true={isCommercial}>
+                     <div class="nds-col">
+                        <p class="nds-text-color_default">
+                           You are leaving the Attentis Health website and going to Express Scripts’s website.<br /><br />Attentis Health does not accept responsibility for the information, accuracy, or
+                           completeness of the Express Scripts website. Please consult your doctor about any medical or treatment information you may find on the [vendor] site. This is general
+                           information and should not be relied upon without speaking with your doctor about your individual needs. The opinions and information are not necessarily those of
+                           Attentis Health.<br /><br />The Privacy Statement of Express Scripts may be different from ours. Review this statement when you get to their site.
+                        </p>
+                     </div>
+                  </template>
+
+                  <template if:true={isMedicare}>
+                     <div class="nds-col">
+                        <p class="nds-text-color_default">
+                           You are leaving the Attentis Health website and going to Express Scripts’s website.<br /><br />We encourage you to read the privacy statement on the Express Scripts website.
+                           Please consult your doctor about any medical advice or treatment information you may find on the Express Scripts site.
+                        </p>
+                     </div>
+                  </template>
+               </div>
+
+               <div class="nds-grid nds-text-align_center">
+                  <div class="nds-size_1-of-1">
+                     <div class="nds-col c-reverse-button-stack_small">
+                        <!-- Go Back option -->
+                        <button class="nds-m-right_large nds-button nds-button_neutral modal-color-1" onclick={closeModal} title="Go Back">Cancel</button>
+
+                        <!-- Pharmacy  -->
+                        <button class="nds-button nds-button_brand modal-color-2" onclick={ssoLink} title="Click here to continue">
+                           Continue<lightning-button-icon variant="bare" icon-name="utility:link"></lightning-button-icon>
+                        </button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <div class="nds-backdrop nds-backdrop_open"></div>
+   </template>
+</template>

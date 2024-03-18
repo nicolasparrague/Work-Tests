@@ -1,0 +1,9 @@
+.box-padding.nds-box {
+    padding: 24px 24px 12px 24px;
+}
+
+@media (min-width: 768px) {
+    .input-margin-right {
+        margin-right: .75rem;
+    }
+}

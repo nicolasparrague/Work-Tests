@@ -1,0 +1,18 @@
+.sort_list {
+    left: 0 !important;
+    transform: translateX(0) !important;
+}
+
+@media (max-width:480px) {
+    .sort_list {
+        width: 100% !important;
+        min-width: auto !important;
+        max-width: initial !important;
+    }
+}
+
+@media (max-width:768px) {
+    .p-top-medium_med-screen {
+        padding-top: 16px;
+    }
+}

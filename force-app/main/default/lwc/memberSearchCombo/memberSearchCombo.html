@@ -1,0 +1,65 @@
+<template>
+   <div class="nds-form-element">
+      <div class="nds-form-element__control">
+         <div class="nds-combobox_container">
+            <div class="nds-combobox nds-dropdown-trigger nds-dropdown-trigger_click nds-is-open" aria-haspopup="listbox">
+               <div class="nds-combobox__form-element nds-input-has-icon nds-input-has-icon_right">
+                  <!-- Default Search Box -->
+                  <div class="defaultClass">
+                     <input
+                        type="text"
+                        class="nds-input nds-combobox__input nds-has-focus searchvalue"
+                        id="combobox-id"
+                        aria-autocomplete="list"
+                        aria-controls="comboListbox"
+                        autocomplete="off"
+                        role="combobox"
+                        aria-required="true"
+                        aria-expanded="false"
+                        placeholder={placeholderText}
+                        aria-label={placeholderText}
+                        onfocus={handleFocusIn}
+                        onkeyup={handleKeyUp}
+                        onkeydown={handleKeyDown}
+                        onblur={handleFocusOut}
+                        value={selectedItem}
+                        required={isRequired}
+                     />
+                     <span class="nds-icon_container" onclick={handleClickArrow}>
+                        <lightning-icon
+                           theme="nds"
+                           icon-name="utility:chevrondown"
+                           class="nds-icon-utility-search nds-input__icon nds-input__icon_right nds-searchIcon"
+                           alternative-text="Approved"
+                           size="x-small"
+                        >
+                        </lightning-icon>
+                     </span>
+                  </div>
+               </div>
+               <!-- To display all items for the drop down -->
+               <div id="listbox-id-3" class="item_list nds-hide">
+                  <ul id="comboListbox" class="nds-listbox nds-listbox_vertical nds-dropdown nds-dropdown_length-with-icon-7 nds-dropdown_fluid" role="listbox"
+                  onmouseup={mouseupScrollBar}
+                  onmousedown={mousedownScrollBar}>
+                     <template if:true={options}>
+                        <template for:each={options} for:item="item">
+                           <li  aria-selected="false" role="option" class="nds-listbox__item" key={item.key} onmousedown={handleOptionSelect} data-id={item.key} id={item.key} data-name={item.value}>
+                              <div id={item.key} class="nds-media nds-listbox__option nds-listbox__option_entity nds-listbox__option_has-meta">
+                                 <span class="nds-media__body">
+                                    <span class="nds-listbox__option-text nds-listbox__option-text_entity slds_optiontxt">{item.value}</span>
+                                 </span>
+                              </div>
+                           </li>
+                        </template>
+                     </template>
+                     <template if:false={options}>
+                        <div>Error</div>
+                     </template>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</template>

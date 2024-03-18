@@ -1,0 +1,11 @@
+.nds-border_bottom:last-child {
+    border: none;
+}
+
+/* .c-border-bottom {
+    border-bottom: solid 1px #dddbda;
+} */
+
+.c-border-bottom:last-child {
+    border: none;
+}

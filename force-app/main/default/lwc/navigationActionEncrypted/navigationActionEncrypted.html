@@ -1,0 +1,17 @@
+<template>
+    <lightning-button  
+        if:true={gotVars} 
+        label={_label}
+        aria-label={_ariaLabel} 
+        role="button"
+        tabindex="0"
+        variant={_variant} 
+        icon-position={_iconPosition}
+        icon-size={_iconSize}
+        icon-name={_iconName}
+        extraclass={_extraclass} 
+        onclick={handleRedirection}
+        alternative-text={_ariaLabel}
+        aria-description={_ariaLabel}>
+    </lightning-button>
+</template>

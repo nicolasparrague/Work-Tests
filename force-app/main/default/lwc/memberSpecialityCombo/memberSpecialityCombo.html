@@ -1,0 +1,20 @@
+<template>
+   <template if:true={loading}>
+      <lightning-spinner alternative-text="Loading" size="medium"> </lightning-spinner>
+   </template>
+   <div class="nds-form-element__label_toggle-text nds-p-around_small nds-m-bottom_x-small">
+      <label class="c-input-label_not-empty" for="combobox-unique-id" aria-label="Specialty"
+         >Specialty
+         <abbr title="Required" class="nds-required nds-p-left_xx-small">*</abbr>
+      </label>
+      <c-member-search-combo-multi
+         default-value={defaultSpecialty}
+         default-code={defaultSpecialtyCode}
+         all-value={allValue}
+         placeholder-text="Search speciality"
+         field-to-save="selectedSpeciality"
+         options={specialties}
+         read-only={readOnly}>
+      </c-member-search-combo-multi>
+   </div>
+</template>

@@ -1,0 +1,97 @@
+.card  {
+   border: solid 1px #63676B;
+   border-radius: 4px;
+}
+
+.pull-padding_pharmacy {
+   margin: -24px -8px 0 -8px;
+}
+.find-care-home-page-cursor {
+   cursor: pointer;
+}
+
+.find-care-home-page-width {
+   width: 40%;
+}
+
+.dental-mobile-top {
+   height: 100px;
+   width: 100%;
+}
+
+.dental-mobile-bottom {
+   background-color: #7d599e;
+   border-color: #7d599e;
+   border-width: 1px;
+   color: #ffff;
+   display: flex;
+   align-items: flex-end;
+   height: 45px;
+   width: 100%;
+   border-bottom-left-radius: 6px;
+   border-bottom-right-radius: 6px;
+}
+
+.dental-home-page-width {
+   width: 50%;
+   fill: none;
+   stroke: #ffff;
+   stroke-width: 2px;
+}
+
+.cls-1 {
+   fill: none;
+   stroke: #fff;
+   stroke-linecap: round;
+   stroke-linejoin: round;
+   stroke-width: 2px;
+}
+
+.be1ae447-9d58-4ba6-9a3f-60d2fde173cb {
+   fill: none;
+   stroke: #fff;
+   stroke-linecap: round;
+   stroke-linejoin: round;
+   stroke-width: 2px;
+}
+
+.line-height-1.nds-text-body_regular {
+   line-height: 1.1;
+}
+
+.tile-margin {
+   margin-right: 1.5rem;
+}
+
+.tile-margin:last-child {
+   margin-right: 0;
+}
+
+.nds-p-vertical_small.find-care-home-page-width {
+   padding-bottom: 0.5rem;
+}
+
+.button-border-find-care{
+   background: none;
+   border: none;
+}
+
+.attentis-find-care-button:focus {
+   outline: 2px solid #036cb6!important;
+}
+
+.cursor-pointer {
+   cursor: pointer;
+}
+@media (max-width: 48rem) {
+   .tile-container {
+      padding: 0.25rem 0;
+   }
+
+   .tile-margin {
+      margin-right: 1rem;
+   }
+   .nds-p-vertical_small.find-care-home-page-width {
+      padding-bottom: 0.5rem;
+   }
+}

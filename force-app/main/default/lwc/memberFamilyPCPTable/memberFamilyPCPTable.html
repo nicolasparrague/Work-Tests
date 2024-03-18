@@ -1,0 +1,40 @@
+<template>
+   <div class="box nds-grid nds-wrap nds-grid_vertical-align-center nds-m-bottom_large">
+      <div class="nds-grid nds-grid_align-end nds-size_2-of-12 nds-medium-size_1-of-12">
+         <lightning-input
+            theme="nds"
+            type="checkbox"
+            name="SelectAll"
+            class="nds-grid nds-grid_align-end nds-m-around_none"
+            onchange={selectAll}
+         ></lightning-input>
+      </div>
+      <label for="SelectAll" class="nds-text-body_regular nds-size_10-of-12 nds-grid_pull-padded">Select All</label>
+   </div>
+   <template for:each={memberList} for:item="member">
+      <div
+         key={member.memberName}
+         class="box nds-grid nds-wrap nds-grid_vertical-align-start nds-m-bottom_large"
+      >
+         <div class="nds-grid nds-grid_align-end nds-size_2-of-12 nds-p-top_none nds-medium-size_1-of-12">
+            <lightning-input
+               theme="nds"
+               type="checkbox"
+               name={member.memberName}
+               class="nds-grid nds-grid_align-end nds-m-around_none nds-p-top_none"
+               onchange={selectFamily}
+            ></lightning-input>
+         </div>
+         <div class="nds-grid nds-wrap nds-size_10-of-12 nds-size-medium_11-of-12 nds-grid_pull-padded">
+            <div class="nds-size_10-of-12 nds-medium-size_5-of-12 nds-m-bottom_xx-small">
+               <h2 class="nds-text-title">{member.memberType} Name</h2>
+               <p class="nds-text-body_regular line-height-125">{member.memberName}</p>
+            </div>
+            <div class="nds-size_10-of-12 nds-medium-size_6-of-12 nds-m-bottom_xx-small">
+               <h2 class="nds-text-title">Current Primary Care Provider Name</h2>
+               <p class="nds-text-body_regular line-height-125">{member.pcpName}</p>
+            </div>
+         </div>
+      </div>
+   </template>
+</template>

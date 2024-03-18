@@ -1,0 +1,88 @@
+<template>
+    <template if:true={loading}>
+       <lightning-spinner alternative-text="Loading" size="medium" theme="nds"> </lightning-spinner>
+    </template>
+    <template if:true={showButton}>
+      <!-- <lightning-button
+          theme="nds"
+          label="Your Benefit Video"
+          icon-position="left"
+          data-id="benefitVideo"          
+          icon-name="utility:play"
+          onclick={openModal}
+          class="benefitPlayVideo"
+          extraclass="c-button-small disabled nds-button_neutral nds-m-bottom_x-small nds-m-top_x-small nds-button_stretch">
+       </lightning-button> -->
+
+      <button         
+         aria-label="Watch Your Benefit Video"
+         onclick={openModal}
+         class="nds-button nds-button_neutral nds-m-bottom_x-small nds-m-top_x-small nds-button_stretch">
+         <span class="btnLabel"><lightning-icon variant="bare" extraclass="nds-button__icon nds-icon_xx-small nds-button__icon_left" icon-position="left" icon-name="utility:play"></lightning-icon>Your Benefit Video</span>
+      </button>
+
+    </template>
+    <template if:true={showModal}>
+       <section role="dialog" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-fade-in-open modalAccessibility">
+          <div class="nds-modal__container">
+             <!-- <header class="nds-modal__header modal-header-confirmation">
+                <button class="nds-button nds-button_icon nds-modal__close nds-button_icon-inverse" title="Close" onclick={closeModal}>
+                   <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                   <span class="nds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-02" class="nds-hyphenate modal-title">Your Benefit Video</h2>
+             </header> -->
+
+             <header class="nds-modal__header modal-header-confirmation">
+               <!-- <button class="nds-button nds-button_icon nds-modal__close nds-button_icon-inverse" title="Close" onclick={closeModal}> -->
+               <!-- <lightning-icon icon-name="utility:close" onclick={closeModal} class="iconClose nds-float_right modalAccessibility" alternative-text="close" variant="inverse" size="small"></lightning-icon> -->
+                            
+               <!-- <span class="nds-assistive-text">Close</span> -->
+               <!-- </button> -->
+               
+               <button onclick={closeModal}
+                  class="iconClose nds-float_right button-border-benefit-video eh-benefit-video" aria-label="Close Button">
+                     <lightning-icon icon-name="utility:close" extraclass="slds-icon slds-icon_small slds-icon-utility-close iconClose nds-float_right slds-icon_container" variant="inverse" size="small"></lightning-icon>
+               </button>
+
+               <h2 id="modal-heading-02" class="nds-hyphenate modal-title">Your Benefit Video</h2>
+            </header>
+
+            
+
+
+             <template if:true={loading}>
+                <lightning-spinner alternative-text="Loading" size="medium" theme="nds"> </lightning-spinner>
+             </template>
+             <template if:true={showRetry}>
+                <div class="nds-modal__content nds-p-around_medium" id="modal-content-id-1">
+                   <!-- Information -->
+                   <div class="nds-grid nds-p-around_medium">
+                     <lightning-icon icon-name="utility:info_alt" alternative-text="Info" size="medium"
+                         title="Info" class="nds-m-right_small nds-brand"></lightning-icon>
+                     <p class="nds-text-body_regular nds-text-align_left">Your personalized video could not be loaded at this time. Please try again later.</p>
+                 </div>
+                 <div class="nds-grid modal-padding-3 nds-p-bottom_medium">
+                     <div class="nds-size_1-of-1">
+                         <div class="nds-col nds-align_absolute-center">
+                             <button class="nds-button nds-button_brand modal-color-2 nds-medium-size_4-of-12" aria-pressed aria-label="Ok Button" onclick={closeModal}>Ok</button>
+                         </div>            
+                     </div>
+                 </div>
+                </div>
+             </template>
+             <template if:false={showRetry}>
+                <div class="nds-modal__content" id="modal-content-id-2">
+                     <iframe frameborder="0" src={iframeSrc} width="100%" height="375"></iframe>
+                </div>
+             </template>
+
+
+             <button class="button-border-benefit-video eh-benefit-video"></button>
+
+
+          </div>
+       </section>
+       <div class="nds-backdrop nds-backdrop_open"></div>
+    </template>
+ </template>

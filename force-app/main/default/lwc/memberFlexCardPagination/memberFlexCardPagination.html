@@ -1,0 +1,282 @@
+<template>
+   <div if:true={loading}>
+      <lightning-spinner alternative-text="Loading content..." size="medium" theme="nds"></lightning-spinner>
+   </div>
+   <div if:true={_showNoRecordsMessage}>
+      <p class="nds-text-body_regular nds-text-align_center nds-m-bottom_medium">You have no records at this time</p>
+   </div>
+
+   <!-- Invoice -->
+   <div if:true={showInvoice} class="nds-grid nds-wrap nds-grid_align-spread">
+      <!-- <div if:true={showInvoice} class="nds-grid nds-wrap "> -->
+      <p class="nds-text-body_regular nds-m-bottom_medium nds-hide_medium nds-size_1-of-1">View up to 24 months of invoice history.</p>
+      <!-- SortBy -->
+      <div class="nds-size_1-of-1 nds-small-size_6-of-12 nds-medium-size_2-of-12 nds-is-relative">
+         <div class="nds-combobox__form-element nds-input-has-icon nds-input-has-icon_right">
+            <!-- Default Search Box -->
+            <div class="SortyByClass nds-text-body_regular">
+               <input
+                  type="button"
+                  class="nds-input nds-combobox__input sort_input sortByInvoice"
+                  id="combobox-id-1"
+                  aria-activedescendant="option1"
+                  aria-autocomplete="list"
+                  list="listbox-id-1"
+                  aria-controls="listbox-id-1"
+                  autocomplete="off"
+                  placeholder={placeholderText}
+                  onclick={sortFocusIn}
+                  aria-label="Sort list by"
+                  value="Sort by"
+                  style="padding-right: 100%;"
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
+                  role="combobox"
+               />
+               <span class="nds-icon_container" onclick={sortFocusIn}>
+                  <lightning-icon
+                     theme="nds"
+                     icon-name="utility:chevrondown"
+                     class="nds-icon-utility-down nds-input__icon nds-input__icon_right nds-m-right_medium nds-p-top_xxx-small"
+                     size="x-small"
+                  >
+                  </lightning-icon>
+               </span>
+            </div>
+         </div>
+
+        
+
+         <div id="listbox-id-1" class="sort_list nds-box nds-dropdown nds-dropdown_large nds-hide" role="listbox">
+            <!-- Sort Options -->          
+
+            <!-- <div role="button">
+               <button
+                  aria-label="Close"
+                  onclick={sortWindowClose}
+                  style="border:none;background:none;"
+                  class="nds-float_right">
+                  <span class="btnLabel" onclick={sortWindowClose}><strong>X</strong></span>
+               </button>
+            </div> -->
+           
+
+            <ul class="nds-dropdown__list" role="presentation">
+               <li role="presentation" class="nds-dropdown__item nds-clearfix nds-p-right_small">
+                  <!-- <lightning-button theme="nds" variant="base" label="" class="nds-float_right" icon-name="utility:close" onclick={sortWindowClose}></lightning-button> -->
+                  <lightning-button-icon 
+                                 aria-label="Close"
+                                 theme="nds"
+                                 icon-name="utility:close"  
+                                 variant="bare" 
+                                 onclick={sortWindowClose}
+                                 class="nds-float_right"
+                                 >
+                  </lightning-button-icon>
+               </li>
+               <template if:true={sortOptions}>
+                  <template for:each={sortOptions} for:item="item">
+                     <li role="presentation" class="nds-dropdown__item nds-p-top_small" key={item.key}>
+                        <div
+                           aria-selected="true"
+                           id={item.key}
+                           data-badge-id={item.key}
+                           data-badge-value={item.value}
+                           class="nds-media nds-listbox__option nds-listbox__option_entity nds-listbox__option_has-meta"
+                           role="option"
+                        >
+                           <span class="nds-media__body nds-m-vertical_x-small" tabindex="0">
+                              <span
+                                 data-badge-id={item.key}
+                                 data-badge-value={item.value}
+                                 onclick={handleSortSelect}
+                                 class="nds-listbox__option-text nds-listbox__option-text_entity nds_optiontxt"
+                                 id={item.key}
+                                 >{item.label}</span
+                              >
+                           </span>
+                           <!-- Badge -->
+                           <div class="badge nds-size_5-of-12 nds-m-vertical_xx-small">
+                              <span id={item.ascBadgeId} class="nds-badge nds-hide nds-p-around_none" onclick={handleSortToggle} tabindex="0">
+                                 Ascending
+                                 <span class="nds-icon_container nds-m-right_xx-small">
+                                    <lightning-icon id={item.ascBadgeId} theme="nds" icon-name="utility:arrowup" class="nds-icon-utility-arrowup nds-m-right_xx-small" size="xx-small">
+                                    </lightning-icon>
+                                 </span>
+                              </span>
+                              <span id={item.descBadgeId} class="nds-badge nds-hide nds-p-around_none" onclick={handleSortToggle} tabindex="0">
+                                 Descending
+                                 <span class="nds-icon_container nds-m-right_xx-small">
+                                    <lightning-icon id={item.descBadgeId} theme="nds" icon-name="utility:arrowdown" class="nds-icon-utility-arrowup nds-m-right_xx-small" size="xx-small">
+                                    </lightning-icon>
+                                 </span>
+                              </span>
+                           </div>
+                        </div>
+                        <hr class="nds-align_absolute-center nds-m-bottom_xx-small" />
+                     </li>
+                  </template>
+               </template>
+               <template if:false={sortOptions}>
+                  <div>Error</div>
+               </template>
+            </ul>
+         </div>
+      </div>
+   </div>
+   <!-- Export to Excel -->
+   <!--  <div class="nds-size_1-of-1 nds-medium-size_3-of-12 nds-x-large-size_2-of-12 nds-m-bottom_medium nds-text-align_right"> -->
+   <!--MVP-1092-->
+   <!-- <c-export-to-excel button-label="Export to Excel" table-data={paginatedRecords} table-structure={invoiceTableStructure} file-name="invoices"></c-export-to-excel>
+         -->
+
+   <!-- </div> -->
+   <!-- Invoice records -->
+
+   <div if:true={showInvoice} class="nds-grid">
+      <!--<div class="nds-col nds-medium-size_3-of-3 nds-small-size_1-of-1"> -->
+      <div class="nds-col nds-medium-size_9-of-12 nds-large-size_10-of-12 nds-small-size_1-of-1 nds-p-top_medium nds-show_medium">
+         <p class="nds-text-body_regular nds-m-bottom_medium">View up to 24 months of invoice history.</p>
+      </div>
+      <div class="nds-col nds-size_12-of-12 nds-medium-size_3-of-12 nds-large-size_2-of-12 nds-m-bottom_medium p-top-medium_med-screen" role="main" aria-label="Export invoice to Excel">
+         <!--MVP-1092-->
+         <c-export-to-excel button-label="Export to Excel" table-data={paginatedRecords} table-structure={invoiceTableStructure} file-name="invoices"></c-export-to-excel>
+      </div>
+   </div>
+
+   <div if:true={showInvoice} class="nds-col nds-medium-size_3-of-3 nds-small-size_1-of-1">
+      <c-pager-non-dynamic class="pager" pagedata={paginatedRecords} elements-per-page={selectedViewNumber} title="" onpagerchanged={handlePagerChange}>
+         <c-cf-a-m-p_-billing-invoice-history if:true={showList} parent-data="true" records={currentlyShown}> </c-cf-a-m-p_-billing-invoice-history>
+      </c-pager-non-dynamic>
+   </div>
+
+   <!-- Payment -->
+   <div if:true={showPayment} class="nds-grid nds-wrap nds-grid_align-spread">
+      <!-- SortBy -->
+      <p class="nds-text-body_regular nds-m-bottom_medium nds-hide_medium nds-size_1-of-1">View up to 24 months of payment history.</p>
+
+      <div class="nds-size_1-of-1 nds-small-size_6-of-12 nds-medium-size_2-of-12 nds-is-relative">
+         <div class="nds-combobox__form-element nds-input-has-icon nds-input-has-icon_right">
+            <!-- Default Search Box -->
+            <div class="SortyByClass nds-text-body_regular">
+               <input
+                  type="button"
+                  class="nds-input nds-combobox__input sort_input sortByPayment"
+                  id="combobox-id-2"
+                  aria-activedescendant="option1"
+                  aria-autocomplete="list"
+                  list="listbox-id-2"
+                  aria-controls="listbox-id-2"
+                  autocomplete="off"
+                  placeholder={placeholderText}
+                  onclick={sortFocusIn}
+                  readonly
+                  value="Sort by"
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
+                  role="combobox"
+                  style="padding-right: 100%;"
+               />
+               <span class="nds-icon_container" onclick={sortFocusIn}>
+                  <lightning-icon
+                     theme="nds"
+                     icon-name="utility:chevrondown"
+                     class="nds-icon-utility-down nds-input__icon nds-input__icon_right nds-m-right_medium nds-p-top_xxx-small"
+                     size="x-small"
+                  >
+                  </lightning-icon>
+               </span>
+            </div>
+         </div>
+
+         <div id="listbox-id-2" class="sort_list nds-box nds-dropdown nds-dropdown_large nds-hide" role="listbox">
+            <!-- Sort Options -->
+            <ul class="nds-dropdown__list" role="presentation">
+               <li role="presentation" class="nds-dropdown__item nds-clearfix nds-p-right_small">
+                  <!-- <lightning-button theme="nds" variant="base" label="" class="nds-float_right" icon-name="utility:close" onclick={sortWindowClose}></lightning-button> -->
+                  <lightning-button-icon 
+                                 aria-label="Close"
+                                 theme="nds"
+                                 icon-name="utility:close"  
+                                 variant="bare" 
+                                 onclick={sortWindowClose}
+                                 class="nds-float_right"
+                                 >
+                  </lightning-button-icon>
+               </li>
+               <template if:true={sortOptions}>
+                  <template for:each={sortOptions} for:item="item">
+                     <li role="presentation" class="nds-dropdown__item" key={item.key}>
+                        <div
+                           aria-selected="true"
+                           id={item.key}
+                           data-badge-id={item.key}
+                           data-badge-value={item.value}
+                           class="nds-media nds-listbox__option nds-listbox__option_entity nds-listbox__option_has-meta"
+                           role="option"
+                        >
+                           <span class="nds-media__body nds-m-vertical_x-small" tabindex="0">
+                              <span
+                                 data-badge-id={item.key}
+                                 data-badge-value={item.value}
+                                 onclick={handleSortSelect}
+                                 class="nds-listbox__option-text nds-listbox__option-text_entity nds_optiontxt"
+                                 id={item.key}
+                                 >{item.label}</span
+                              >
+                           </span>
+                           <!-- Badge -->
+                           <div class="badge nds-size_5-of-12 nds-m-vertical_xx-small">
+                              <span id={item.ascBadgeId} class="nds-badge nds-hide nds-p-around_none" onclick={handleSortToggle} tabindex="0">
+                                 Ascending
+                                 <span class="nds-icon_container nds-m-right_xx-small">
+                                    <lightning-icon id={item.ascBadgeId} theme="nds" icon-name="utility:arrowup" class="nds-icon-utility-arrowup nds-m-right_xx-small" size="xx-small">
+                                    </lightning-icon>
+                                 </span>
+                              </span>
+                              <span id={item.descBadgeId} class="nds-badge nds-hide nds-p-around_none" onclick={handleSortToggle} tabindex="0">
+                                 Descending
+                                 <span class="nds-icon_container nds-m-right_xx-small">
+                                    <lightning-icon id={item.descBadgeId} theme="nds" icon-name="utility:arrowdown" class="nds-icon-utility-arrowup nds-m-right_xx-small" size="xx-small">
+                                    </lightning-icon>
+                                 </span>
+                              </span>
+                           </div>
+                        </div>
+                        <hr class="nds-align_absolute-center nds-m-bottom_xx-small" />
+                     </li>
+                  </template>
+               </template>
+               <template if:false={sortOptions}>
+                  <div>Error</div>
+               </template>
+            </ul>
+         </div>
+      </div>
+   </div>
+   <!-- Export to Excel -->
+   <!-- <div class="nds-size_1-of-1 nds-medium-size_3-of-12 nds-x-large-size_2-of-12 nds-p-top_medium nds-text-align_right">
+       <c-export-to-excel button-label="Export to Excel" table-data={paginatedRecords} table-structure={paymentTableStructure} file-name="payments"></c-export-to-excel> 
+      </div> -->
+   <!-- </div> -->
+   <!-- Payment records -->
+   <div if:true={showPayment} class="nds-grid">
+      <!-- <div class="nds-col nds-medium-size_3-of-3 nds-small-size_1-of-1"> -->
+      <!-- <p class="nds-text-body_regular nds-p-bottom_medium nds-show_medium">View up to 24 months of payment history.</p>
+         </div> -->
+      <div class="nds-col nds-medium-size_9-of-12 nds-large-size_10-of-12 nds-small-size_1-of-1 nds-p-top_medium nds-show_medium">
+         <p class="ds-text-body_regular nds-m-bottom_medium">View up to 24 months of invoice history.</p>
+      </div>
+      <div class="nds-col nds-size_12-of-12 nds-medium-size_3-of-12 nds-large-size_2-of-12 nds-m-bottom_medium p-top-medium_med-screen">
+         <!--MVP-1092-->
+         <c-export-to-excel button-label="Export to Excel" table-data={paginatedRecords} table-structure={paymentTableStructure} file-name="payments"></c-export-to-excel>
+      </div>
+   </div>
+   <div if:true={showPayment} class="nds-col nds-medium-size_3-of-3 nds-small-size_1-of-1">
+      <c-pager-non-dynamic class="pager" pagedata={paginatedRecords} elements-per-page={selectedViewNumber} title="" onpagerchanged={handlePagerChange}>
+         <c-cf-a-m-p_-payment-history parent-data="true" records={currentlyShown}> </c-cf-a-m-p_-payment-history>
+      </c-pager-non-dynamic>
+   </div>
+
+   <!-- </div> -->
+</template>

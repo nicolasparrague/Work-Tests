@@ -1,0 +1,33 @@
+.nds-button{
+    border-radius: none;
+}
+
+button{
+    background-color: #000;
+	color: #fff;
+}
+
+.nds-button{
+    background-color: #000;
+	color: #fff;
+}
+
+.section-padding_top {
+    padding-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .section-padding_top {
+        padding-top: 1rem;
+    }
+}
+.learnMore a::after{
+    content: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==');
+    margin: 0px 3px 0px 5px;
+}
+.learmore-nds{
+    text-align: left !important;
+    margin: 0 !important;
+    padding: 0px !important;
+
+}

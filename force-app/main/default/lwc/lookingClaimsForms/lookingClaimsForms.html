@@ -1,0 +1,29 @@
+<template>
+    <template if:true={hasRendered}>
+        <div class="nds-show_medium">
+            <p class="nds-text-body_regular">
+                <!-- <a href={sourceName} target="_blank" area-label={nameUrlAcc}> {nameUrl} </a> -->
+                <!-- <lightning-icon theme="nds" icon-name="utility:new_window" size="xx-small" alternative-text={nameUrl} title={nameUrl} class="nds-m-right_xxx-small nds-brand c-fc-action-icon_right nds-p-left_x-small"></lightning-icon> -->
+                
+                <!-- <a href={sourceName} target="_blank" aria-label={nameUrlAcc}> {nameUrl} </a> -->
+                <a href={sourceName} target="_blank" class="border-bottom-link" aria-label={nameUrlAcc}> {nameUrl} </a>
+                <lightning-icon theme="nds" icon-name="utility:new_window" size="xx-small" alternative-text={nameUrl} title={nameUrl} class="nds-m-right_xxx-small nds-brand c-fc-action-icon_right"></lightning-icon>
+            </p>            
+        </div>
+
+        <div class="nds-hide_medium">
+            <!-- original button -->
+            <!-- <button aria-label={nameUrlAcc}  onclick={downloadMobileForm} class="vlocity-btn nds-button c-remove-button-styles"> {nameUrl} 
+                <lightning-icon theme="nds" icon-name="utility:new_window" size="xx-small" alternative-text={nameUrl} title={nameUrl} class="nds-m-right_xxx-small nds-brand c-fc-action-icon_right nds-p-left_x-small"></lightning-icon>
+            </button> -->
+
+            <!-- <lightning-button aria-label={nameUrlAcc}  onclick={downloadMobileForm} class="vlocity-btn nds-button c-remove-button-styles"> {nameUrl} 
+                <lightning-icon theme="nds" icon-name="utility:new_window" size="xx-small" alternative-text={nameUrl} title={nameUrl} class="nds-m-right_xxx-small nds-brand c-fc-action-icon_right nds-p-left_x-small"></lightning-icon>
+            </lightning-button> -->
+
+            <button aria-label={nameUrlAcc}  onclick={downloadMobileForm} class="vlocity-btn nds-button c-remove-button-styles border-bottom-link"> {nameUrl} </button>
+            <lightning-icon theme="nds" icon-name="utility:new_window" size="xx-small" alternative-text={nameUrl} title={nameUrl} class="nds-m-right_xxx-small nds-brand c-fc-action-icon_right nds-p-left_x-small"></lightning-icon>
+
+        </div> 
+    </template>
+</template>

@@ -1,0 +1,84 @@
+<template>
+  <template if:true={loading}>
+    <lightning-spinner alternative-text="Loading" size="medium" theme="nds"> </lightning-spinner>
+  </template>
+  <!-- Dental Services Start -->
+  <div class="nds-grid">
+    <div class="nds-size_12-of-12 nds-p-around_small">
+      <h2 class="nds-text-heading_small nds-p-bottom_medium">
+        Dental Services
+      </h2>
+    </div>
+  </div>
+  <div class="nds-box">
+    <template for:each={dentalBenefits} for:item="dental">
+      <div key={dental.bsdlCode} class="nds-grid nds-grid_vertical nds-m-top_large c-border-bottom nds-p-bottom_small nds-p-left_medium nds-p-right_medium nds-hide_medium">
+        <div class="nds-medium-size_4-of-12 nds-large-size_4-of-12">
+          <p class="nds-text-title">
+            {dental.bsdlLabel}
+          </p>
+        </div>
+        <div class="nds-medium-size_8-of-12 nds-large-size_8-of-12">
+          <p class="">{dental.description}</p>
+        </div>
+      </div>
+      <div key={dental.bsdlCode} class="nds-grid nds-m-top_large nds-border_bottom nds-p-bottom_large nds-p-left_medium nds-p-right_medium nds-show_medium">
+        <div class="nds-medium-size_4-of-12 nds-large-size_4-of-12">
+          <p class="nds-text-title">
+            {dental.bsdlLabel}
+          </p>
+        </div>
+        <div class="nds-medium-size_8-of-12 nds-large-size_8-of-12">
+          <p class="nds-p-left_small">{dental.description}</p>
+        </div>
+        <!-- <hr /> -->
+      </div>
+
+    </template>
+  </div>
+  <!-- Limits - Diagnostic services start-->
+  <template for:each={groups} for:item="item">
+    <div key={item.key}>
+      <div class="nds-grid" if:true={item.showtitle}>
+        <div class="nds-size_12-of-12 nds-p-around_small nds-m-top_large">
+          <h2 class="nds-text-heading_small nds-p-bottom_medium">
+            {item.group}
+          </h2>
+        </div>
+      </div>
+      <div class="nds-box nds-m-top_medium">
+        <template for:each={item.items} for:item="row">
+          <!-- Record -->
+          <div class="nds-grid nds-grid_vertical nds-m-top_large c-border-bottom nds-p-bottom_small nds-p-left_medium nds-p-right_medium nds-hide_medium" key={row.title}>
+            <div class="nds-medium-size_4-of-12 nds-large-size_4-of-12 nds-small-size_12-of-12">
+              <p class="nds-text-title">
+                {row.title}
+              </p>
+            </div>
+            <div class="nds-medium-size_8-of-12 nds-large-size_8-of-12 nds-small-size_12-of-12">
+              <p class="">{row.limitLanguage}</p>
+            </div>
+          </div>
+          <div class="nds-grid nds-m-top_large nds-border_bottom  nds-p-bottom_large nds-p-left_medium nds-p-right_medium nds-show_medium" key={row.title}>
+            <div class="nds-medium-size_4-of-12 nds-large-size_4-of-12 nds-small-size_12-of-12">
+              <p class="nds-text-title">
+                {row.title}
+              </p>
+            </div>
+            <div class="nds-medium-size_8-of-12 nds-large-size_8-of-12 nds-small-size_12-of-12">
+              <p class="nds-p-left_small">{row.limitLanguage}</p>
+            </div>
+            <!-- <hr /> -->
+          </div>
+
+        </template>
+      </div>
+    </div>
+  </template>
+  <!-- Limits - Diagnostic services end -->
+  <!-- Disclaimer -->
+  <div class="nds-grid nds-p-vertical_large">
+      <c-custom-icon icon-name="Information_Tool_Tip" size="small" variant="information" title="Info" alternative-text="Info" class="nds-m-right_x-small"></c-custom-icon>
+      <p class="nds-text">{disclaimer}</p>
+  </div>
+</template>

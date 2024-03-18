@@ -1,0 +1,44 @@
+
+
+/* .linkToErrors {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
+} */
+
+div.sticky {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    /* position: -webkit-fixed; /* Safari */
+    /* position: fixed; */
+    bottom: 0;
+}
+
+.main-navi{
+    grid-area: nav;
+}
+
+.wrapper {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 40fr;
+    grid-template-areas: "nav nav";
+}
+
+
+nav ul{
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (max-width: 1023px) {
+    .showCancelZoomed{
+        display: flex!important;
+    }
+    /* .stickyZoomed {
+        position: static!important;
+    } */
+}

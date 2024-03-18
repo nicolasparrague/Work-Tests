@@ -1,0 +1,709 @@
+<template>
+   <template if:true={snapShotData}>
+      <div class="via-nds nds-is-relative">
+         <div class="nds">
+            <lightning-tabset theme="nds" id="tabTest" class="">
+               <!--************************** Medical Plan **********************************-->
+               <template if:true={hasMedical}>
+                  <lightning-tab theme="nds" label="Medical" title="Medical" value="Medical" onactive={tabChangeHandler} class="nds-p-around_medium">
+                     <div class="nds-p-horizontal_x-large nds-m-bottom_large">
+                        <div if:true={showMedGraph} class="nds-p-top_x-small nds-grid nds-grid_align-spread">
+                           <p class="plan-name-header">{medicalINDText}</p>
+                           <p class="nds-text-body_regular">In-Network</p>
+                        </div>
+                        <div if:true={isFHS}>
+                           <c-member-claims-financial-summary hfclabel={_hfcLabel} userid={userid}></c-member-claims-financial-summary>
+                        </div>
+                     </div>
+
+                     <div if:true={showMedGraphInd} class="nds-grid nds-p-horizontal_medium nds-m-bottom_large">
+                        <div class="nds-col nds-size_1-of-2 nds-p-horizontal_medium">
+                           <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium box-height">
+                              <div class="nds-m-bottom_medium">
+                                 <label class="nds-text-title">Deductibles</label>
+                                 <p class="nds-text-body_regular">
+                                    $<lightning-formatted-number value={indInNtwkDeductibleTotalAmountMedical} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                                 </p>
+                              </div>
+                              <template if:true={showMedGraphIndDeductible}>
+                                 <lightning-progress-bar
+                                    class="deductibles-progress-bar"
+                                    theme="nds"
+                                    transition="0.5"
+                                    progress={indInNtwkDeductibleProgressMedical}
+                                    success
+                                    size="large"
+                                 ></lightning-progress-bar>
+                                 <div class="nds-grid nds-grid_align-spread">
+                                    <div class="nds-p-top_xx-small">
+                                       <label class="label_small nds-m-bottom_x-small">Spent</label>
+                                       <p class="field-value_small">
+                                          $<lightning-formatted-number value={indInNtwkDeductibleSpentMedical} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                                       </p>
+                                    </div>
+                                    <div class="nds-p-top_xx-small">
+                                       <label class="label_small nds-m-bottom_x-small">Remaining</label>
+                                       <p class="field-value_small">
+                                          $<lightning-formatted-number value={indInNtwkDeductibleRemainingMedical} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                                       </p>
+                                    </div>
+                                 </div>
+                              </template>
+                              <template if:false={showMedGraphIndDeductible}>
+                                 <p class="nds-text-body_regular message-height">{message}</p>
+                              </template>
+                           </div>
+                        </div>
+                        <div if:true={showMedGraphIndOOPM} class="nds-col nds-size_1-of-2 nds-p-horizontal_medium">
+                           <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium box-height">
+                              <div class="nds-m-bottom_medium">
+                                 <label class="nds-text-title">Maximum Out-of-Pocket</label>
+                                 <p class="nds-text-body_regular">
+                                    $<lightning-formatted-number value={indInNtwkOutOfPocketMaxTotalAmountMedical} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                                 </p>
+                              </div>
+                              <template if:true={showMedGraphIndOOPM}>
+                                 <lightning-progress-bar
+                                    class="max-oop-progress-bar"
+                                    theme="nds"
+                                    transition="0.5"
+                                    progress={indInNtwkOutOfPocketMaxProgressMedical}
+                                    success
+                                    size="large"
+                                 ></lightning-progress-bar>
+
+                                 <div class="nds-grid nds-grid_align-spread">
+                                    <div class="nds-p-top_xx-small">
+                                       <label class="label_small nds-m-bottom_x-small">Spent</label>
+                                       <p class="field-value_small">
+                                          $<lightning-formatted-number value={indInNtwkOutOfPocketMaxSpentMedical} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                                       </p>
+                                    </div>
+                                    <div class="nds-p-top_xx-small">
+                                       <label class="label_small nds-m-bottom_x-small">Remaining</label>
+                                       <p class="field-value_small">
+                                          $<lightning-formatted-number
+                                             value={indInNtwkOutOfPocketMaxRemainingMedical}
+                                             maximum-fraction-digits="2"
+                                             minimum-fraction-digits="2"
+                                          ></lightning-formatted-number>
+                                       </p>
+                                    </div>
+                                 </div>
+                              </template>
+                           </div>
+                        </div>
+                     </div>
+                     <template if:true={showMedFamilySpendingInfo}>
+                        <div class="nds-p-horizontal_x-large nds-m-bottom_large">
+                           <p class="plan-name-header">{medicalFamilyText}</p>
+                        </div>
+                        <div class="nds-grid nds-p-horizontal_large nds-m-bottom_medium">
+                           <div if:true={showMedGraphFam} class="nds-col nds-size_1-of-2 nds-p-horizontal_x-small">
+                              <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium box-height">
+                                 <div class="nds-m-bottom_medium">
+                                    <label class="nds-text-title">Deductibles</label>
+                                    <p class="nds-text-body_regular">
+                                       $<lightning-formatted-number value={famInNtwkDeductibleTotalAmountMedical} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                                    </p>
+                                 </div>
+
+                                 <template if:true={showMedGraphFamDeductible}>
+                                    <lightning-progress-bar
+                                       class="deductibles-progress-bar"
+                                       theme="nds"
+                                       transition="0.5"
+                                       progress={famInNtwkDeductibleProgressMedical}
+                                       success
+                                       size="large"
+                                    ></lightning-progress-bar>
+
+                                    <div class="nds-grid nds-grid_align-spread">
+                                       <div class="nds-p-top_xx-small">
+                                          <label class="label_small nds-m-bottom_x-small">Spent</label>
+                                          <p class="field-value_small">
+                                             $<lightning-formatted-number value={famInNtwkDeductibleSpentMedical} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                                          </p>
+                                       </div>
+                                       <div class="nds-p-top_xx-small">
+                                          <label class="label_small nds-m-bottom_x-small">Remaining</label>
+                                          <p class="field-value_small">
+                                             $<lightning-formatted-number
+                                                value={famInNtwkDeductibleRemainingMedical}
+                                                maximum-fraction-digits="2"
+                                                minimum-fraction-digits="2"
+                                             ></lightning-formatted-number>
+                                          </p>
+                                       </div>
+                                    </div>
+                                 </template>
+                                 <template if:false={showMedGraphFamDeductible}>
+                                    <p class="nds-text-body_regular message-height">{message}</p>
+                                 </template>
+                              </div>
+                           </div>
+                           <div if:true={showMedGraphFamOOPM} class="nds-col nds-size_1-of-2 nds-p-horizontal_x-small">
+                              <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium box-height">
+                                 <div class="nds-m-bottom_medium">
+                                    <label class="nds-text-title">Maximum Out-of-Pocket</label>
+                                    <p class="nds-text-body_regular">
+                                       $<lightning-formatted-number
+                                          value={famInNtwkOutOfPocketMaxTotalAmountMedical}
+                                          maximum-fraction-digits="2"
+                                          minimum-fraction-digits="2"
+                                       ></lightning-formatted-number>
+                                    </p>
+                                 </div>
+                                 <template if:true={showMedGraphFamOOPM}>
+                                    <lightning-progress-bar
+                                       class="max-oop-progress-bar"
+                                       theme="nds"
+                                       transition="0.5"
+                                       progress={famInNtwkOutOfPocketMaxProgressMedical}
+                                       success
+                                       size="large"
+                                    ></lightning-progress-bar>
+
+                                    <div class="nds-grid nds-grid_align-spread">
+                                       <div class="nds-p-top_xx-small">
+                                          <label class="label_small nds-m-bottom_x-small">Spent</label>
+                                          <p class="field-value_small">
+                                             $<lightning-formatted-number
+                                                value={famInNtwkOutOfPocketMaxSpentMedical}
+                                                maximum-fraction-digits="2"
+                                                minimum-fraction-digits="2"
+                                             ></lightning-formatted-number>
+                                          </p>
+                                       </div>
+                                       <div class="nds-p-top_xx-small">
+                                          <label class="label_small nds-m-bottom_x-small">Remaining</label>
+                                          <p class="field-value_small">
+                                             $<lightning-formatted-number
+                                                value={famInNtwkOutOfPocketMaxRemainingMedical}
+                                                maximum-fraction-digits="2"
+                                                minimum-fraction-digits="2"
+                                             ></lightning-formatted-number>
+                                          </p>
+                                       </div>
+                                    </div>
+                                 </template>
+                              </div>
+                           </div>
+                        </div>
+                     </template>
+                     <template if:true={showHSATextMedical}>
+                        <div class="nds-grid nds-p-horizontal_x-large nds-m-vertical_xx-small">
+                           <c-custom-icon
+                              theme="nds"
+                              icon-name="Information_Tool_Tip"
+                              alternative-text="info"
+                              variant="information"
+                              size="small"
+                              title="Info"
+                              class="nds-grid nds-grid_vertical-align-start nds-p-right_x-small nds-text-icon_default"
+                           ></c-custom-icon>
+                           <lightning-formatted-text class="nds-text-body_regular" value="Visit HealthCare.gov/high-deductible-health-plan to learn more about HSA." linkify></lightning-formatted-text>
+                        </div>
+                     </template>
+                  </lightning-tab>
+               </template>
+               <!--
+                  ************************** Dental Plan **********************************
+               -->
+               <template if:true={hasDental}>
+                  <lightning-tab theme="nds" label="Dental" title="Dental" value="Dental" onactive={tabChangeHandler} class="nds-p-around_medium">
+                     <div class="nds-p-horizontal_x-large nds-m-bottom_medium">
+                        <div if:true={showDentGraph} class="nds-p-top_x-small nds-grid nds-grid_align-spread">
+                           <p class="plan-name-header">{dentalINDText}</p>
+                           <p class="nds-text-body_regular">In-Network</p>
+                        </div>
+                        <div if:true={isFHS}>
+                           <c-member-claims-financial-summary hfclabel={_hfcLabel} userid={userId}></c-member-claims-financial-summary>
+                        </div>
+                     </div>
+
+                     <div if:true={showDentGraphInd} class="nds-grid nds-p-horizontal_medium nds-m-bottom_large">
+                        <div if:true={showDentGraphIndDeductible} class="nds-col nds-size_1-of-2 nds-p-horizontal_medium">
+                           <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium box-height">
+                              <div class="nds-m-bottom_medium">
+                                 <p class="nds-text-body_regular">
+                                    <span class="nds-text-title">Annual Benefit Maximum</span> - $<lightning-formatted-number
+                                       value={indInNtwkDeductibleTotalAmountDental}
+                                       maximum-fraction-digits="2"
+                                       minimum-fraction-digits="2"
+                                    ></lightning-formatted-number>
+                                 </p>
+                              </div>
+                              <template if:true={showDentGraphIndDeductible}>
+                                 <lightning-progress-bar
+                                    class="deductibles-progress-bar"
+                                    theme="nds"
+                                    transition="0.5"
+                                    progress={indInNtwkDeductibleProgressDental}
+                                    success
+                                    size="large"
+                                 ></lightning-progress-bar>
+
+                                 <div class="nds-grid nds-grid_align-spread">
+                                    <div class="nds-p-top_xx-small">
+                                       <label class="label_small nds-m-bottom_x-small">Spent</label>
+                                       <p class="field-value_small">
+                                          $<lightning-formatted-number value={indInNtwkDeductibleSpentDental} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                                       </p>
+                                    </div>
+                                    <div class="nds-p-top_xx-small">
+                                       <label class="label_small nds-m-bottom_x-small">Remaining</label>
+                                       <p class="field-value_small">
+                                          $<lightning-formatted-number value={indInNtwkDeductibleRemainingDental} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                                       </p>
+                                    </div>
+                                 </div>
+                              </template>
+                           </div>
+                        </div>
+                        <div if:true={showDentGraphIndOOPM} class="nds-col nds-size_1-of-2 nds-p-horizontal_medium">
+                           <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium box-height">
+                              <div class="nds-m-bottom_medium">
+                                 <p class="nds-text-body_regular">
+                                    <span class="nds-text-title">Lifetime Benefit Maximum</span> - $<lightning-formatted-number
+                                       value={indInNtwkOutOfPocketMaxTotalAmountDental}
+                                       maximum-fraction-digits="2"
+                                       minimum-fraction-digits="2"
+                                    ></lightning-formatted-number>
+                                 </p>
+                              </div>
+                              <template if:true={showDentGraphIndOOPM}>
+                                 <lightning-progress-bar
+                                    class="max-oop-progress-bar"
+                                    theme="nds"
+                                    transition="0.5"
+                                    progress={indInNtwkOutOfPocketMaxProgressDental}
+                                    success
+                                    size="large"
+                                 ></lightning-progress-bar>
+                                 <div class="nds-grid nds-grid_align-spread">
+                                    <div class="nds-p-top_xx-small">
+                                       <label class="label_small nds-m-bottom_x-small">Spent</label>
+                                       <p class="field-value_small">
+                                          $<lightning-formatted-number value={indInNtwkOutOfPocketMaxSpentDental} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                                       </p>
+                                    </div>
+                                    <div class="nds-p-top_xx-small">
+                                       <label class="label_small nds-m-bottom_x-small">Remaining</label>
+                                       <p class="field-value_small">
+                                          $<lightning-formatted-number
+                                             value={indInNtwkOutOfPocketMaxRemainingDental}
+                                             maximum-fraction-digits="2"
+                                             minimum-fraction-digits="2"
+                                          ></lightning-formatted-number>
+                                       </p>
+                                    </div>
+                                 </div>
+                              </template>
+                           </div>
+                        </div>
+                     </div>
+                     <template if:true={showDentFamilySpendingInfo}>
+                        <div class="nds-p-vertical_x-small nds-p-horizontal_x-large">
+                           <p class="plan-name-header">{medicalFamilyText}</p>
+                        </div>
+
+                        <div if:true={showDentGraphFam} class="nds-grid nds-p-horizontal_medium nds-m-bottom_large">
+                           <div class="nds-col nds-size_1-of-2 nds-p-horizontal_medium">
+                              <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium box-height">
+                                 <div class="nds-m-bottom_medium">
+                                    <p class="nds-text-body_regular">
+                                       <span class="nds-text-title">Annual Benefit Maximum</span> - $<lightning-formatted-number
+                                          value={famInNtwkDeductibleTotalAmountDental}
+                                          maximum-fraction-digits="2"
+                                          minimum-fraction-digits="2"
+                                       ></lightning-formatted-number>
+                                    </p>
+                                 </div>
+                                 <template if:true={showDentGraphFamDeductible}>
+                                    <lightning-progress-bar
+                                       class="deductibles-progress-bar"
+                                       theme="nds"
+                                       transition="0.5"
+                                       progress={famInNtwkDeductibleProgressDental}
+                                       success
+                                       size="large"
+                                    ></lightning-progress-bar>
+
+                                    <div class="nds-grid nds-grid_align-spread">
+                                       <div class="nds-p-top_xx-small">
+                                          <label class="label_small nds-m-bottom_x-small">Spent</label>
+                                          <p class="field-value_small">
+                                             $<lightning-formatted-number value={famInNtwkDeductibleSpentDental} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                                          </p>
+                                       </div>
+                                       <div class="nds-p-top_xx-small">
+                                          <label class="label_small nds-m-bottom_x-small">Remaining</label>
+                                          <p class="field-value_small">
+                                             $<lightning-formatted-number
+                                                value={famInNtwkDeductibleRemainingDental}
+                                                maximum-fraction-digits="2"
+                                                minimum-fraction-digits="2"
+                                             ></lightning-formatted-number>
+                                          </p>
+                                       </div>
+                                    </div>
+                                 </template>
+                                 <template if:false={showDentGraphFamDeductible}>
+                                    <p class="nds-text-body_regular message-height">{message}</p>
+                                 </template>
+                              </div>
+                           </div>
+                           <div if:true={showDentGraphFamOOPM} class="nds-col nds-size_1-of-2 nds-p-horizontal_medium">
+                              <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium box-height">
+                                 <div class="nds-m-bottom_medium">
+                                    <p class="nds-text-body_regular">
+                                       <span class="nds-text-title">Lifetime Benefit Maximum</span> - $<lightning-formatted-number
+                                          value={famInNtwkOutOfPocketMaxTotalAmountDental}
+                                          maximum-fraction-digits="2"
+                                          minimum-fraction-digits="2"
+                                       ></lightning-formatted-number>
+                                    </p>
+                                 </div>
+                                 <template if:true={showDentGraphFamOOPM}>
+                                    <lightning-progress-bar
+                                       class="max-oop-progress-bar"
+                                       theme="nds"
+                                       transition="0.5"
+                                       progress={famInNtwkOutOfPocketMaxProgressDental}
+                                       success
+                                       size="large"
+                                    ></lightning-progress-bar>
+
+                                    <div class="nds-grid nds-grid_align-spread">
+                                       <div class="nds-p-top_xx-small">
+                                          <label class="label_small nds-m-bottom_x-small">Spent</label>
+                                          <p class="field-value_small">
+                                             $<lightning-formatted-number
+                                                value={famInNtwkOutOfPocketMaxSpentDental}
+                                                maximum-fraction-digits="2"
+                                                minimum-fraction-digits="2"
+                                             ></lightning-formatted-number>
+                                          </p>
+                                       </div>
+                                       <div class="nds-p-top_xx-small">
+                                          <label class="label_small nds-m-bottom_x-small">Remaining</label>
+                                          <p class="field-value_small">
+                                             $<lightning-formatted-number
+                                                value={famInNtwkOutOfPocketMaxRemainingDental}
+                                                maximum-fraction-digits="2"
+                                                minimum-fraction-digits="2"
+                                             ></lightning-formatted-number>
+                                          </p>
+                                       </div>
+                                    </div>
+                                 </template>
+                              </div>
+                           </div>
+                        </div>
+                     </template>
+                     <template if:true={showHSATextDental}>
+                        <div class="nds-grid nds-p-horizontal_x-large nds-m-vertical_xx-small">
+                           <c-custom-icon
+                              theme="nds"
+                              icon-name="Information_Tool_Tip"
+                              alternative-text="info"
+                              variant="information"
+                              size="small"
+                              title="Info"
+                              class="nds-grid nds-grid_vertical-align-start nds-p-right_x-small nds-text-icon_default"
+                           ></c-custom-icon>
+                           <lightning-formatted-text class="nds-text-body_regular" value="Visit HealthCare.gov/high-deductible-health-plan to learn more about HSA." linkify></lightning-formatted-text>
+                        </div>
+                     </template>
+                  </lightning-tab>
+               </template>
+               <!--
+                  ************************** Vision Plan **********************************
+                -->
+               <template if:true={hasVision}>
+                  <lightning-tab theme="nds" label="Vision" title="Vision" value="Vision" onactive={tabChangeHandler} class="nds-p-around_medium">
+                     <div class="nds-p-horizontal_x-large nds-m-bottom_medium">
+                        <div if:true={showVisionGraph} class="nds-p-top_x-small nds-grid nds-grid_align-spread">
+                           <p class="plan-name-header">{visionINDText}</p>
+                           <p class="nds-text-body_regular">In-Network</p>
+                        </div>
+                        <div if:true={isFHS}>
+                           <c-member-claims-financial-summary hfclabel={_hfcLabel} userid={userId}></c-member-claims-financial-summary>
+                        </div>
+                     </div>
+
+                     <div if:true={showVisionGraphInd} class="nds-grid nds-p-horizontal_medium nds-m-bottom_large">
+                        <div class="nds-col nds-size_1-of-2 nds-p-horizontal_medium">
+                           <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium box-height">
+                              <div class="nds-m-bottom_medium">
+                                 <label class="nds-text-title">Deductibles</label>
+                                 <p class="nds-text-body_regular"></p>
+                                 $<lightning-formatted-number value={indInNtwkDeductibleTotalAmountVision} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                              </div>
+                              <template if:true={showVisionGraphIndDeductible}>
+                                 <lightning-progress-bar
+                                    class="deductibles-progress-bar"
+                                    theme="nds"
+                                    transition="0.5"
+                                    progress={indInNtwkDeductibleProgressVision}
+                                    success
+                                    size="large"
+                                 ></lightning-progress-bar>
+
+                                 <div class="nds-grid nds-grid_align-spread">
+                                    <div class="nds-p-top_xx-small">
+                                       <label class="label_small nds-m-bottom_x-small">Spent</label>
+                                       <p class="field-value_small">
+                                          $<lightning-formatted-number value={indInNtwkDeductibleSpentVision} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                                       </p>
+                                    </div>
+                                    <div class="nds-p-top_xx-small">
+                                       <label class="label_small nds-m-bottom_x-small">Remaining</label>
+                                       <p class="field-value_small">
+                                          $<lightning-formatted-number value={indInNtwkDeductibleRemainingVision} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                                       </p>
+                                    </div>
+                                 </div>
+                              </template>
+                              <template if:false={showVisionGraphIndDeductible}>
+                                 <p class="nds-text-body_regular message-height">{message}</p>
+                              </template>
+                           </div>
+                        </div>
+                        <div if:true={showVisionGraphIndOOPM} class="nds-col nds-size_1-of-2 nds-p-horizontal_medium">
+                           <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium box-height">
+                              <div class="nds-m-bottom_medium">
+                                 <label class="nds-text-title">Maximum Out-of-Pocket</label>
+                                 <p class="nds-text-body_regular">
+                                    $<lightning-formatted-number value={indInNtwkOutOfPocketMaxTotalAmountVision} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                                 </p>
+                              </div>
+                              <template if:true={showVisionGraphIndOOPM}>
+                                 <lightning-progress-bar
+                                    class="max-oop-progress-bar"
+                                    theme="nds"
+                                    transition="0.5"
+                                    progress={indInNtwkOutOfPocketMaxProgressVision}
+                                    success
+                                    size="large"
+                                 ></lightning-progress-bar>
+
+                                 <div class="nds-grid nds-grid_align-spread">
+                                    <div class="nds-p-top_xx-small">
+                                       <label class="label_small nds-m-bottom_x-small">Spent</label>
+                                       <p class="field-value_small">
+                                          $<lightning-formatted-number value={indInNtwkOutOfPocketMaxSpentVision} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                                       </p>
+                                    </div>
+                                    <div class="nds-p-top_xx-small">
+                                       <label class="label_small nds-m-bottom_x-small">Remaining</label>
+                                       <p class="field-value_small">
+                                          $<lightning-formatted-number
+                                             value={indInNtwkOutOfPocketMaxRemainingVision}
+                                             maximum-fraction-digits="2"
+                                             minimum-fraction-digits="2"
+                                          ></lightning-formatted-number>
+                                       </p>
+                                    </div>
+                                 </div>
+                              </template>
+                           </div>
+                        </div>
+                     </div>
+                     <template if:true={showVisionFamilySpendingInfo}>
+                        <div class="nds-p-vertical_x-small nds-p-horizontal_x-large">
+                           <p class="plan-name-header">{visionFamilyText}</p>
+                        </div>
+
+                        <div if:true={showVisionGraphFam} class="nds-grid nds-p-horizontal_medium nds-m-bottom_large">
+                           <div class="nds-col nds-size_1-of-2 nds-p-horizontal_medium">
+                              <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium box-height">
+                                 <div class="nds-m-bottom_medium">
+                                    <label class="nds-text-title">Deductibles</label>
+                                    <p class="nds-text-body_regular">
+                                       $<lightning-formatted-number value={famInNtwkDeductibleTotalAmountVision} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                                    </p>
+                                 </div>
+                                 <template if:true={showVisionGraphFamDeductible}>
+                                    <lightning-progress-bar
+                                       class="deductibles-progress-bar"
+                                       theme="nds"
+                                       transition="0.5"
+                                       progress={famInNtwkDeductibleProgressVision}
+                                       success
+                                       size="large"
+                                    ></lightning-progress-bar>
+
+                                    <div class="nds-grid nds-grid_align-spread">
+                                       <div class="nds-p-top_xx-small">
+                                          <label class="label_small nds-m-bottom_x-small">Spent</label>
+                                          <p class="field-value_small">
+                                             $<lightning-formatted-number value={famInNtwkDeductibleSpentVision} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number>
+                                          </p>
+                                       </div>
+                                       <div class="nds-p-top_xx-small">
+                                          <label class="label_small nds-m-bottom_x-small">Remaining</label>
+                                          <p class="field-value_small">
+                                             $<lightning-formatted-number
+                                                value={famInNtwkDeductibleRemainingVision}
+                                                maximum-fraction-digits="2"
+                                                minimum-fraction-digits="2"
+                                             ></lightning-formatted-number>
+                                          </p>
+                                       </div>
+                                    </div>
+                                 </template>
+                                 <template if:false={showVisionGraphFamDeductible}>
+                                    <p class="nds-text-body_regular message-height">{message}</p>
+                                 </template>
+                              </div>
+                           </div>
+                           <div if:true={showVisionGraphFamOOPM} class="nds-col nds-size_1-of-2 nds-p-horizontal_medium">
+                              <div class="card c-box-shadow nds-p-horizontal_large nds-p-vertical_medium box-height">
+                                 <div class="nds-m-bottom_medium">
+                                    <label class="nds-text-title">Maximum Out-of-Pocket</label>
+                                    <p class="nds-text-body_regular">
+                                       $<lightning-formatted-number
+                                          value={famInNtwkOutOfPocketMaxTotalAmountVision}
+                                          maximum-fraction-digits="2"
+                                          minimum-fraction-digits="2"
+                                       ></lightning-formatted-number>
+                                    </p>
+                                 </div>
+                                 <template if:true={showVisionGraphFamOOPM}>
+                                    <lightning-progress-bar
+                                       class="max-oop-progress-bar"
+                                       theme="nds"
+                                       transition="0.5"
+                                       progress={famInNtwkOutOfPocketMaxProgressVision}
+                                       success
+                                       size="large"
+                                    ></lightning-progress-bar>
+
+                                    <div class="nds-grid nds-grid_align-spread">
+                                       <div class="nds-p-top_xx-small">
+                                          <label class="label_small nds-m-bottom_x-small">Spent</label>
+                                          <p class="field-value_small">
+                                             $<lightning-formatted-number
+                                                value={famInNtwkOutOfPocketMaxSpentVision}
+                                                maximum-fraction-digits="2"
+                                                minimum-fraction-digits="2"
+                                             ></lightning-formatted-number>
+                                          </p>
+                                       </div>
+                                       <div class="nds-p-top_xx-small">
+                                          <label class="label_small nds-m-bottom_x-small">Remaining</label>
+                                          <p class="field-value_small">
+                                             $<lightning-formatted-number
+                                                value={famInNtwkOutOfPocketMaxRemainingVision}
+                                                maximum-fraction-digits="2"
+                                                minimum-fraction-digits="2"
+                                             ></lightning-formatted-number>
+                                          </p>
+                                       </div>
+                                    </div>
+                                 </template>
+                              </div>
+                           </div>
+                        </div>
+                     </template>
+                     <template if:true={showHSATextVision}>
+                        <div class="nds-grid nds-p-horizontal_x-large nds-m-vertical_xx-small">
+                           <c-custom-icon
+                              theme="nds"
+                              icon-name="Information_Tool_Tip"
+                              alternative-text="info"
+                              variant="information"
+                              size="small"
+                              title="Info"
+                              class="nds-grid nds-grid_vertical-align-start nds-p-right_x-small nds-text-icon_default"
+                           ></c-custom-icon>
+                           <lightning-formatted-text class="nds-text-body_regular" value="Visit HealthCare.gov/high-deductible-health-plan to learn more about HSA." linkify></lightning-formatted-text>
+                        </div>
+                     </template>
+                  </lightning-tab>
+               </template>
+               <!--
+                  ************************** Pharamcy Plan **********************************
+               -->
+               <template if:true={hasPharmacy}>
+                  <lightning-tab theme="nds" label="Pharmacy" title="Pharmacy" value="Pharmacy" onactive={tabChangeHandler} class="nds-p-around_medium">
+                     <div class="nds-p-horizontal_x-large nds-m-bottom_medium">
+                        <div if:true={isFHS}>
+                           <c-member-claims-financial-summary hfclabel={_hfcLabel} userid={userId}></c-member-claims-financial-summary>
+                        </div>
+                     </div>
+
+                     <div class="nds-col nds-size_3-of-3 nds-p-horizontal_large">
+                        <span>
+                           <p>
+                              Your Pharmacy benefits are managed by <a onclick={openPharmacyModal}>&nbsp;Express Scripts, Inc., (ESI).</a> To learn about your benefits and spending, visit their site.
+                           </p>
+                        </span>
+                     </div>
+                     <!-- Pharmacy Health Modal Window-->
+                     <template if:true={isModalPharmacy}>
+                        <!-- Modal/Popup Box LWC starts here -->
+                        <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-fade-in-open">
+                           <div class="nds-modal__container modalAccessibility">
+                              <!-- Modal/Popup Box LWC body starts here -->
+                              <div class="nds-modal__content nds-p-around_x-large" id="modal-content-id-2">
+                                 <div class="nds-grid nds-m-bottom_large">
+                                    <template if:true={isCommercial}>
+                                       <div class="nds-col">
+                                          <p class="nds-text-color_default">
+                                             You are leaving the Attentis Health website and going to Express Scripts’s website.<br /><br />Attentis Health does not accept responsibility for the
+                                             information, accuracy, or completeness of the Express Scripts website. Please consult your doctor about any medical or treatment information you may
+                                             find on the [vendor] site. This is general information and should not be relied upon without speaking with your doctor about your individual needs. The
+                                             opinions and information are not necessarily those of Attentis Health.<br /><br />The Privacy Statement of Express Scripts may be different from ours.
+                                             Review this statement when you get to their site.
+                                          </p>
+                                       </div>
+                                    </template>
+                                    <template if:true={isMedicare}>
+                                       <div class="nds-col">
+                                          <p class="nds-text-color_default">
+                                             You are leaving the Attentis Health website and going to Express Scripts’s website.<br /><br />We encourage you to read the privacy statement on the
+                                             Express Scripts website. Please consult your doctor about any medical advice or treatment information you may find on the Express Scripts site.
+                                          </p>
+                                       </div>
+                                    </template>
+                                 </div>
+                                 <div class="nds-grid nds-text-align_center">
+                                    <div class="nds-size_1-of-1">
+                                       <div class="nds-col c-reverse-button-stack_small">
+                                          <!-- Go Back option -->
+                                          <button class="nds-m-right_large nds-button nds-button_neutral modal-color-1" onclick={closeModal} title="Go Back">Cancel</button>
+                                          <!-- Pharmacy  -->
+                                          <button class="nds-button nds-button_brand modal-color-2" onclick={ssoLink} title="Click here to continue">
+                                             Continue<lightning-button-icon variant="bare" icon-name="utility:link"></lightning-button-icon>
+                                          </button>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </section>
+                        <div class="nds-backdrop nds-backdrop_open"></div>
+                     </template>
+                  </lightning-tab>
+               </template>
+            </lightning-tabset>
+            <div if:true={showViewAllSpendingLink}>
+               <c-navigation-action-encrypted
+                  class="c-fc-action-text c-tabset-link-position"
+                  targettype={targettype}
+                  targetname={targetname}
+                  label={_label}
+                  variant={_variant}
+                  targetparams={targetparams}
+                  iconname={_iconName}
+                  iconposition={_iconPosition}
+                  extraclass={_extraclass}
+               ></c-navigation-action-encrypted>
+            </div>
+         </div>
+      </div>
+   </template>
+</template>

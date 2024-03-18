@@ -1,0 +1,51 @@
+.c-filter-section {
+    margin-top: -56px;
+}
+
+.c-box-style {
+    border-radius: 5px;
+    border-color: rgb(204, 204, 204);
+}
+
+.nds-box.radio-box {
+    padding: 24px;
+}
+@media (max-width: 1023px) { 
+    .c-filter-section {
+        margin-top: 0;
+    }
+
+    .c-filter-section .nds-box { 
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+        
+    }
+
+    /*style="white-space:pre-wrap;"*/
+
+    .c-filter_dropdown {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        background: #ffffff;
+        border: 1px solid #dddbda;
+        border-radius: 3px;
+        z-index: 100;
+        padding-left: 10px;
+        padding-right: 10px;
+        box-shadow: 0 14px 26px -17px rgb(0 0 0 / 44%);
+        white-space:pre-wrap;
+    }
+    
+    .c-filter_dropdown.c-hide_small {
+        display: none !important;
+    }
+}
+
+@media only screen and (hover: none) and (pointer: coarse){
+    .extra-margin-bottom {
+        margin-bottom: 500px;
+    }
+}

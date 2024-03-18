@@ -1,0 +1,37 @@
+<template>
+  <button         
+    aria-label={label}
+    onclick={openModal}
+    class={extraclass}
+    style={extrastyle}>
+   <span if:true={learnMoreButton} class="btnLabel">{name}<lightning-icon size="small" variant="outline-brand" class="slds-button__icon slds-icon_xx-small slds-button__icon_right learn-more-button" icon-position="right" icon-name={icon}></lightning-icon></span>
+   <span if:false={learnMoreButton} class="btnLabel">{name}<lightning-icon size="small" variant="outline-brand" class="slds-button__icon slds-icon_xx-small slds-button__icon_right" icon-position="right" icon-name={icon}></lightning-icon></span>
+  </button >
+
+      <!-- Desktop/Mobile Modal  -->
+      <template if:true={isModalGlobal}>
+        <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-modal__confirmation nds-fade-in-open">
+          <div class="nds-modal__container modalAccessibility">
+            <div class="nds-modal__content nds-p-around_x-large" id="modal-content-id-1">
+              <div class="nds-grid nds-m-bottom_large"> 
+                <!-- Body Message -->
+                <p class="nds-text-color_default  nds-text-body_regular nds-show_medium">This link will take to a new tab, but your Attentis Health session will remain active in this tab.</p>
+                <p class="nds-text-color_default  nds-text-body_regular nds-hide_medium">This link will open in your browser. You can come back to the app at any time to pick up where you left off.</p>
+              </div>    
+              <div class="nds-grid nds-text-align_center ">
+                 <div class="nds-size_1-of-1">
+                    <div class="nds-col c-reverse-button-stack_small">
+                       <!-- Cancel Option  -->
+                       <button class="nds-m-right_large nds-button nds-button_neutral modal-color-1" onclick={closeModal} title="Go Back">Cancel</button>
+                       <!-- Continue Option -->
+                       <button class="nds-button nds-button_brand modal-color-2 " onclick={navigateToExternalSite} title="Proceed to the site">Continue<lightning-button-icon variant="bare" icon-name="utility:link"></lightning-button-icon>
+                       </button>
+                    </div>
+                 </div>
+              </div>
+           </div>
+          </div>
+        </section>
+        <div class="nds-backdrop nds-backdrop_open"></div>
+      </template>
+</template>

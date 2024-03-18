@@ -1,0 +1,335 @@
+.toggleButton{
+   border: 1px solid rgb(82, 35, 127);
+}
+.toggleButton[aria-pressed="true"] {
+   background-color: rgb(82, 35, 127);
+   color: white;
+}
+.toggleButton[aria-pressed="false"] {
+   color: rgb(82, 35, 127);
+   background-color: white;
+}
+
+lightning-map {
+   margin: 1rem;
+   min-height: 88vh;
+   position: sticky;
+   top: 120px;
+}
+.nds-dropdown {
+   z-index: 10 !important;
+}
+
+.badge_hand {
+   cursor: hand;
+}
+
+.nds-badge + .nds-badge,
+.m-distance,
+.m-specialty {
+   margin-left: 0.25rem;
+   margin-right: 0.25rem;
+}
+
+.badge-align {
+   justify-content: center;
+}
+
+.tableFixHead {
+   overflow-y: auto;
+   height: 200px;
+   color: brown;
+}
+.tableFixHead thead th {
+   position: sticky;
+   top: 0;
+}
+
+.compass-icon {
+   padding-top: 3%;
+}
+
+.cls-1 {
+   fill: none;
+   /* stroke:#5b3880; */
+   stroke-linecap: round;
+   stroke-miterlimit: 10;
+   stroke-width: 2px;
+}
+.b03b6020-40e8-4ff9-81cc-d0d4f77475f6 {
+   fill: none;
+   stroke: #202020;
+   stroke-linecap: round;
+   stroke-linejoin: round;
+   stroke-width: 2px;
+}
+
+.results-select-container select.nds-select,
+input.nds-input[readonly] {
+   margin-top: 4px;
+}
+
+.results-select-container .nds-form-element__control.nds-form-element__control-animated-label select:focus~label.nds-form-element__label {
+   line-height: .5;
+}
+
+.nds-input.nds-combobox__input.sort_input {
+   margin-top: -3px;
+}
+.nds-input.nds-combobox__input.sort_input:focus {
+   margin-top: 0;
+}
+
+.box {
+   border-radius: 0.25rem;
+   border: 1px solid #dddbda;
+   padding: 24px 16px 16px 16px;
+ }
+
+.m-top_xxxl {
+   margin-top: 72px;
+}
+
+.compare-provider-name {
+   font-size: 17px;
+   display: inline-block;
+   padding-right: 12px;
+}
+
+.button-border-benefit-video{
+   background: none;
+   border: none;
+}
+
+.attentis-benefit-video:focus {
+   outline: 2px solid #efb21a !important;
+}
+
+@media only screen and (max-width: 768px) {
+   lightning-map {
+      margin-left: auto;
+      margin-right: auto;
+   }
+   div.c-brand-border_right {
+      border-right: none;
+   }
+}
+
+/* ---- Tablet Mode ---- */
+@media only screen and (max-width: 1024px) and (min-width: 760px) {
+   .m-top {
+      margin-top: 1.5rem;
+   }
+   .nds-border_right {
+      border-right: none !important;
+   }
+   .c-brand-border_right {
+      border-right: none !important;
+   }
+}
+
+/* ---- Mobile Mode ---- */
+@media screen and (max-width: 30rem) {
+   .nds-border_right {
+      border-right: none !important;
+   }
+   .c-brand-border_right {
+      border-right: none !important;
+   }
+   .txtCenter {
+      text-align: initial;
+   }
+   .mp-success-dot {
+      margin-left: 1px;
+   }
+   .mp-error-square {
+      margin-left: 1px;
+   }
+}
+
+/* Badges */
+
+@media (min-width: 48rem) and (max-width: 64rem) {
+   .badge-align {
+      justify-content: flex-end;
+   }
+   .m-distance {
+      margin-right: 0;
+      margin-left: 0;
+   }
+   .nds-badge + .nds-badge,
+   .m-specialty {
+      margin-right: 0;
+      margin-left: 0.5rem;
+   }/*
+   .nds-grid.nds-wrap.nds-m-top_large {
+      margin-top: 0px;
+   }*/
+}
+
+@media (min-width: 64rem) {
+   .badge-align {
+      justify-content: flex-start;
+   }
+   .m-distance {
+      margin-right: 0.5rem;
+      margin-left: 0;
+   }
+   .nds-badge + .nds-badge,
+   .m-specialty {
+      margin-right: 0;
+      margin-left: 0;
+   }
+}
+
+@media screen and (max-width: 48rem) {
+   .nds-input.nds-combobox__input.sort_input {
+      margin-top: 2px;
+   }
+   /*.nds-grid.nds-wrap.nds-m-top_large {
+      margin-top: 0px;
+   }*/
+   .nds-input.nds-combobox__input.filter_input {
+      margin-top: 2px;
+   }
+}
+
+.compare-footer-border {
+   border-radius: 8px;
+   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+   background-color: #F4F3F1;
+   position: -webkit-sticky; /* Safari */
+   position: sticky;
+   bottom: 0;
+}
+
+.compare-footer-text {
+   padding-left: 10%;
+}
+
+/* div.compare-providers-div {
+   padding-top: 8px;
+} */
+
+div.compare-provider {
+   display: inline-block;
+   min-width: 290px;
+   padding: .75rem 1rem;
+   margin: .75rem .5rem 0 .5rem;
+   font-weight: 500;
+   text-transform: none;
+   /* text-align: center; */
+   color: #fff;
+   /* border: 1px solid #343741; */
+   font-size: 17px;
+}
+
+.compare-close-icon {
+   border: none;
+   border-radius: 50%;
+   /* margin-left: 15px; */
+   float: right;
+   background-color: #fff;
+   cursor: pointer;
+   height: 24px;
+   width:24px;
+   position: relative;
+}
+
+.compare-modal-close-icon_container {
+   border-radius: 50%;
+   /* margin-left: 15px; */
+   float: right;
+   background-color: #fff;
+   cursor: pointer;
+   height: 24px;
+   width:24px;
+   position: relative;
+}
+
+.close-icon svg {
+   height: 16px;
+   width: 16px;
+}
+
+.sticky-table-header th {
+   position: sticky;
+   top: 64px;
+   z-index: 1;
+}
+
+.sticky-icon-header {
+   position: sticky;
+   top: 0px;
+   z-index: 1;
+   background-color: #fff;
+}
+
+.vertical-align-top {
+   vertical-align: top;
+}
+.dot {
+   height: 30px;
+   width: 28px;
+   background-color: white;
+   border-radius: 50%;
+   display: inline-block;
+}
+
+.compare-footer-main-text {
+   font-weight: bolder;
+}
+
+.compare-button-padding {
+   padding-left: 20% !important;
+   padding-right: 20% !important;
+}
+
+.checkbox-round {
+   width: 1.3em;
+   height: 1.5em;
+   background-color: white !important;
+   border-radius: 50%;
+   vertical-align: middle;
+   border: 1px solid #ddd;
+   -webkit-appearance: none;
+   outline: none;
+   cursor: pointer;
+}
+
+.checkbox-round-image {
+   background: url("/memberportal/resource/closeIcon");
+   background-repeat: round;
+}
+
+.checkbox-cross {
+   color: black;
+   padding-left: 26.5%;
+   position: relative;
+   cursor: pointer;
+}
+
+.move-restart-button {
+   padding-left: 13%;
+}
+
+.clickable {
+   cursor: pointer;
+}
+
+.st0 {
+   fill: #57575b;
+}
+.st1 {
+   fill: #e87825;
+}
+.st2 {
+   fill: #ffffff;
+} 
+.buttonBadge {
+   background-color: #dbcce9 !important;
+   height: 30px !important;
+   font-size: 17px !important;
+   font-weight: 400 !important;
+   padding: 5px 24px !important;
+}

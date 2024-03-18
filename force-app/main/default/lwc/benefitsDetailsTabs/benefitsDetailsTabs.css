@@ -1,0 +1,50 @@
+.nds-button{
+    border-radius: none;
+    min-width: 250px;
+}
+
+button{
+    background-color: #000;
+	color: #fff;
+}
+
+.customPad{
+    padding: .75rem;
+}
+
+.nds-button{
+    background-color: #000;
+	color: #fff;
+}
+
+.section-padding_top {
+    padding-top: 3rem;
+}
+
+.content-max-width {
+    max-width: 1000px;
+    margin: auto;
+}
+@media (max-width: 768px) {
+    .section-padding_top {
+        padding-top: 1rem;
+    }
+}
+.learnMore a::after{
+    content: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==');
+    margin: 0px 3px 0px 5px;
+}
+
+@media print {
+    .vendorListHeading {
+        background-color: #1564BF !important;
+        -webkit-print-color-adjust: exact; 
+    }
+}
+
+
+
+
+/* .preAuth{
+    padding-right: 3rem !important;
+} */

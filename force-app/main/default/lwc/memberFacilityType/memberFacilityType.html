@@ -1,0 +1,51 @@
+<template>
+   <template if:true={loading}>
+      <lightning-spinner alternative-text="Loading" size="medium" theme="nds"></lightning-spinner>
+   </template>
+   <template if:true={radioButtons}>
+      <fieldset class="nds-form-element">
+         <legend class="nds-form-element__legend nds-form-element__label"></legend>
+         <div class="nds-form-element__control nds-horizontal_radio">
+            <span class="nds-radio">
+               <input class="hospital-radio" type="radio" id="Hospital" value="Hospital" name="default" onclick={radioHandler}>
+               <label class="nds-radio__label" for="Hospital">
+                  <span class="nds-radio_faux"></span>
+                  <span class="nds-form-element__label">Hospital</span>
+               </label>
+            </span>
+            <span class="nds-radio">
+               <input class="urgentcare-radio" type="radio" id="UrgentCare" value="UrgentCare" name="default" onclick={radioHandler}/>
+               <label class="nds-radio__label" for="UrgentCare">
+                  <span class="nds-radio_faux"></span>
+                  <span class="nds-form-element__label">Urgent Care</span>
+               </label>
+            </span>
+            <span class="nds-radio">
+               <input class="facility-radio" type="radio" id="Facility" value="Facility" name="default" onclick={radioHandler} />
+               <label class="nds-radio__label" for="Facility">
+                  <span class="nds-radio_faux"></span>
+                  <span class="nds-form-element__label">Facility</span>
+               </label>
+            </span>
+         </div>
+      </fieldset>
+   </template>
+   <template if:true={displayOnCheck}>
+      <div class="nds-form-element__label_toggle-text nds-p-around_small nds-m-bottom_x-small">
+         <label class="" for="combobox-unique-id" aria-label="Facility"
+            >Facility Type
+            <abbr title="Required" class="nds-required nds-p-left_xx-small">*</abbr>
+         </label>
+         <c-member-search-combo
+            default-code={defaultFacilityCode}
+            default-value={defaultFacility}
+            placeholder-text="Search Facility"
+            field-to-save="selectedFacilityType"
+            options={facilities}
+            read-only={readOnly}
+            required=true
+         >
+         </c-member-search-combo>
+      </div>
+   </template>
+</template>

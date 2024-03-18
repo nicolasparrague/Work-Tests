@@ -1,0 +1,21 @@
+.id-card-h1 {
+    height: 0px !important;
+    overflow: hidden !important;
+}
+
+.boxaskqusn{
+    box-shadow: 1px 7px 12px -1px #d9d9d9;
+}
+
+.customPad{
+    padding: .75rem;
+}
+
+button{
+    background-color: #000;
+	color: #fff;
+}
+
+.nds-notify_alert {
+    margin-bottom: 20px !important;
+}

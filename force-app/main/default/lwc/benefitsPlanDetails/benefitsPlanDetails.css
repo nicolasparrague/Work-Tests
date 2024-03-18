@@ -1,0 +1,45 @@
+.amp-font {
+   font-family: "Lucida Console", "Courier New", monospace;
+}
+
+.bottom {
+   position: absolute;
+   bottom: 0;
+   left: 0;
+}
+.nds-button {
+   border-radius: none;
+}
+
+button {
+   background-color: #000;
+   color: #fff;
+}
+
+.nds-button {
+   background-color: #000;
+   color: #fff;
+}
+.minheight {
+   min-height: 100px;
+}
+
+.section-padding_top {
+   padding-top: 3rem;
+}
+
+@media (max-width: 768px) {
+   .section-padding_top {
+      padding-top: 1rem;
+   }
+}
+.learnMore a::after {
+   content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==");
+   margin: 0px 3px 0px 5px;
+}
+
+@media print {
+   a[href]:after {
+      display: none !important;
+   }
+}

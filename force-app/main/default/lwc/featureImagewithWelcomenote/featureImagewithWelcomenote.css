@@ -1,0 +1,92 @@
+.welcome-note-bg {
+    background-image: url("/memberportal/resource/WelcomeNoteAttentis");
+    /* color: white; */
+    height: 360px;
+    /* background-size: 1500px 1000px; */
+    background-size: cover;
+    /* background-position: center;*/
+    background-position-y: 45%;
+    background-repeat: no-repeat;
+}
+
+.welcome-note-bg {
+    background-image: url("/memberportal/resource/WelcomeNoteAttentis");
+    /* color: white; */
+    height: 360px;
+    /* background-size: 1500px 1000px;  */
+    background-size: cover;
+    background-position: center;
+    background-position-y: 40%;
+    background-repeat: no-repeat;
+}
+
+.welcome-note-bg-mobile {
+    background-color: #f9f2ff;
+    min-height: 200px;
+}
+
+.iframeHomePage {
+    border: none;
+    /* padding-left: 20%; */
+}
+
+.iconClose {
+    float: right;
+    cursor: pointer;
+}
+
+.iframeBackground {
+    background-color: #fff;
+}
+
+.benefit-video-hp {
+    /* background-image: url('/member/resource/benefits_explanation');
+     background-image: url("/member/resource/benefitVideoWithIcon"); */
+    background-image: url("/memberportal/resource/WelcomeNoteAttentis");
+    /* height: 200px; */
+    /*height: 160px;*/
+    height: 100%;
+    width: 90%;
+    background-repeat: round;
+    float: right;
+    cursor: pointer;
+}
+
+.white-background {
+    background-color: rgba(255, 255, 255, 0.9);
+    /* opacity: .9; */
+    border-radius: 8px;
+    margin-left: 32px;
+}
+
+.button-outline-brand-round {
+    --sds-c-button-outline-brand-color-background: white;
+    --sds-c-button-outline-brand-color-background-hover: white;
+    --sds-c-button-outline-brand-color-border: black;
+    --sds-c-button-outline-brand-color-border-hover: black;
+    border-radius: 12px;
+    width: 25%;
+}
+
+.portal-max-width {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.opacity-1 {
+    opacity: 1;
+}
+
+.button-border-benefit-video {
+    background: none;
+    border: none;
+}
+
+.benefit-video:focus {
+    outline: 2px solid #efb21a !important;
+}
+
+.bottom-m-5px {
+    margin-bottom: 5px;
+}

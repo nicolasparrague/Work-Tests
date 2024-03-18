@@ -1,0 +1,56 @@
+<template>
+   <div class="nds-col nds-large-size_3-of-12 nds-m-top_medium rightButton">
+      <button onclick={goToExternalSite} class="vlocity-btn nds-button nds-button_brand" aria-label="Get Started opens a modal" data-btn-id="wellessProgramBtn">
+         Get Started
+         <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small nds-brand c-fc-action-icon_right" style="padding-left: 7px;"></lightning-icon>
+      </button>
+   </div>
+    <template if:true={isModalGlobal}>
+    <!-- Modal/Popup Box LWC starts here -->
+    <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-modal__confirmation nds-fade-in-open">
+      <div class="nds-modal__container modalAccessibility">
+        <!-- Modal/Popup Box LWC header here -->
+        <div class="nds-modal__content nds-p-around_x-large" id="modal-content-id-1">
+          <div class="nds-grid nds-p-top_small">
+             <template if:true={isCommercial}>
+                  <div class="nds-col">
+                     <p class="nds-text-body_regular ">
+                        You are leaving the Attentis Health website and going to Teladoc website.<br><br>Attentis Health does not accept responsibility for the information, accuracy, or
+                        completeness of the Teladoc website. Please consult your doctor about any medical or treatment information you may find on the Teladoc site. This is general
+                        information and should not be relied upon without speaking with your doctor about your individual needs. The opinions and information are not necessarily those of
+                        Attentis Health.<br><br>The Privacy Statement of Teladoc may be different from ours. Review this statement when you get to their site.
+                     </p>
+                  </div>
+             </template>
+
+             <template if:true={isMedicare}>
+                  <div class="nds-col">
+                     <p class="nds-text-body_regular">
+                        You are leaving the Attentis Health website and going to Teladoc website.<br><br>We encourage you to read the privacy statement on the Teladoc website. Please
+                        consult your doctor about any medical advice or treatment information you may find on the Teladoc site.
+                     </p>
+                  </div>
+             </template>
+          </div>
+
+          <div class="nds-grid nds-text-align_center nds-m-top_large">
+             <div class="nds-size_1-of-1">
+                <div class="nds-col c-reverse-button-stack_small">
+                   <!-- Go Back option -->
+                   <button class="nds-m-right_large nds-button nds-button_neutral modal-color-1" title="Go Back" onclick={closeModal}>
+                      Cancel
+                   </button>
+
+                   <!-- Pharmacy  -->
+                   <button class="nds-button nds-button_brand modal-color-2" title="Proceed to the Teladoc website" onclick={truvenLoginWithToken}>
+                      Continue<lightning-button-icon variant="bare" icon-name="utility:link"></lightning-button-icon>
+                   </button>
+                </div>
+             </div>
+          </div>
+       </div>
+      </div>
+    </section>
+    <div class="nds-backdrop nds-backdrop_open"></div>
+  </template>
+</template>

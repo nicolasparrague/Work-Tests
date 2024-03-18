@@ -1,0 +1,92 @@
+<template>
+   <div class="nds-form-element">
+      <div class="nds-form-element__control">
+         <div class="nds-combobox_container">
+            <div class="nds-combobox nds-dropdown-trigger nds-dropdown-trigger_click nds-is-open" aria-haspopup="listbox">
+               <template if:true={showSuccess}>
+                  <span class="visuallyHidden" role="alert">Successfully added {selectedItem}</span>
+               </template>
+               <template if:true={showError}>
+                  <span class="visuallyHidden" role="alert">{selectedItem} has already been added</span>
+               </template>
+               <template if:true={allSelected}>
+                  <span class="visuallyHidden" role="alert">All specialties selected</span>
+               </template>
+               <template if:true={itemRemoved}>
+                  <span class="visuallyHidden" role="alert">{itemToRemove} removed</span>
+               </template>
+               <div class="nds-combobox__form-element nds-input-has-icon nds-input-has-icon_right">
+                  <!-- Default Search Box -->
+                  <div class="defaultClass">
+                     <input
+                        type="text"
+                        class="nds-input nds-combobox__input nds-has-focus searchvalue"
+                        id="combobox-id"
+                        aria-autocomplete="list"
+                        aria-controls="comboListbox"
+                        autocomplete="off"
+                        role="combobox"
+                        placeholder={placeholderText}
+                        aria-label={placeholderText}
+                        onkeyup={handleKeyUp}
+                        onkeydown={handleKeyDown}
+                        onfocus={handleFocusIn}
+                        onblur={handleFocusOut}
+                        value={selectedItemsNum}
+                        aria-required="true"
+                        aria-expanded="false"
+                     />
+                     <span class="nds-icon_container" onclick={handleClickArrow}>
+                        <lightning-icon
+                           theme="nds"
+                           icon-name="utility:chevrondown"
+                           class="nds-icon-utility-search nds-input__icon nds-input__icon_right nds-searchIcon"
+                           alternative-text="Approved"
+                           size="x-small"
+                        >
+                        </lightning-icon>
+                        <lightning-icon theme="nds" icon-name="utility:chevrondown" class="nds-icon-utility-down nds-input__icon nds-input__icon_right nds-hide" size="x-small"> </lightning-icon>
+                     </span>
+                  </div>
+               </div>
+               <div class="selected-items-div">
+                  <template for:each={selectedItemArr} for:item="item" for:index="index">
+                     <div key={item.key} class="selected-item c-multiselect-bubble" onclick={handleRemoveSelection} data-selectedname={item.value}>
+                        {item.value}
+                        <template if:false={allSelected}>
+                           <button aria-labelledby={index} class="remove-item">X</button>
+                           <label id={index} class="visuallyHidden">Remove {item.value}</label>
+                        </template>
+                     </div>
+                  </template>
+               </div>
+               <!-- To display all items for the drop down -->
+               <div id="listbox-id-3" class="item_list nds-hide">
+                  <ul
+                     id="comboListbox"
+                     class="nds-listbox nds-listbox_vertical nds-dropdown nds-dropdown_length-with-icon-7 nds-dropdown_fluid"
+                     role="listbox"
+                     onmouseup={mouseupScrollBar}
+                     onmousedown={mousedownScrollBar}
+                  >
+                     <template if:true={options}>
+                        <template for:each={options} for:item="item">
+                           <li aria-label={item.value} id={item.key} aria-selected="false" role="option" class="nds-listbox__item" key={item.key} onmousedown={handleOptionSelect} data-id={item.key} data-name={item.value} data-item={item}>
+                              <div class="nds-media nds-listbox__option nds-listbox__option_entity nds-listbox__option_has-meta">
+                                 <span class="nds-media__body">
+                                    <span class="nds-listbox__option-text nds-listbox__option-text_entity nds-p-left_large">{item.value}</span>
+                                 </span>
+                              </div>
+                           </li>
+                        </template>
+                     </template>
+                     <template if:false={options}>
+                        <div>Error</div>
+                     </template>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</template>

@@ -1,0 +1,77 @@
+<template>
+   <template if:true={loading}>
+      <lightning-spinner alternative-text="Loading" size="medium" theme="nds"> </lightning-spinner>
+   </template>
+   <div class="nds-text-align_center nds-m-top_xx-large" style="overflow: auto">
+      <div class="c-tab-button-group" role="tablist">
+         <button data-id="0" role="tab" aria-selected={invoiceHistorySelected} class="nds-button nds-button_neutral nds-nowrap-whitespace" onclick={showInvoiceHistory}>Invoice History</button>
+         <button data-id="1" role="tab" aria-selected={paymentHistorySelected} class="nds-button nds-button_neutral nds-nowrap-whitespace" onclick={showPaymentHistory}>Payment History</button>
+         <!--<button if:true={pendingPayTab} data-id={ppDataId} class="nds-button nds-button_neutral nds-nowrap-whitespace" onclick={loadPendingPayment}>Pending Payments</button>-->
+         <!--<button if:true={autoPayTab} data-id={apDataId} class="nds-button nds-button_neutral nds-nowrap-whitespace" onclick={loadAutoPayments}>Automatic Payments</button>-->
+      </div>
+   </div>
+   <div if:true={userId} class="section-padding_top">
+      <template if:true={stateInvoiceHistory}>
+         <c-member-flex-card-pagination history-type="Invoice" userid={userId}></c-member-flex-card-pagination>   
+      </template>
+      <template if:true={statePaymentHistory}>
+         <c-member-flex-card-pagination history-type="Payment" userid={userId}></c-member-flex-card-pagination>
+      </template>
+      <template if:true={stateLoadPendingPayment}>
+         <!-- <c-cf-a-m-p_-billing-invoice-history parent-data="false" records={pendingPaymentsList}></c-cf-a-m-p_-billing-invoice-history> -->
+      </template>
+      <template if:true={stateLoadAutoPayments}>
+         <template if:true={showAutopayment}>
+            <!-- <c-cf-e-h-c-c-i-member_billing-auto-payments parent-data="true" records={autoPayRecordM}> </c-cf-e-h-c-c-i-member_billing-auto-payments> -->
+         </template>
+         <template if:false={showAutopayment}>
+            <p class="nds-text-body_regular nds-text-align_center nds-m-bottom_medium">There is no auto payment information, You need to first set up your auto payment.</p>
+         </template>
+      </template>
+   </div>
+   <!-- <hr /> -->
+   <!-- MOBILE -->
+   <div class="nds-text-align_left nds-hide_medium ">
+      <div class="nds-col nds-box  c-box-shadow nds-size_12-of-12 nds-m-top_medium">
+      <div class="nds-grid slds-wrap">
+         <div class="nds-size_12-of-12 c-fc-action-text">
+            <c-navigation-action-encrypted
+               targettype="standard__namedPage"
+               targetname="create-message"
+               targetparams={askQuestionParams}
+               label="Ask a Question"
+               vairant=""
+               iconposition="left"
+               iconname="utility:email"
+            ></c-navigation-action-encrypted>
+         </div>
+         <div class="nds-size_12-of-12 learmore-nds">
+            <p class="nds-text-body_regular"><a href={redirectUrl} target="_blank" title="Link opens in a new tab">Learn More </a> about other ways to pay your bill.</p>
+         </div>
+      </div>
+      </div>
+   </div>
+   <!-- DESKTOP -->
+   <!-- <div class="nds-text-align_left nds-show_medium learnMore"> -->
+      <div class="nds-col nds-box  c-box-shadow nds-size_12-of-12 nds-m-top_medium">
+      <div class="nds-text-align_left nds-show_medium">
+      <div class="nds-grid slds-gutters nds-p-left_small">
+         <div class="nds-size_3-of-12 c-fc-action-text">
+            <c-navigation-action-encrypted
+               targettype="standard__namedPage"
+               targetname="create-message"
+               targetparams={askQuestionParams}
+               label="Ask a Question"
+               variant=""
+               iconposition="left"
+               iconname="utility:email"
+            ></c-navigation-action-encrypted>
+           
+         </div>
+         <div class="nds-grid nds-size_4-of-12 nds-align_absolute-center learmore-nds">
+            <p class="nds-text-body_regular"><a href={redirectUrl} target="_blank" aria-label="Learn More about other ways to pay your bill opens in a new tab">Learn More </a> about other ways to pay your bill.</p>
+         </div>
+      </div>
+      </div>
+   </div>
+</template>

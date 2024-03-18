@@ -1,0 +1,30 @@
+header.nds-modal__header.modal-header-confirmation {
+    padding: 0;
+}
+  
+  .border-bottom-link{
+    border: none;
+    background: none;
+    border-bottom: solid 2px #036cb6 !important;
+    padding: 0;
+  }
+
+  .button-border-benefit-video{
+    background: none;
+    border: none;
+  }
+
+  .modal-custom-close{
+    width: 32px;
+    height: 32px;
+    margin-left: auto;
+    position: relative;
+    bottom: 8px;
+    right: -8px;
+  }
+
+@media (max-width: 30rem) {
+    .mobile-button-margin_bottom.nds-align_absolute-center {
+        margin-bottom: 24px;
+    }
+}

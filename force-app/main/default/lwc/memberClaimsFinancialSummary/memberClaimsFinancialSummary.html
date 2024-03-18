@@ -1,0 +1,150 @@
+<template>
+    <!-- Download Healthcare Financial Summary -->
+    <div class="nds-size_12-of-12">
+        <button if:true={costCalculator} class="nds-action_item nds-text-link c-field-label_medium attentis-border-bottom-link" onclick={openModal} aria-label="Healthcare financial summary link opens a modal">{hfclabel}</button>
+    </div>
+    <template if:true={showModal}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="nds-modal nds-fade-in-open nds-modal__confirmation">
+            <template if:true={loading}>
+                <lightning-spinner alternative-text="Loading" size="medium"> </lightning-spinner>
+            </template>
+            <div class="nds-modal__container modalAccessibility">
+                <!-- Modal/Popup Box LWC header here -->
+                <header>
+                    <!-- slds-modal__close was replaced by custom class -->
+                    <button class="nds-float_right slds-button slds-button_icon modal-custom-close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="nds-modal__content " id="modal-content-id-2">
+                    <h2 id="modal-heading-02" class="nds-hyphenate nds-m-bottom_large"><strong>Download Healthcare Financial Summary</strong></h2>
+
+                    <!-- Information -->
+                    <div class="nds-grid nds-m-bottom_medium">
+                        <p class="nds-text-body_regular">This report will provide summary expense information on your
+                            claims. Use this to track your claims spend.</p>
+                    </div>
+                    <!-- Select Member -->
+                    <c-member-claims-member-select userid={userid} allow-all={allowAll}></c-member-claims-member-select>
+                    <!-- Date Radio Button -->
+                    <div class="nds-p-left_medium nds-p-right_medium">
+                        <p class="c-field-label_medium nds-p-bottom_medium">Select Date</p>
+                        <div class="nds-form-element__control">
+                            <div class="nds-radio nds-p-bottom_small nds-size_12-of-12">
+                                <input type="radio" id="radio-1" class="radioByYear yearToDateRadio" name="option" value="byYear"
+                                   onclick={selectDateOption}>
+                                <label class="nds-radio__label" for="radio-1">
+                                    <span class="nds-radio_faux"></span>
+                                    <span class="nds-text-body_regular">Year-to-date</span>
+                                </label>
+                            </div>
+                            <div class="nds-radio nds-p-bottom_small nds-size_12-of-12">
+                                <input type="radio" id="radio-2" class="radioByRange customDateRadio" name="option" value="byRange"
+                                    onclick={selectDateOption}>
+                                <label class="nds-radio__label" for="radio-2">
+                                    <span class="nds-radio_faux"></span>
+                                    <span class="nds-text-body_regular">Custom Date Range</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- From Date - To Date -->
+                    <div if:true={showRadio}>
+                        <div class="nds-grid nds-wrap nds-p-top_small">
+                            <div
+                                class="nds-p-left_medium nds-size_1-of-1 nds-col nds-x-small-size_12-of-12 nds-small-size_6-of-12 nds-medium-size_6-of-12 nds-large-size_6-of-12">
+                                <c-custom-tooltip helptext="You may search as far back as 24 months from today."
+                                    headertext="From *" headerclass="nds-text-body_regular" arrowposition="top-left">
+                                </c-custom-tooltip>
+                                <lightning-input
+                                    type="date"
+                                    label="" 
+                                    name="From" 
+                                    aria-label="From"
+                                    value={yearToDate}
+                                    hide-icon=false 
+                                    today-label="Today" 
+                                    format="MM/DD/YYYY" 
+                                    onchange={transformDate}
+                                    required 
+                                    class="filter_fromDate"
+                                    message-when-bad-input="Error encountered with date field">
+                                </lightning-input>
+                            </div>
+                            <p if:true={fromDateMessage}
+                                class="nds-p-left_medium nds-p-bottom_small nds-col nds-size_1-of-1 nds-text-body_small c-color-text_red nds-hide_small" tabindex="0">
+                                You have searched for dates outside of the available range.
+                            </p>
+                            <div
+                                class="nds-p-left_medium nds-size_1-of-1 nds-col nds-x-small-size_12-of-12 nds-small-size_6-of-12 nds-medium-size_6-of-12 nds-large-size_6-of-12">
+                                <c-custom-tooltip helptext="This date can't be a future date." headertext="To*"
+                                    headerclass="nds-text-body_regular" arrowposition="top-left">
+                                </c-custom-tooltip>
+                                <lightning-input
+                                    type="date" label="" 
+                                    name="To" value={today}
+                                    aria-label="To"
+                                    hide-icon=false
+                                    today-label="Today" 
+                                    format="MM/DD/YYYY" 
+                                    onchange={transformDate} 
+                                    required
+                                    class="filter_toDate"
+                                    message-when-bad-input="Error encountered with date field">
+                                </lightning-input>
+                            </div>
+                            <p if:true={toDateMessage}
+                                class="nds-p-left_medium nds-p-bottom_small nds-col nds-size_1-of-1 nds-text-body_small c-color-text_red nds-hide_small" tabindex="0">
+                                You have searched for dates outside of the available range.
+                            </p>
+                        </div>
+                        <div
+                            class="nds-grid nds-size_12-of-12 nds-p-left_medium nds-p-right_medium nds-p-bottom_medium">
+                            <p if:true={fromDateMessage}
+                                class="nds-col nds-size_6-of-12 nds-text-body_small c-color-text_red nds-show_small" tabindex="0">You
+                                have searched for
+                                dates outside of the available range.</p>
+                            <p if:false={fromDateMessage}
+                                class="nds-col nds-size_6-of-12 nds-text-body_small c-color-text_red"></p>
+                            <p if:true={toDateMessage}
+                                class="nds-col nds-size_6-of-12 nds-text-body_small c-color-text_red nds-show_small" tabindex="0">You
+                                have searched for
+                                dates outside of the available range.</p>
+                            <p if:false={toDateMessage}
+                                class="nds-col nds-size_6-of-12 nds-text-body_small c-color-text_red"></p>
+                        </div>
+                    </div>
+                    <div if:true={errorMessage} class="nds-size_12-of-12 nds-p-left_medium nds-p-right_medium nds-p-bottom_medium">
+                        <p class="nds-text-body_small c-color-text_red">We were unable to find
+                            any results based on your filter. Please check your criteria and try again.</p>
+                    </div>
+                    <!-- Buttons -->
+                    <div class="nds-grid nds-wrap nds-p-top_medium">
+                        <div
+                            class="nds-size_1-of-1 nds-col nds-small-size_5-of-12 nds-medium-size_5-of-12 nds-large-size_5-of-12 nds-align_absolute-center mobile-button-margin_bottom">
+                            <button class="nds-button nds-button_brand nds-button_stretch" data-btn-id="excel"
+                                onclick={exportDocument} disabled={isDisabled} title="Export to Excel">Export to
+                                Excel</button>
+                        </div>
+                        <div
+                            class="nds-size_1-of-1 nds-col nds-small-size_5-of-12 nds-medium-size_5-of-12 nds-large-size_5-of-12 nds-align_absolute-center ">
+                            <button class="nds-button nds-button_brand nds-button_stretch" data-btn-id="pdf"
+                                onclick={exportDocument} disabled={isDisabled} title="Export to PDF">Export to
+                                PDF</button>
+                        </div>
+                    </div>
+
+                    <button class="button-border-benefit-video"></button>
+
+                </div>
+            </div>
+        </section>
+        <div class="nds-backdrop nds-backdrop_open"></div>
+    </template>
+</template>

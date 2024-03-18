@@ -1,0 +1,28 @@
+.cursor-print-details{
+    cursor: pointer;
+}
+
+@media print {
+    .hide-print {
+        display: none;
+    }
+    /* hides the google maps url */
+    a[href]:after {
+        display: none !important;
+     }
+@media (min-width: 600px) {
+   @page {
+       size: landscape!important;
+       margin: 0!important;
+    }
+}
+
+  }
+
+  
+.attentis-border-bottom-link{
+    border: none;
+    background: none;
+    border-bottom: solid 2px #036cb6 !important;
+    padding: 0;
+}

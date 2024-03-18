@@ -1,0 +1,33 @@
+<template>
+    <!-- Claim Estimator Form Button -->
+    <button if:true={showClaimEstimatorForm} class="nds-button nds-button_brand modal-color-2 nds-m-top_medium claim-estimator-form-button" onclick={navigateToClaimEstimatorForm} title="Take Health Risk Assessment">Take Health Risk Assessment</button>
+  <!-- Desktop/Mobile Modal  -->
+  <template if:true={isModalGlobal}>
+    <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-modal__confirmation nds-fade-in-open">
+      <div class="nds-modal__container modalAccessibility">
+        <div class="nds-modal__content nds-p-around_medium" id="modal-content-id-1">
+          <div class="nds-grid"> 
+            <!-- Body Message -->
+              <p if:true={isModalCostCalcComm} class=" nds-text-body_regular  ">You are leaving the {provider} website and going to Truven’s website.<br><br>{provider} does not accept responsibility for the information, accuracy, or completeness of the Truven website. Please consult your doctor about any medical or treatment information you may find on the Truven site. This is general information and should not be relied upon without speaking with your doctor about your individual needs. The opinions and information are not necessarily those of {provider}.<br><br>The Privacy Statement of Truven may be different from ours. Review this statement when you get to their site.</p>
+              <p if:true={isModalCostCalcMed} class=" nds-text-body_regular  ">You are leaving the {provider} website and going to Truven's website.<br>We encourage you to read the privacy statement on the Truven website.<br>Please consult your doctor about any medical advice or treatment information you may find on the Truven site.</p> 
+              <p if:true={isModalCostCalcOther} class=" nds-text-body_regular  ">You are leaving the website and entering the Cost Calculator website.</p>
+          </div>    
+          <div class="nds-grid nds-text-align_center">
+             <div class="nds-size_1-of-1">
+                <div class="nds-col nds-m-top_large c-reverse-button-stack_small">
+                   <!-- Cancel Option  -->
+                   <button class="nds-m-right_large nds-button nds-button_neutral modal-color-1 nds-show_large" title="Go Back" onclick={closeModal}>Cancel</button>
+                   <button class="nds-m-right_large nds-button nds-button_neutral modal-color-1 nds-hide_large" title="Go Back" onclick={closeModal}>Cancel</button>
+                   <!-- Continue Option -->
+                   <button if:true={isModalGlobal} class="nds-button nds-button_brand modal-color-2" title="Proceed to the Cost Calculator Site" onclick={truvenLoginWithToken}>Continue <lightning-button-icon variant="bare" icon-name="utility:link"></lightning-button-icon></button>
+                </div>
+             </div>
+          </div>
+       </div>
+      </div>
+    </section>
+    <div class="nds-backdrop nds-backdrop_open"></div>
+  </template>
+
+
+</template>

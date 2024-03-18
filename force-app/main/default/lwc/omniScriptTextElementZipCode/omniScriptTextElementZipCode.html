@@ -1,0 +1,10 @@
+<template>
+        <template if:true={loading}>
+                <lightning-spinner alternative-text="Loading" size="medium" theme="nds"> </lightning-spinner>
+        </template>
+        
+         <div class="nds-p-horizontal_x-small nds-m-bottom_medium" onclick={getLocation}>
+                <c-custom-icon extra-class="nds-m-right_x-small" variant="information" size="x-small" icon-name="Address_Pin_Geotag" alternative-text="Click to get your location"></c-custom-icon>
+                <a aria-label="Use my location (automatic geolocation)" role="button" class="nds-text-link" style="cursor:pointer;" href="#!">Use my Location</a>
+         </div>
+</template>

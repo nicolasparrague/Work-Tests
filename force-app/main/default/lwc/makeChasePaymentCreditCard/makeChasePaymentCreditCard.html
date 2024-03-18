@@ -1,0 +1,33 @@
+<template>
+
+    <template if:true={loading}>
+        <lightning-spinner alternative-text="Loading" size="medium"> </lightning-spinner>
+    </template>
+    
+    <!-- Header -->
+    <h1 if:true={headerTitleACHAutoPay} class="nds-page-header_title nds-align_absolute-center nds-text-align_center nds-medium-size nds-p-horizontal_large">Set up Autopay</h1>
+    <h1 if:true={headerTitleACHMakePayment} class="nds-page-header_title nds-align_absolute-center nds-text-align_center nds-medium-size nds-p-horizontal_large">Make a Payment</h1>
+
+    <div class="nds-m-top_large nds-m-bottom_large">        
+        <p class="nds-text-body_regular nds-m-around_large nds-text-align--center">
+            Add New Credit/Debit Card Information
+        </p>        
+    </div>
+
+    <!-- IFrame -->
+    <div class="nds-size_1-of-1 nds-grid">             
+        <template if:true={showIframe}>
+                <iframe                              
+                    id="eh-os-make-payment-screen" 
+                    class="nds-size_1-of-1 chaseIFrame center-iframe iframeMobile" 
+                    allowpaymentrequest="true"
+                    height={iframeHeight}
+                    frameborder="0"
+                    onload={addCSS}                    
+                    src={iframeSrc}>  
+                    Iframes not supported
+                </iframe>
+        </template>
+    </div>
+    
+</template>

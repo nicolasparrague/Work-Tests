@@ -1,0 +1,106 @@
+:host {
+    --white: rgb(255, 255, 255);
+    --active: #f5edcc;
+}
+
+.page-data-container {
+    background-color: var(--white);
+    max-height: max-content;
+    overflow: hidden;
+}
+
+button {
+    background-color: var(--white);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 5px 10px;
+}
+
+.iconright {
+    position: absolute;
+    top: 6px;
+    right: 0
+    }
+
+.inputlabel{
+        position: absolute;
+        bottom: 24px;
+        right: 40px;
+}
+.gotopage-input {
+    position: relative;
+}
+.mobilepagerview{
+    margin-top: 20px;
+
+}
+
+.active {
+    background-color: var(--active);
+}
+
+.print {
+    display: flex;
+}
+.totalEntries {
+    font-size: 19px;
+    font-weight: initial;
+    text-align: initial;
+    text-decoration: solid;
+}
+.labelPrint {
+    padding-left: 5px;
+    color: #0070d2;
+    font-size: 15px;
+    font-weight: initial;
+    text-decoration: solid;
+    margin: 5px;
+}
+.pagination {
+    text-align: left;
+    font-size: 13px;
+    font-weight: 400;
+    margin: -17px;
+}
+
+.box {
+    padding: 24px;
+    border-radius: .25rem;
+    border: 1px solid #dddbda;
+}
+
+.prevButton {
+    padding-right: 5px;
+}
+
+.nextButton {
+    padding-left: 5px;
+}
+
+.pagerange span {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.pagerange span[data-id="ph"] {
+    cursor: default;
+}
+
+input {
+    text-align: center;
+}
+
+.selected-page {
+    border: 1px solid rgb(221, 219, 218);
+}
+
+.links-box {
+    line-height: 1.5;
+}
+
+.links-box.nds-wrap {
+    align-items: center;
+}
+.links-box .nds-button {
+    border: none;
+}

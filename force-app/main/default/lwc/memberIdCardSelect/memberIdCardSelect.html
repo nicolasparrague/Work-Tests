@@ -1,0 +1,46 @@
+<template>
+    <div class="via-nds nds-grid">
+        <div class="nds-m-vertical_x-large">
+            <c-main-content styleclass="nds-page-header_title" heading="ID Cards"></c-main-content>
+        </div>
+        <template if:true={loading}>
+            <lightning-spinner alternative-text="Loading" size="medium"> </lightning-spinner>
+        </template>
+        <template if:false={loading}>
+            <div class="nds-size_8-of-12 nds-m-bottom_medium nds-align_absolute-center">
+                <c-member-mdm-content userid={userId}></c-member-mdm-content>
+            </div>
+            <div class="nds-show nds-size_12-of-12 nds-small-size_6-of-12 nds-align_absolute-center nds-m-bottom_medium">
+                <lightning-combobox
+                    options={members}
+                    onchange={handleMemberSelect}
+                    value={selectedMemberId}
+                    placeholder=''
+                    label="Select Member"
+                    read-only={isReadOnly}
+                    disabled={isDisabled} >
+                </lightning-combobox>
+            </div>
+            <template if:true={showNoUsersMsg}>
+                <div class="nds-notify nds-notify_alert nds-size_6-of-12 nds-m-bottom_medium" role="alert">
+                    <c-custom-icon class="nds-m-right_small" icon-name="Error" size="medium" variant="error" alternative-text="Error"></c-custom-icon>
+                    <div>{errorMsg}</div>
+                </div>
+            </template>
+            <template if:true={showCardList}>
+                <div class="nds-size_12-of-12">
+                    <div class="customPad" style="overflow: auto">
+                        <div class={btnGroupClass} role="tablist">
+                            <button if:true={showCurrentBtn} role="tab" aria-selected={currentSelected} class={planButtonClassesCurrent} onclick={handleCurrentTabSelect}>Current Plan(s)</button>
+                            <button if:true={showFutureBtn} role="tab" aria-selected={futureSelected} class={planButtonClassesFuture} onclick={handleFutureTabSelect}>Future Plan(s)</button>
+                        </div>
+                    </div>
+                    <c-member-id-card-list selected-member={selectedMember}></c-member-id-card-list>
+                </div>
+            </template>
+            <div class="nds-size_12-of-12">
+                <c-cf-a-m-p_-footer-ask-question></c-cf-a-m-p_-footer-ask-question>
+            </div>
+        </template>
+    </div>
+</template>

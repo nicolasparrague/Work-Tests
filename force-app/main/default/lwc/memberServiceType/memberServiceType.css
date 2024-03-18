@@ -1,0 +1,89 @@
+.container {
+    
+    max-width: 700px;
+}
+
+/* Override OOTB radio button class to remove margins */
+.nds-radio_button {
+    margin: 1rem !important;
+}
+
+.nds-radio_button.nds-button {
+    padding: 0 !important;
+}
+
+.service-icon {
+    margin-top: 24px;
+}
+ 
+.service-type-card {
+    height: 200px;
+    width: 200px;
+}
+
+.service-type-name {
+    margin: .5rem 10%;
+    text-align: center;
+}
+.nds-icon.service-icon {
+    height: 80px;
+    width: 80px;
+}
+
+.hide-service-type{
+    display: none;
+}
+
+.padding-button-bottom{
+    padding-bottom: 10% !important;
+}
+
+.pointer-event-service-type{
+    pointer-events: none;
+}
+
+.button-border-service-type{
+    background: none;
+    border: none;
+}
+
+.button-type:focus{
+    border: solid 2px #5b3880!important;
+    color: #fff;
+    background-color: #5b3880!important;
+}
+
+@media (max-width:480px) {
+    .nds-radio_button {
+        margin: .5rem !important;
+    }
+    .service-type-card {
+        height: 150px;
+        width: 150px;
+    }
+    .container {
+        display:flex;
+        justify-content: center;
+    }
+    .nds-icon.service-icon {
+        height: 50px;
+        width: 50px;
+    }
+    .c-service-tile button {
+        font-size: 16px;
+        line-height: 1;
+        margin: 8px;
+        
+    }
+
+}
+
+.findCarePreviousButton{
+    margin-left: -10%;
+    position: relative;
+    top: -223px;
+}
+
+.findCarePreviousButtonService{
+    padding-top: 27%;
+}

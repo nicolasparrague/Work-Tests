@@ -1,0 +1,120 @@
+.container {
+    
+    max-width: 900px;
+}
+.c-section-style{
+    font-size: 22px; font-weight: 500; line-height: 23px;
+   /* padding-left: 24px;
+    padding-top: 24px;*/
+}
+
+.c-section-body{
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.c-button-request{
+    padding-bottom: 24px;
+    padding-right: 24px;
+}
+
+.c-service-tile-bg{
+    max-width: none !important;
+}
+
+.service-type-container{
+    background-image: linear-gradient(45deg, rgb(239, 239, 239) 6.25%, rgb(250, 250, 249) 6.25%, rgb(250, 250, 249) 50%, rgb(239, 239, 239) 50%, rgb(239, 239, 239) 56.25%, rgb(250, 250, 249) 56.25%, rgb(250, 250, 249) 100%);
+    background-size: 8px 8px;
+    height: 205px;
+}
+
+.customicon-pharm
+{
+   /* visibility: hidden;*/
+    width: max-content;
+    max-width: 35rem;
+    background-color: #555;
+    /*color: #fff;*/
+    text-align: left;
+    padding: 5px 5px;
+    border-radius: 0.25rem;
+    border: 1px solid #dddbda;
+    min-height: 2rem;
+  
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 6000;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    box-shadow: 0 2px 3px 0 rgb(0 0 0 / 16%);
+  
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+    /***/
+    content: "";
+    position: absolute;
+    /* top: 100%; */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+    /***/
+
+} 
+.customicon-pharm:hover
+{
+    visibility: visible;
+    opacity: 1;
+
+}
+
+.c-service-tilepharm
+{
+box-shadow: none;
+
+}
+
+.nds-m-top_xxxx-small {
+    margin-top: 1.25rem;
+}
+
+.c-service-tile-priceadrug
+{
+    height: 24px;
+    width: 24px; 
+
+}
+
+.nds-radio_button {
+    margin: 1rem !important;
+}
+
+.nds-radio_button.nds-button {
+    padding: 0 !important;
+}
+
+.service-type-name {
+    margin: .5rem 10%;
+    text-align: center;
+}
+
+
+.c-custom-icon .nds-icon{
+        height: 50px;
+        width: 50px;
+}
+
+
+.hide-service-type{
+    display: none;
+}
+
+.button-border-service-type {
+    background: none;
+    border: none;
+}

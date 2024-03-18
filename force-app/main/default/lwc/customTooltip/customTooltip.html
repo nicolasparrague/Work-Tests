@@ -1,0 +1,20 @@
+<template>
+    <div if:true={_showOutputField} class="vloc-min-height">
+        <div class="nds-grid">
+            <label class={_labelClass}>{_label}</label>
+            <div style="margin-top: -4px">
+                <lightning-helptext content={_helpText}></lightning-helptext>
+            </div>
+        </div>
+        <span class={_valueClass}>{_value}</span>
+    </div>
+    <div if:true={_showHeader}>
+        <div class="nds-grid">
+            <h2 class={_headerClass}>{_headerText}</h2>
+            <div style="margin-top: -4px">
+                <lightning-helptext content={_helpText}></lightning-helptext>
+            </div>
+        </div>
+        <p class={_subheaderClass}>{_subheaderText}</p>
+    </div>
+</template>

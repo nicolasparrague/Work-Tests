@@ -1,0 +1,40 @@
+.nds-button{
+    border-radius: none;
+    min-width: 250px;
+}
+
+
+.customPad{
+    /* padding: .75rem; */
+    padding-bottom: .75rem;
+  
+}
+
+button{
+    background-color: #000;
+	color: #fff;
+}
+
+.nds-button{
+    background-color: #000;
+	color: #fff;
+}
+
+.section-padding_top {
+    /* padding-top: 3rem; */
+    padding-top: 1.25rem;
+}
+
+@media (max-width: 768px) {
+    .section-padding_top {
+        padding-top: 1rem;
+    }
+}
+.learnMore a::after{
+    content: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==');
+    margin: 0px 3px 0px 5px;
+}
+
+.preAuth{
+    padding-right: 3rem !important;
+}

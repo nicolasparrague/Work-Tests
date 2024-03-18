@@ -1,0 +1,871 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 10-07-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+   <template if:true={loading}>
+      <lightning-spinner alternative-text="Loading" size="medium" theme="nds"> </lightning-spinner>
+   </template>
+   <!-- Header Set up AutoPay-->
+   <!-- <label if:true={setUpAutopayFlow} class="nds-brand nds-align_absolute-center nds-text-align_center nds-form-element__label c-text-small_label">SET UP AUTO PAY</label>
+    <h1 if:true={setUpAutopayFlow} class="nds-page-header_title nds-align_absolute-center nds-text-align_center nds-medium-size nds-p-horizontal_large">Auto Pay Details</h1> -->
+   <h1 if:true={setUpAutopayFlow} class="nds-page-header_title nds-align_absolute-center nds-text-align_center nds-medium-size nds-p-horizontal_large">Set up Auto Pay</h1>
+   <!-- <p if:true={setUpAutopayFlow} class="nds-text-body_regular nds-text-align--center">Auto Pay Details</p> -->
+   <p if:true={setUpAutopayFlow} class="nds-text-body_regular nds-text-align--center">
+      Your auto pay set up must be completed 6 business days prior to your payment due date. If you do not have 6 business days before your payment due date, make a one time payment if necessary and
+      your auto pay will begin the next month.
+   </p>
+
+   <!-- Header Make a Payment -->
+   <h1 if:true={makeAPaymentFlow} class="nds-page-header_title nds-align_absolute-center nds-text-align_center nds-medium-size nds-p-horizontal_large">{headerMakePayment}</h1>
+   <div if:true={makeAPaymentFlow} class="nds-form-element nds-form-container nds-text-bloc nds-show_medium">
+      <p class="nds-text-body_regular nds-text-align--center">Payment Details: Attentis Health partners with JPMorgan Chase to provide a secure and efficient online payment service</p>
+   </div>
+
+   <div class="nds-m-top_large nds-m-bottom_large">
+      <!-- Auto Pay Information -->
+      <div if:true={setUpAutopayFlow}>
+        <div class="nds-align_absolute-center">
+            <div class="nds-size_11-of-12">
+         <!-- <label if:true={setUpAutopayFlow} class="nds-show--inline nds-size_8-of-12 nds-grid nds-form-element__label c-medium-bold-header">Auto Pay Information</label> -->
+         <label if:true={setUpAutopayFlow} class=" nds-show--inline  nds-size_8-of-12 title-margin nds-grid nds-form-element__label c-medium-bold-header nds-show_medium nds-text-align-right">Auto Pay Information</label> 
+         <div class="nds-align_absolute-center">
+         <div class=" nds-col nds-box c-box-shadow nds-p-around_medium nds-m-top_medium nds-m-bottom_xx-large nds-size_8-of-12 c-border-branded_bottom ">
+            <div class="nds-grid nds-wrap nds-p-top_small nds-p-horizontal_medium nds-p-bottom_large">
+               <!-- Total Amount Due -->
+               <div class="nds-col nds-size_4-of-12 nds-medium-size_6-of-12 nds-large-size_6-of-12">
+                  <div class="nlds-col nds-size_12-of-12">
+                     <div class="nds-m-horizontal_xxx-small">
+                        <!-- <label class="nds-show--inline nds-form-element__label c-text-medium_label" style="font-weight: 500;">Total Amount Due</label> -->
+                        <label class="nds-show--inline" style="font-weight: 500;">Total Amount Due</label>
+                        <p class="nds-text-body_regular nds-m-bottom_medium">
+                           Check your Monthly Invoice $
+                           <lightning-formatted-number value={totalAmountDue} minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number>
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <!-- Payment Date -->
+               <div class="nds-col nds-size_4-of-12 nds-medium-size_6-of-12 nds-large-size_6-of-12">
+                  <div class="nlds-col nds-size_12-of-12">
+                     <div class="nds-m-horizontal_xxx-small">
+                        <!-- <label class="nds-show--inline nds-form-element__label c-text-medium_label" style="font-weight: 500;">Payment Date</label> -->
+                        <label class="nds-show--inline" style="font-weight: 500;">Payment Date</label>
+                        <p class="nds-text-body_regular nds-m-bottom_medium">{paymentDate} of every month</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="nds-grid nds-p-bottom_x-small nds-p-horizontal_medium">
+               <!-- <lightning-icon icon-name="utility:info_alt" alternative-text="Info" size="small" title="Info" class="nds-m-right_x-small nds-brand"></lightning-icon> -->
+               <c-custom-icon
+                icon-name="Information_Tool_Tip" 
+                size="small"
+                variant="information"
+                alternative-text="Info" 
+                extra-class="nds-m-right_x-small nds-m-bottom_x-small"></c-custom-icon>
+            
+               
+               <p class="nds-text-body_regular nds-m-bottom_medium">Your autopayment will be deducted on your due date.</p>
+            </div>
+         </div>
+         </div>
+         </div>
+         </div>
+      </div>
+      <!-- Payment Details -->
+      <div if:true={makeAPaymentFlow}>
+      
+         <!-- <label class="nds-show--inline nds-form-element__label c-medium-bold-header nds-show_medium nds-text-align-right">Payment Information</label> -->
+       
+         <div if:true={makeAPaymentFlow} class="nds-form-element nds-form-container nds-text-bloc nds-hide_medium">
+            <p class="nds-text-body_regular nds-text-align--center">
+               Payment Details: Attentis Health partners with JPMorgan Chase to provide a secure and efficient online payment service
+            </p>
+         </div>
+         <!-- <label class="nds-show--inline nds-form-element__label c-medium-bold-header nds-hide_medium">Payment Details</label> -->
+
+         <!-- MPV-1329 -->
+         <label class="nds-show--inline nds-form-element__label c-medium-bold-header nds-hide_medium">Payment Information</label>
+         <!-- Make a Binder Payment -->
+         <template if:true={makeBinderPayment}>
+            <div class="nds-align_absolute-center">
+                <div class="nds-size_11-of-12">
+            <label class=" nds-show--inline  nds-size_8-of-12 title-margin nds-grid nds-form-element__label c-medium-bold-header nds-show_medium nds-text-align-right">Payment Information</label>
+            <!-- <div class="nds-col nds-box c-box-shadow nds-p-around_medium nds-m-top_medium nds-m-bottom_x-large nds-size_12-of-12"> -->
+            <div class="nds-col nds-box c-box-shadow nds-p-around_medium nds-m-top_medium nds-m-bottom_x-large nds-size_8-of-12 c-border-branded_bottom nds-align_absolute-center">
+               <div class="nds-grid nds-wrap  nds-m-left_x-small nds-m-vertical_x-small nds-m-right_medium">
+                  <!-- Total Amount -->
+                  <div class="nds-col nds-medium-order_1 nds-large-order_1 nds-size_1-of-1 nds-medium-size_4-of-12 nds-large-size_4-of-12">
+                     <div class="nds-col nds-size_12-of-12">
+                        <div class="nds-col nds-size_12-of-12">
+                           <div class="nds-m-horizontal_xxx-small">
+                              <div class="nds-text-title">Total Amount Due</div>
+                              <p class="nds-text-body_regular nds-m-bottom_medium">${binderPaymentAmount}</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- Due Date -->
+                  <div class="nds-col nds-medium-order_2 nds-large-order_2 nds-size_1-of-1 nds-medium-size_4-of-12 nds-large-size_4-of-12">
+                     <div class="nds-col nds-size_12-of-12">
+                        <div class="nds-col nds-size_12-of-12">
+                           <div class="nds-m-horizontal_xxx-small">
+                              <div class="nds-text-title">Binder Due Date</div>
+                              <p class="nds-text-body_regular nds-m-bottom_medium">{binderPaymentDueDate}</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- Payment Date -->
+                  <div class="nds-col nds-medium-order_3 nds-large-order_3 nds-size_1-of-1 nds-medium-size_4-of-12 nds-large-size_4-of-12">
+                     <div class="nds-col nds-size_12-of-12">
+                        <div class="nds-col nds-size_12-of-12">
+                           <div class="nds-m-horizontal_xxx-small">
+                              <div class="nds-text-title">Payment Date</div>
+                              <p class="nds-text-body_regular nds-m-bottom_medium">{today}</p>
+                           </div>
+                        </div>
+                     </div>
+                     </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </template>
+         <!-- Make a Payment -->
+         <template if:false={makeBinderPayment}>
+             <div class="nds-align_absolute-center">
+                <div class="nds-size_11-of-12">
+            <label class=" nds-show--inline  nds-size_8-of-12 title-margin nds-grid nds-form-element__label c-medium-bold-header nds-show_medium nds-text-align-right">Payment Information</label>
+            <!-- <div class="nds-col nds-box c-box-shadow nds-p-around_medium nds-m-top_medium nds-m-bottom_x-large nds-size_12-of-12"> -->
+                <div class=" nds-grid nds-col nds-box c-box-shadow nds-m-top_medium nds-m-bottom_x-large nds-size_8-of-12  c-border-branded_bottom nds-align_absolute-center">
+              
+                <div class="nds-grid nds-wrap nds-m-left_x-small nds-m-vertical_x-small nds-m-right_medium">
+                  <!-- Due Date -->
+                  <div class="nds-col nds-medium-order_1 nds-large-order_1 nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_4-of-12">
+                     <div class="nds-col nds-size_12-of-12">
+                        <div class="nds-col nds-size_12-of-12">
+                           <div class="nds-m-horizontal_xxx-small">
+                              <div class="nds-text-title">Due Date</div>
+                              <p class="nds-text-body_regular nds-m-bottom_medium">{dueDate}</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- Payment Date -->
+                  <div class="nds-col nds-large-order_2 nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_4-of-12">
+                     <div class="nds-col nds-size_12-of-12">
+                        <div class="nds-m-horizontal_xxx-small nds-m-bottom_medium">
+                           <div class="nds-text-title">Payment Date</div>
+                           <lightning-input
+                              type="date"
+                              theme="nds"
+                              label=""
+                              name="Payment Date"
+                              value={today}
+                              hide-icon="false"
+                              today-label="Today"
+                              format="MM/DD/YYYY"
+                              min={today}
+                              prev-month-label="Previous"
+                              next-month-label="Next"
+                              pick-year-label="Pick a year"
+                              select-date-label="Date Picker"
+                              onchange={transformPaymentDate}
+                              message-when-bad-input="Error encountered with date field"
+                              aria-label="Payment Date"
+                           ></lightning-input>
+                           <!-- Remove disabled -> MPV-1827 -->
+                        </div>
+                     </div>
+                  </div>
+                  <!-- Radio Button -->
+                  <div class="nds-col nds-medium-order_2 nds-large-order_2 nds-medium-size_6-of-12 nds-large-size_12-of-12">
+                     <div class="nds-col nds-size_12-of-12">
+                        <template if:true={radioOptionsPaymentInformation}>
+                           <fieldset>
+                              <!-- <div class="nds-border_top"> -->
+                                <div> 
+                                 <div class="nds-form-element__control">
+                                    <!-- <template if:true={hideTotalAmount}> -->
+                                    <span class="nds-radio nds-order_2 nds-medium-order_1 nds-large-order_1 nds-size_1-of-1 nds-medium-size_4-of-12 nds-large-size_4-of-12 nds-m-top_medium">
+                                       <input type="radio" id="radio-15" name="radio" class="radioTotal" value="Total Amount Due" onchange={payCustomAmount} checked={flagTotalAmount} />
+                                       <label class="nds-radio__label" for="radio-15">
+                                          <span class="nds-radio_faux"></span>
+                                          <span class="nds-text-title nds-m-left_small">Total Amount Due</span>
+                                       </label>
+                                       <div>
+                                          <div class="nds-form-element__control">
+                                             <!-- <input type="text" value={totalAmountDue} disabled="" id="text-input-id-1" class="nds-input" placeholder="Placeholder Text"> -->
+                                             <lightning-input
+                                                theme="nds"
+                                                type="number"
+                                                name="input7"
+                                                label=""
+                                                value={totalAmountDue}
+                                                formatter="currency"
+                                                step="0.01"
+                                                class="container"
+                                                disabled
+                                             ></lightning-input>
+                                          </div>
+                                       </div>
+                                    </span>
+                                    <!-- </template> -->
+                                    <!-- <template if:true={hidePastDouAmount}> -->
+                                    <span class="nds-radio nds-order_3 nds-medium-order_1 nds-large-order_2 nds-size_1-of-1 nds-medium-size_4-of-12 nds-large-size_4-of-12 nds-m-top_medium">
+                                       <input type="radio" id="radio-16" name="radio" value="Past Due Amount" onchange={payCustomAmount} checked={flagPastDue} />
+                                       <label class="nds-radio__label" for="radio-16">
+                                          <span class="nds-radio_faux"></span>
+                                          <span class="nds-text-title nds-m-left_small">Past Due Amount</span>
+                                       </label>
+                                       <div>
+                                          <div class="nds-form-element__control">
+                                             <lightning-input
+                                                theme="nds"
+                                                type="number"
+                                                name="input7"
+                                                label=""
+                                                value={pastDueAmount}
+                                                formatter="currency"
+                                                step="0.01"
+                                                class="container"
+                                                disabled
+                                             ></lightning-input>
+                                          </div>
+                                       </div>
+                                    </span>
+                                    <!-- </template> -->
+                                    <span class="nds-radio nds-order_4 nds-medium-order_1 nds-large-order_3 nds-size_1-of-1 nds-medium-size_4-of-12 nds-large-size_4-of-12 nds-m-top_medium">
+                                       <input type="radio" id="radio-17" name="radio" class="radioCustom" value="Pay Custom Amount" onchange={payCustomAmount} checked={flagCustomAmount} />
+                                       <label class="nds-radio__label" for="radio-17">
+                                          <span class="nds-radio_faux"></span>
+                                          <span class="nds-text-title nds-m-left_small">Custom Amount</span>
+                                       </label>
+                                       <div>
+                                          <lightning-input
+                                             theme="nds"
+                                             type="number"
+                                             name="input7"
+                                             label=""
+                                             value="0.00"
+                                             formatter="currency"
+                                             step="0.01"                                             
+                                             required
+                                             class="customAmt"
+                                             onchange={handleAmountChange}
+                                             message-when-value-missing=""
+                                             aria-label="Custom Amount"
+                                          >
+                                          </lightning-input>
+                                       </div>
+                                       <!-- <div if:true={payCstmAmt}>
+                                                    <lightning-input theme="nds" type="number" name="input7" label="" value="0.00" formatter="currency" step="0.01" required class="container" onchange={handleAmountChange}></lightning-input>
+                                                </div> -->
+                                    </span>
+                                 </div>
+                              </div>
+
+                              <div if:true={showAmountMessage} class="nds-m-top_xx-small">
+                                 <div class="nds-text-body_small nds-text-title" style="color: #cc0000" role="alert">
+                                    The amount you have selected to pay is lower than your Total Amount due. This may impact your plan eligibility
+                                 </div>
+                              </div>
+                              <div if:true={showCustomAmountMessage} class="nds-m-top_xx-small">
+                                 <div class="nds-text-body_small nds-text-title" style="color: #cc0000" role="alert">
+                                    The amount you have selected to pay is greater than your Total Amount due. Please note that, you can only pay up to $10,000 in a single transaction.
+                                 </div>
+                              </div>
+                              <div if:true={showZeroValueMessage} class="nds-m-top_xx-small">
+                                 <div class="nds-text-body_small nds-text-title" role="alert" style="color: #cc0000">Please enter a valid amount.</div>
+                              </div>
+                           </fieldset>
+                        </template>
+                     </div>
+                  </div>
+               </div>
+               </div>
+            </div>
+            </div>
+         </template>
+      </div>
+
+      <!-- Payment Method -->
+      <label class="nds-show--inline nds-form-element__label c-medium-bold-header">Payment Method</label><br>
+      <label class="nds-show--inline nds-form-element__label c-text-medium_label">Saved Cards/ Account Details</label>
+
+      <div if:true={selectCardError} class="nds-text-body_small nds-text-title nds-m-left_medium" style="color: #cc0000; margin-left: 1px">*Required</div>
+      <!-- <div if:true={selectCardError} class="nds-text-body_small nds-text-title nds-m-left_medium" style="color: #cc0000; margin-left: 1px"></div> -->
+      <!-- <div class="nds-col nds-box c-box-shadow nds-border_top nds-border_right nds-border_bottom nds-border_left nds-p-around_medium nds-m-top_medium nds-m-bottom_x-large nds-size_12-of-12" style="background-color: rgb(255, 255, 255); border-width: 0.5px; border-style: solid; border-color: rgb(204, 204, 204); border-radius: 5px;"> -->
+      <div class="nds-col nds-box c-box-shadow nds-p-around_medium nds-m-top_medium nds-m-bottom_x-large nds-size_12-of-12" role="radiogroup" aria-label="Payment Method">
+         <!-- <label class="nds-show--inline nds-form-element__label c-text-medium_label">Saved Cards/ Account Details</label> -->
+         <template if:true={cardList}>
+            <template for:each={cardList} for:item="myCard" for:index="index">
+               <div key={myCard.accountId}>
+                  <div class="nds-grid nds-m-bottom_large nds-m-top_x-small nds-p-left_x-small">
+                     <!-- Radio -->
+                     <div>
+                        <div class="nds-form-element__control nds-p-right_medium nds-float_right">
+                           <span class="nds-radio">
+                              <input type="radio" aria-label={myCard.cardname} id={myCard.accountId} name="cardSelection" value={myCard.accountId} onchange={selectCard} />
+                              <label class="nds-radio__label" for={myCard.accountId}>
+                                 <span class="nds-radio_faux"></span>
+                                 <span class="nds-form-element__label"></span>
+                              </label>
+                           </span>
+                        </div>
+                     </div>
+                     <!-- Card for Desktop -->
+                     <div class="nds-size_7-of-12 nds-box nds-show_medium">
+                        <div class="nds-grid nds-wrap nds-p-vertical_x-small nds-p-horizontal_medium">
+                           <!-- Card Name -->
+                           <div if:true={myCard.cc} class="nds-size_12-of-12 nds-medium-size_4-of-12 nds-large-size_3-of-12 nds-show_medium">
+                              <div class="c-text-medium_label">{myCard.cardname}</div>
+                              <p class="nds-text-body_small">**** **** **** {myCard.creditCardNumberLast4} {myCard.accountNumberLast4}</p>
+                           </div>
+                           <div if:false={myCard.cc} class="nds-size_12-of-12 nds-medium-size_8-of-12 nds-large-size_8-of-12 nds-show_medium">
+                              <div class="c-text-medium_label">{myCard.cardname}</div>
+                              <p class="nds-text-body_small">**** **** **** {myCard.creditCardNumberLast4} {myCard.accountNumberLast4}</p>
+                           </div>
+                           <!-- Expiration Date -->
+                           <div if:true={myCard.cc} class="nds-size_7-of-12 nds-medium-size_2-of-12 nds-large-size_2-of-12">
+                              <template if:true={myCard.expDate}>
+                                 <div class="c-text-medium_label">
+                                    <div class="c-text-medium_label">Exp Date</div>
+                                    <p class="nds-text-body_small">{myCard.creditCardExpirationDate}</p>
+                                 </div>
+                              </template>
+                           </div>
+                           <!-- CVV -->
+                           <div if:true={myCard.cc} class="nds-size_5-of-12 nds-medium-size_2-of-12 nds-large-size_3-of-12 nds-media">
+                              <template if:true={myCard.isSelected}>
+                                 <template if:true={myCard.cc}>
+                                    <div class="nds-col nds-size_4-of-12">
+                                       <div class="nds-form-element__control">
+                                          <div class="nds-form-element__control">
+                                             <input
+                                                type="text"
+                                                autocomplete="off"
+                                                placeholder="CVV"
+                                                maxlength={myCard.cvSize}
+                                                aria-description="Enter your CVV to continue"
+                                                name={myCard.cvvId}
+                                                id={myCard.accountId}
+                                                onchange={validateCV}
+                                                class="nds-input nds-border_top nds-border_left nds-border_right"
+                                                style="border-radius: 5px; border-top: 1px solid #dddbda !important"
+                                                required
+                                             />
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="nds-col nds-size_8-of-12 nds-show_medium nds-m-top_small nds-text-body_small">
+                                       &nbsp;&nbsp;* <a onclick={showCVVImage} id={myCard.accountId} tabindex="0">(What is this?)</a>
+                                    </div>
+                                    <div class="nds-col nds-size_6-of-12 nds-hide_medium nds-m-top_small">
+                                       <lightning-icon icon-name="utility:info" alternative-text="Info" size="x-small" title="Info" class="nds-m-right_x-small"></lightning-icon>
+                                    </div>
+                                 </template>
+                              </template>
+                           </div>
+                           <!-- Edit -->
+                           <div class="nds-size_6-of-12 nds-medium-size_2-of-12 nds-large-size_2-of-12">
+                              <button class="nds-button" aria-label={myCard.editButtonAriaLabel} onclick={navigateEditCardETF} data-btn-id={myCard.accountId}>
+                                 <!-- <button class="nds-button"> -->
+                                 <lightning-icon
+                                    class="nds-m-right_small"
+                                    size="x-small"
+                                    theme="nds"
+                                    icon-name="utility:edit"
+                                    onclick={navigateEditCardETF}
+                                    data-btn-id={myCard.accountId}
+                                    alternative-text="Edit"
+                                    title="Edit"
+                                    variant="brand"
+                                 ></lightning-icon>
+                                 Edit
+                              </button>
+                           </div>
+                           <!-- Delete -->
+                           <div class="nds-size_6-of-12 nds-medium-size_2-of-12 nds-large-size_2-of-12">
+                              <button class="nds-button nds-float_none" aria-label={myCard.deleteButtonAriaLabel} onclick={openModalDeleteCard} data-btn-id={myCard.accountId}>
+                                 <!-- <button class="nds-button nds-float_none"> -->
+                                
+                                 <lightning-icon
+                                    class="nds-m-right_small"
+                                    size="x-small"
+                                    theme="nds"
+                                    icon-name="utility:recycle_bin_empty"
+                                    onclick={openModalDeleteCard}
+                                    data-btn-id={myCard.accountId}
+                                    alternative-text="Delete"
+                                    title="Delete"
+                                    variant="brand"
+                                 ></lightning-icon>
+                                Delete
+                              </button>
+                           </div>
+                        </div>
+                        <template if:true={myCard.cc}>
+                           <template if:true={myCard.isSelected}>
+                              <template if:true={myCard.requiredCVV}>
+                                 <div class="nds-text-body_small nds-text-title nds-m-around_medium nds-align_absolute-center nds-show_medium" style="color: #cc0000">
+                                    Enter your CVV to continue
+                                 </div>
+                              </template>
+                           </template>
+                        </template>
+                     </div>
+                     <!-- Card for Mobile -->
+                     <div class="nds-size_11-of-12 nds-box nds-hide_medium">
+                        <div class="nds-grid nds-wrap">
+                           <!-- Name Mobile -->
+                           <div class="nds-hide_medium nds-size_12-of-12">
+                              <div class="nds-col nds-media nds-border_bottom">
+                                 <!-- <div class="nds-col nds-size_2-of-12">
+                                                    <template if:true={myCard.mastercard}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" viewBox="0 0 152.407 108" style="margin-left: -5px"><g><rect width="152.407" height="108" style="fill: none;"/><g><rect x="60.4117" y="25.6968" width="31.5" height="56.6064" style="fill: #ff5f00"/><path d="M382.20839,306a35.9375,35.9375,0,0,1,13.7499-28.3032,36,36,0,1,0,0,56.6064A35.938,35.938,0,0,1,382.20839,306Z" transform="translate(-319.79649 -252)" style="fill: #eb001b"></path><path d="M454.20349,306a35.99867,35.99867,0,0,1-58.2452,28.3032,36.00518,36.00518,0,0,0,0-56.6064A35.99867,35.99867,0,0,1,454.20349,306Z" transform="translate(-319.79649 -252)" style="fill: #f79e1b"></path><path d="M450.76889,328.3077v-1.1589h.4673v-.2361h-1.1901v.2361h.4675v1.1589Zm2.3105,0v-1.3973h-.3648l-.41959.9611-.41971-.9611h-.365v1.3973h.2576v-1.054l.3935.9087h.2671l.39351-.911v1.0563Z" transform="translate(-319.79649 -252)" style="fill: #f79e1b"></path></g></g></svg>
+                                                    </template>
+                                                    <template if:true={myCard.visa}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="35" style="margin-left: -9px; margin-top: -4px; margin-right: 4px;" clip-rule="evenodd" fill-rule="evenodd" viewBox="0 0 560 400"><path d="m286.87 176.71c-.228 17.993 16.036 28.034 28.287 34.004 12.588 6.126 16.816 10.054 16.768 15.531-.096 8.384-10.042 12.083-19.35 12.227-16.24.252-25.681-4.384-33.188-7.891l-5.849 27.373c7.531 3.472 21.476 6.499 35.938 6.631 33.944 0 56.152-16.756 56.273-42.736.132-32.971-45.607-34.797-45.295-49.535.108-4.468 4.372-9.237 13.717-10.45 4.624-.612 17.392-1.081 31.866 5.585l5.681-26.484c-7.783-2.835-17.789-5.55-30.244-5.55-31.95 0-54.423 16.984-54.604 41.295m139.44-39.013c-6.198 0-11.423 3.616-13.753 9.165l-48.49 115.777h33.92l6.75-18.654h41.451l3.916 18.654h29.896l-26.089-124.942zm4.744 33.752 9.789 46.916h-26.809zm-185.31-33.752-26.737 124.942h32.322l26.725-124.942zm-47.817 0-33.644 85.04-13.609-72.308c-1.597-8.071-7.903-12.732-14.906-12.732h-54.999l-.769 3.628c11.291 2.45 24.119 6.402 31.89 10.63 4.756 2.582 6.114 4.84 7.675 10.978l25.776 99.706h34.161l52.369-124.942z" fill="#1a1f71"></path></svg>
+                                                    </template>
+                                                    <template if:true={myCard.amex}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="35" viewBox="-150 -249.37925 1300 1496.2755" style="margin-left: -5px"><path d="M0 0h997.517v538.49l-49.375 77.147 49.375 68.661v313.219H0v-507.63l30.859-35.488L0 420.454z" fill="#016fd0"></path><path d="M193.64 695.099v-156.61h165.82l17.791 23.193 18.38-23.193h601.886V684.3s-15.74 10.643-33.945 10.8H630.295l-20.058-24.688V695.1h-65.73v-42.142s-8.979 5.882-28.39 5.882h-22.373v36.26h-99.52l-17.766-23.69-18.038 23.69zM0 420.454l37.393-87.177h64.668l21.22 48.833v-48.833h80.388l12.633 35.295 12.247-35.295h360.858v17.744s18.97-17.744 50.146-17.744l117.085.41 20.854 48.193v-48.603h67.273l18.515 27.683v-27.683h67.89v156.61h-67.89l-17.744-27.774v27.773h-98.838l-9.94-24.687h-26.57l-9.779 24.687h-67.028c-26.826 0-43.974-17.381-43.974-17.381v17.381H488.343L468.285 465.2v24.687H92.481L82.548 465.2H56.06l-9.86 24.686H0z" fill="#fff"></path><path d="M50.628 352.584L.193 469.848h32.836l9.306-23.482h54.1l9.257 23.482h33.56L88.863 352.584zm18.66 27.29l16.49 41.034H52.75zm73.435 89.954V352.564l46.661.173 27.14 75.605 26.49-75.778h46.289v117.264h-29.316v-86.405l-31.076 86.405h-25.71l-31.162-86.405v86.405zm166.638 0V352.564h95.663v26.23h-66.038v20.058h64.495v24.688h-64.495v20.83h66.038v25.458zm112.636-117.244v117.264h29.316v-41.66h12.343l35.15 41.66h35.826l-38.574-43.203c15.831-1.336 32.161-14.923 32.161-36.018 0-24.676-19.368-38.043-40.984-38.043zm29.316 26.23h33.51c8.04 0 13.887 6.288 13.887 12.343 0 7.79-7.577 12.344-13.452 12.344h-33.945zm118.807 91.014h-29.933V352.564h29.933zm70.975 0h-6.46c-31.262 0-50.243-24.63-50.243-58.15 0-34.349 18.768-59.114 58.246-59.114h32.402v27.773h-33.586c-16.026 0-27.36 12.507-27.36 31.63 0 22.71 12.96 32.248 31.63 32.248h7.715zm63.792-117.244l-50.435 117.264h32.836l9.305-23.482h54.1l9.258 23.482h33.559l-50.387-117.264zm18.66 27.29l16.49 41.034h-33.029zm73.386 89.954V352.564h37.272l47.59 73.676v-73.676h29.317v117.264h-36.067l-48.796-75.604v75.604zM213.699 675.04V557.776h95.662v26.23h-66.038v20.059h64.495v24.687h-64.495v20.83h66.038v25.458zm468.748 0V557.776h95.662v26.23h-66.038v20.059h64.187v24.687H712.07v20.83h66.038v25.458zm-369.373 0l46.578-57.908-47.687-59.356H348.9l28.4 36.693 28.497-36.693h35.488l-47.06 58.632 46.663 58.632H403.96l-27.576-36.114-26.905 36.114zM444.37 557.796V675.06h30.087v-37.03h30.859c26.111 0 45.903-13.853 45.903-40.792 0-22.317-15.523-39.442-42.094-39.442zm30.087 26.52h32.498c8.436 0 14.465 5.17 14.465 13.5 0 7.826-5.999 13.501-14.561 13.501h-32.402zm89.491-26.54V675.04h29.316v-41.66h12.344l35.15 41.66h35.825l-38.573-43.202c15.83-1.336 32.16-14.924 32.16-36.019 0-24.676-19.368-38.043-40.984-38.043zm29.316 26.23h33.511c8.039 0 13.887 6.288 13.887 12.344 0 7.79-7.577 12.343-13.453 12.343h-33.945zm198.423 91.034v-25.458h58.671c8.681 0 12.44-4.692 12.44-9.837 0-4.93-3.747-9.913-12.44-9.913h-26.513c-23.045 0-35.88-14.04-35.88-35.121 0-18.803 11.753-36.935 46-36.935h57.088l-12.343 26.385h-49.375c-9.438 0-12.343 4.952-12.343 9.682 0 4.86 3.59 10.222 10.8 10.222h27.773c25.69 0 36.838 14.572 36.838 33.655 0 20.517-12.422 37.32-38.236 37.32zm107.597 0v-25.458h58.67c8.682 0 12.44-4.692 12.44-9.837 0-4.93-3.746-9.913-12.44-9.913h-26.512c-23.046 0-35.88-14.04-35.88-35.121 0-18.803 11.753-36.935 45.999-36.935h57.089l-12.344 26.385h-49.374c-9.438 0-12.344 4.952-12.344 9.682 0 4.86 3.59 10.222 10.801 10.222h27.773c25.69 0 36.838 14.572 36.838 33.655 0 20.517-12.422 37.32-38.236 37.32z" fill="#016fd0"></path></svg>
+                                                    </template>
+                                                </div> -->
+                                 <div class="nds-col nds-size_8-of-12">
+                                    <div class="c-text-medium_label">{myCard.cardname}</div>
+                                 </div>
+                                 <div class="nds-col nds-size_4-of-12">
+                                    <p class="nds-text-body_small nds-float_right">**** {myCard.creditCardNumberLast4} {myCard.accountNumberLast4}</p>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- Expiration Date -->
+                           <div class="nds-size_8-of-12 nds-medium-size_2-of-12 nds-large-size_2-of-12 nds-m-top_small">
+                              <template if:true={myCard.expDate}>
+                                 <div class="c-text-medium_label">
+                                    <div class="c-text-medium_label">Expiration Date</div>
+                                    <p class="nds-text-body_small">{myCard.creditCardExpirationDate}</p>
+                                 </div>
+                              </template>
+                           </div>
+                           <!-- CVV -->
+                           <div if:true={myCard.isSelected} class="nds-size_4-of-12 nds-medium-size_2-of-12 nds-large-size_3-of-12 nds-media nds-m-top_small">
+                              <template if:true={myCard.cc}>
+                                 <div class="nds-col nds-size_12-of-12">
+                                    <!-- <div class="c-text-medium_label">CVV</div> -->
+                                    <div class="nds-text-title">CVV</div>
+                                    <div class="nds-col nds-size_12-of-12 nds-media">
+                                       <div class="nds-form-element__control">
+                                          <div class="nds-form-element__control">
+                                             <input
+                                                type="text"
+                                                autocomplete="off"
+                                                maxlength={myCard.cvSize}
+                                                name={myCard.cvvId}
+                                                id={myCard.accountId}
+                                                onchange={validateCV}
+                                                class="nds-input nds-border_top nds-border_left nds-border_right"
+                                                style="border-radius: 5px; border-top: 1px solid #dddbda !important"
+                                                required
+                                             />
+                                          </div>
+                                       </div>
+                                       <!-- Icon -->
+                                       <!-- <div class="nds-col nds-size_6-of-12 nds-align_absolute-center nds-text-align_center nds-hide_medium">
+                                                            <div class="tooltip">
+                                                                <lightning-icon icon-name="utility:info" alternative-text="Info" size="x-small" title="Info" class="nds-m-right_x-small"></lightning-icon>
+                                                                <div class="tooltiptext">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="110px" height="68px" viewBox="0 0 219 136" enable-background="new 0 0 219 136" xml:space="preserve"><path fill-rule="evenodd" clip-rule="evenodd" fill="#DAD9D9" d="M10,0h199c5.523,0,10,4.477,10,10v116c0,5.523-4.477,10-10,10H10  c-5.523,0-10-4.477-10-10V10C0,4.477,4.477,0,10,0z"></path><path fill-rule="evenodd" clip-rule="evenodd" fill="#171717" d="M0,18h219v26H0V18z"></path><path fill-rule="evenodd" clip-rule="evenodd" fill="#F1F1F1" d="M0,50h219v27H0V50z"></path><path fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M117,104h36v23h-36V104z"></path><path fill-rule="evenodd" clip-rule="evenodd" fill="#4463AE" d="M119,106h32v5h-32V106z"></path><path fill-rule="evenodd" clip-rule="evenodd" fill="#F89C48" d="M119,120h32v5h-32V120z"></path><path fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M177.5,104c6.351,0,11.5,5.149,11.5,11.5s-5.149,11.5-11.5,11.5  c-6.352,0-11.5-5.149-11.5-11.5S171.148,104,177.5,104z"></path><path fill-rule="evenodd" clip-rule="evenodd" fill="#EE2F24" d="M177.5,106c5.247,0,9.5,4.253,9.5,9.5s-4.253,9.5-9.5,9.5  c-5.247,0-9.5-4.253-9.5-9.5S172.253,106,177.5,106z"></path><path fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M193.5,104c6.351,0,11.5,5.149,11.5,11.5s-5.149,11.5-11.5,11.5  c-6.352,0-11.5-5.149-11.5-11.5S187.148,104,193.5,104z"></path><path fill-rule="evenodd" clip-rule="evenodd" fill="#F89B48" d="M193.5,106c5.247,0,9.5,4.253,9.5,9.5s-4.253,9.5-9.5,9.5  c-5.247,0-9.5-4.253-9.5-9.5S188.253,106,193.5,106z"></path><g><path fill="#363636" d="M180.442,63.613v-0.039c0.469-0.098,0.831-0.292,1.086-0.581c0.255-0.29,0.383-0.663,0.383-1.118   c0-0.554-0.192-0.989-0.576-1.306c-0.384-0.317-0.923-0.476-1.616-0.476c-0.423,0-0.826,0.066-1.208,0.198s-0.72,0.313-1.013,0.544   l0.41,0.547c0.355-0.228,0.67-0.384,0.947-0.469c0.276-0.085,0.571-0.127,0.884-0.127c0.41,0,0.735,0.099,0.974,0.298   c0.239,0.198,0.359,0.472,0.359,0.82c0,0.436-0.163,0.777-0.488,1.023c-0.326,0.246-0.767,0.369-1.323,0.369h-0.713v0.698h0.703   c1.36,0,2.041,0.433,2.041,1.299c0,0.967-0.617,1.45-1.851,1.45c-0.313,0-0.644-0.04-0.994-0.12c-0.35-0.08-0.68-0.196-0.989-0.349   v0.771c0.296,0.143,0.602,0.243,0.916,0.3c0.314,0.057,0.66,0.085,1.038,0.085c0.869,0,1.54-0.183,2.012-0.549   s0.708-0.89,0.708-1.57c0-0.476-0.139-0.859-0.415-1.152C181.44,63.867,181.015,63.685,180.442,63.613z"></path><path fill="#363636" d="M187.426,60.156h-0.859l-3.389,4.829v0.708h3.472v1.641h0.776v-1.641h1.06v-0.737h-1.06V60.156z    M186.649,62.583v2.373h-2.661l2.231-3.174c0.137-0.205,0.283-0.464,0.439-0.776h0.039   C186.666,61.591,186.649,62.117,186.649,62.583z"></path><path fill="#363636" d="M193.43,63.532c-0.431-0.373-1.023-0.559-1.775-0.559c-0.371,0-0.744,0.037-1.118,0.112l0.181-2.144h2.856   v-0.747h-3.55l-0.269,3.34l0.42,0.269c0.518-0.095,0.931-0.142,1.24-0.142c1.221,0,1.831,0.498,1.831,1.494   c0,0.511-0.159,0.901-0.476,1.172c-0.317,0.27-0.763,0.405-1.335,0.405c-0.329,0-0.663-0.042-1.001-0.125s-0.622-0.198-0.85-0.344   v0.781c0.423,0.257,1.037,0.386,1.841,0.386c0.827,0,1.476-0.21,1.946-0.63s0.706-1,0.706-1.738   C194.077,64.415,193.861,63.905,193.43,63.532z"></path></g><path fill-rule="evenodd" clip-rule="evenodd" fill="#ED1C24" d="M201,50h-31c-1.657,0-3,1.295-3,2.893v21.214  c0,1.598,1.343,2.893,3,2.893h31c1.657,0,3-1.295,3-2.893V52.893C204,51.295,202.657,50,201,50z M201,74.107h-31V52.893h31V74.107z"></path><g><path fill="#ED1C24" d="M81.846,90.201c0.648,0,1.297,0.152,1.945,0.457l0.422-0.855c-0.672-0.328-1.457-0.492-2.355-0.492   c-0.844,0-1.577,0.18-2.2,0.539s-1.1,0.871-1.43,1.535s-0.495,1.438-0.495,2.32c0,1.41,0.343,2.498,1.028,3.264   s1.659,1.148,2.921,1.148c0.871,0,1.604-0.111,2.197-0.334V96.91c-0.766,0.215-1.447,0.322-2.045,0.322   c-0.973,0-1.722-0.306-2.247-0.917s-0.788-1.478-0.788-2.599c0-1.09,0.272-1.948,0.817-2.575S80.904,90.201,81.846,90.201z"></path><path fill="#ED1C24" d="M88.983,94.941c-0.227,0.629-0.41,1.26-0.551,1.893c-0.133-0.602-0.313-1.221-0.539-1.857l-1.969-5.543   H84.87L87.94,98h0.984l3.088-8.566H90.94L88.983,94.941z"></path><path fill="#ED1C24" d="M96.426,94.941c-0.227,0.629-0.41,1.26-0.551,1.893c-0.133-0.602-0.313-1.221-0.539-1.857l-1.969-5.543   h-1.055L95.383,98h0.984l3.088-8.566h-1.072L96.426,94.941z"></path><path fill="#ED1C24" d="M107.239,91.461c-0.441,0-0.842,0.087-1.201,0.261s-0.639,0.419-0.838,0.735h-0.047l-0.158-0.879h-0.791V98   h0.973v-3.369c0-0.836,0.156-1.436,0.469-1.799c0.313-0.363,0.805-0.545,1.477-0.545c0.507,0,0.881,0.129,1.119,0.387   c0.238,0.258,0.357,0.648,0.357,1.172V98h0.973v-4.189c0-0.82-0.196-1.417-0.586-1.79   C108.595,91.647,108.013,91.461,107.239,91.461z"></path><path fill="#ED1C24" d="M116.199,94.953c0,0.832-0.155,1.432-0.466,1.799s-0.802,0.551-1.474,0.551   c-0.508,0-0.881-0.129-1.119-0.387s-0.357-0.648-0.357-1.172v-4.166h-0.984v4.201c0,0.816,0.194,1.41,0.583,1.781   s0.974,0.557,1.755,0.557c0.453,0,0.856-0.084,1.21-0.252s0.63-0.41,0.829-0.727h0.053L116.369,98h0.803v-6.422h-0.973V94.953z"></path><path fill="#ED1C24" d="M126.519,91.461c-0.465,0-0.879,0.098-1.242,0.293s-0.641,0.461-0.832,0.797h-0.047   c-0.309-0.727-0.965-1.09-1.969-1.09c-0.414,0-0.788,0.088-1.122,0.264s-0.593,0.42-0.776,0.732h-0.047l-0.158-0.879h-0.791V98   h0.973v-3.369c0-0.832,0.142-1.431,0.425-1.796s0.729-0.548,1.339-0.548c0.465,0,0.807,0.128,1.025,0.384s0.328,0.64,0.328,1.151   V98h0.973v-3.586c0-0.723,0.145-1.258,0.434-1.605s0.736-0.521,1.342-0.521c0.461,0,0.801,0.128,1.02,0.384s0.328,0.64,0.328,1.151   V98h0.973v-4.189c0-0.82-0.181-1.417-0.542-1.79S127.245,91.461,126.519,91.461z"></path><path fill="#ED1C24" d="M133.985,91.473c-0.891,0-1.563,0.32-2.016,0.961h-0.047c0.031-0.395,0.047-0.84,0.047-1.336v-2.215h-0.973   V98h0.697l0.205-0.826h0.07c0.234,0.32,0.524,0.558,0.87,0.712s0.728,0.231,1.146,0.231c0.835,0,1.489-0.292,1.96-0.876   s0.706-1.403,0.706-2.458s-0.233-1.87-0.7-2.446S134.829,91.473,133.985,91.473z M135.204,96.649   c-0.293,0.436-0.738,0.653-1.336,0.653c-0.664,0-1.146-0.194-1.447-0.583s-0.451-1.034-0.451-1.937s0.146-1.544,0.439-1.925   s0.771-0.571,1.436-0.571c0.613,0,1.066,0.205,1.359,0.615s0.439,1.033,0.439,1.869C135.643,95.588,135.497,96.214,135.204,96.649z   "></path><path fill="#ED1C24" d="M141.111,91.461c-0.859,0-1.544,0.305-2.054,0.914s-0.765,1.432-0.765,2.467   c0,1.027,0.274,1.83,0.823,2.408s1.298,0.867,2.247,0.867c0.434,0,0.804-0.032,1.11-0.097s0.632-0.171,0.976-0.319v-0.867   c-0.676,0.289-1.359,0.434-2.051,0.434c-0.656,0-1.165-0.195-1.526-0.586s-0.552-0.963-0.571-1.717h4.424V94.35   c0-0.867-0.234-1.565-0.703-2.095S141.916,91.461,141.111,91.461z M139.324,94.174c0.055-0.594,0.235-1.059,0.542-1.395   s0.718-0.504,1.233-0.504c0.508,0,0.898,0.163,1.172,0.489s0.41,0.796,0.41,1.409H139.324z"></path><path fill="#ED1C24" d="M147.505,91.801c-0.336,0.227-0.623,0.549-0.861,0.967h-0.047l-0.111-1.189h-0.803V98h0.973v-3.445   c0-0.629,0.185-1.154,0.554-1.576s0.813-0.633,1.333-0.633c0.203,0,0.437,0.029,0.703,0.088l0.135-0.902   c-0.227-0.047-0.483-0.07-0.768-0.07C148.209,91.461,147.841,91.574,147.505,91.801z"></path><path fill="#ED1C24" d="M156.46,89.434h-0.949c-0.57,0.68-1.007,1.471-1.31,2.373s-0.454,1.871-0.454,2.906   c0,1.02,0.15,1.973,0.451,2.859s0.738,1.662,1.313,2.326h0.938c-0.543-0.738-0.959-1.555-1.248-2.449s-0.434-1.811-0.434-2.748   c0-0.953,0.142-1.881,0.425-2.783S155.897,90.188,156.46,89.434z"></path><path fill="#ED1C24" d="M161.249,93.535v-0.047c0.563-0.117,0.997-0.35,1.304-0.697s0.46-0.795,0.46-1.342   c0-0.664-0.23-1.187-0.691-1.567s-1.107-0.571-1.939-0.571c-0.508,0-0.991,0.079-1.45,0.237s-0.864,0.376-1.216,0.653l0.492,0.656   c0.425-0.273,0.805-0.461,1.137-0.563s0.686-0.152,1.061-0.152c0.492,0,0.882,0.119,1.169,0.357s0.431,0.566,0.431,0.984   c0,0.523-0.195,0.933-0.586,1.228s-0.92,0.442-1.588,0.442h-0.855v0.838h0.844c1.633,0,2.449,0.52,2.449,1.559   c0,1.16-0.74,1.74-2.221,1.74c-0.375,0-0.773-0.048-1.192-0.144c-0.42-0.096-0.815-0.235-1.187-0.419v0.926   c0.355,0.172,0.722,0.292,1.099,0.36s0.792,0.103,1.245,0.103c1.043,0,1.848-0.22,2.414-0.659s0.85-1.067,0.85-1.884   c0-0.57-0.166-1.031-0.498-1.383S161.936,93.621,161.249,93.535z"></path><path fill="#ED1C24" d="M173.046,91.496l0.023,0.451l0.041,0.463h-0.076c-0.465-0.633-1.133-0.949-2.004-0.949   c-0.836,0-1.488,0.293-1.957,0.879s-0.703,1.408-0.703,2.467s0.233,1.875,0.7,2.449s1.12,0.861,1.96,0.861   c0.895,0,1.566-0.326,2.016-0.979h0.053L173.228,98h0.791v-9.117h-0.973V91.496z M173.046,95.012c0,0.805-0.149,1.388-0.448,1.749   s-0.78,0.542-1.444,0.542c-0.583,0-1.023-0.209-1.324-0.627s-0.451-1.037-0.451-1.857c0-0.809,0.151-1.435,0.454-1.878   c0.302-0.443,0.739-0.665,1.31-0.665c0.664,0,1.147,0.194,1.45,0.583c0.303,0.389,0.454,1.038,0.454,1.948V95.012z"></path><path fill="#ED1C24" d="M176.873,89.193c-0.164,0-0.301,0.052-0.41,0.155s-0.164,0.267-0.164,0.489   c0,0.219,0.055,0.382,0.164,0.489s0.246,0.161,0.41,0.161c0.156,0,0.291-0.054,0.404-0.161s0.17-0.271,0.17-0.489   s-0.057-0.381-0.17-0.486S177.029,89.193,176.873,89.193z"></path><rect x="176.381" y="91.578" fill="#ED1C24" width="0.973" height="6.422"/><path fill="#ED1C24" d="M181.843,91.461c-0.773,0-1.371,0.19-1.793,0.571s-0.633,0.923-0.633,1.626   c0,0.422,0.104,0.797,0.313,1.125s0.479,0.561,0.812,0.697c-0.27,0.164-0.467,0.334-0.592,0.51s-0.188,0.381-0.188,0.615   c0,0.207,0.056,0.389,0.167,0.545s0.249,0.271,0.413,0.346c-0.453,0.102-0.805,0.295-1.055,0.58s-0.375,0.623-0.375,1.014   c0,0.57,0.228,1.012,0.683,1.324s1.103,0.469,1.942,0.469c1.094,0,1.926-0.187,2.496-0.56s0.855-0.915,0.855-1.626   c0-0.559-0.187-0.984-0.56-1.277s-0.907-0.439-1.603-0.439h-1.137c-0.352,0-0.6-0.042-0.744-0.126s-0.217-0.214-0.217-0.39   c0-0.332,0.207-0.607,0.621-0.826c0.168,0.031,0.348,0.047,0.539,0.047c0.75,0,1.34-0.188,1.77-0.563s0.645-0.877,0.645-1.506   c0-0.277-0.043-0.526-0.129-0.747s-0.184-0.399-0.293-0.536l1.189-0.141v-0.615h-2.221C182.481,91.5,182.179,91.461,181.843,91.461   z M181.251,97.854h1.166c0.594,0,0.998,0.067,1.213,0.202s0.322,0.376,0.322,0.724c0,0.418-0.196,0.749-0.589,0.993   s-0.997,0.366-1.813,0.366c-0.547,0-0.967-0.09-1.26-0.27s-0.439-0.443-0.439-0.791c0-0.395,0.123-0.697,0.369-0.908   S180.81,97.854,181.251,97.854z M183.243,93.617c0,0.922-0.475,1.383-1.424,1.383c-0.453,0-0.807-0.115-1.061-0.346   s-0.381-0.57-0.381-1.02c0-0.484,0.123-0.85,0.369-1.096s0.598-0.369,1.055-0.369C182.763,92.17,183.243,92.652,183.243,93.617z"></path><rect x="186.59" y="91.578" fill="#ED1C24" width="0.973" height="6.422"/><path fill="#ED1C24" d="M187.083,89.193c-0.164,0-0.301,0.052-0.41,0.155s-0.164,0.267-0.164,0.489   c0,0.219,0.055,0.382,0.164,0.489s0.246,0.161,0.41,0.161c0.156,0,0.291-0.054,0.404-0.161s0.17-0.271,0.17-0.489   s-0.057-0.381-0.17-0.486S187.239,89.193,187.083,89.193z"></path><path fill="#ED1C24" d="M192,97.314c-0.32,0-0.572-0.104-0.756-0.311s-0.275-0.504-0.275-0.891v-3.779h1.863v-0.756h-1.863V90.09   h-0.563l-0.41,1.371l-0.92,0.404v0.469h0.92v3.82c0,1.309,0.621,1.963,1.863,1.963c0.164,0,0.349-0.017,0.554-0.05   s0.36-0.075,0.466-0.126v-0.744c-0.094,0.027-0.221,0.054-0.381,0.079S192.171,97.314,192,97.314z"></path><path fill="#ED1C24" d="M196.659,94.35c-0.555-0.207-0.93-0.365-1.125-0.475c-0.196-0.109-0.337-0.225-0.425-0.346   s-0.132-0.268-0.132-0.439c0-0.254,0.117-0.453,0.352-0.598s0.582-0.217,1.043-0.217c0.523,0,1.107,0.133,1.752,0.398l0.346-0.791   c-0.66-0.281-1.336-0.422-2.027-0.422c-0.742,0-1.326,0.151-1.752,0.454s-0.639,0.716-0.639,1.239c0,0.293,0.062,0.545,0.185,0.756   s0.311,0.399,0.563,0.565s0.677,0.36,1.274,0.583c0.629,0.242,1.052,0.452,1.269,0.63s0.325,0.392,0.325,0.642   c0,0.332-0.137,0.579-0.41,0.741c-0.273,0.162-0.665,0.243-1.172,0.243c-0.328,0-0.669-0.045-1.022-0.135   c-0.354-0.09-0.685-0.213-0.993-0.369v0.902c0.477,0.27,1.14,0.404,1.992,0.404c0.805,0,1.43-0.162,1.875-0.486   s0.668-0.785,0.668-1.383c0-0.426-0.134-0.779-0.401-1.061S197.421,94.627,196.659,94.35z"></path><path fill="#ED1C24" d="M202.074,91.815c-0.301-0.904-0.738-1.698-1.313-2.382h-0.949c0.563,0.754,0.985,1.582,1.269,2.484   s0.425,1.83,0.425,2.783c0,0.938-0.145,1.854-0.434,2.751s-0.705,1.712-1.248,2.446h0.938c0.57-0.656,1.007-1.428,1.31-2.314   s0.454-1.844,0.454-2.871S202.375,92.72,202.074,91.815z"></path></g><path fill-rule="evenodd" clip-rule="evenodd" fill="#ED1C24" d="M185,77h1v11h-1V77z"></path></svg>
+                                                                </div>
+                                                            </div>
+                                                        </div> -->
+                                       <div class="nds-col nds-size_6-of-12 nds-hide_medium nds-m-top_xxx-small">
+                                          <lightning-icon
+                                             icon-name="utility:info"
+                                             alternative-text="Info"
+                                             size="x-small"
+                                             title="Info"
+                                             class="nds-m-left_xx-small"
+                                             onclick={openModalCVVImage}
+                                             variant="brand"
+                                          ></lightning-icon>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </template>
+                           </div>
+                           <!-- Edit -->
+                           <div class="nds-size_6-of-12 nds-medium-size_2-of-12 nds-large-size_2-of-12">
+                              <button class="nds-button" onclick={navigateEditCardETF} data-btn-id={myCard.accountId}>
+                                 <!-- <button class="nds-button"> -->
+                                 <!-- Edit -->
+                                 <lightning-icon
+                                    class="nds-m-right_small"
+                                    theme="nds"
+                                    size="x-small"
+                                    icon-name="utility:edit"
+                                    onclick={navigateEditCardETF}
+                                    data-btn-id={myCard.accountId}
+                                    alternative-text="Edit"
+                                    title="Edit"
+                                    variant="brand"
+                                 ></lightning-icon>
+                                 Edit
+                              </button>
+                           </div>
+                           <!-- Delete -->
+                           <div class="nds-size_6-of-12 nds-medium-size_2-of-12 nds-large-size_2-of-12">
+                              <button class="nds-button nds-float_none" onclick={openModalDeleteCard} data-btn-id={myCard.accountId}>
+                                 <!-- <button class="nds-button nds-float_none"> -->
+                                
+                                 <lightning-icon
+                                    class="nds-m-right_small"
+                                    theme="nds"
+                                    size="x-small"
+                                    icon-name="utility:recycle_bin_empty"
+                                    onclick={openModalDeleteCard}
+                                    data-btn-id={myCard.accountId}
+                                    alternative-text="Delete"
+                                    title="Delete"
+                                    variant="brand"
+                                 ></lightning-icon>
+                                 Delete
+                              </button>
+                           </div>
+                        </div>
+                        <template if:true={myCard.cc}>
+                           <template if:true={myCard.isSelected}>
+                              <template if:true={myCard.requiredCVV}>
+                                 <div class="nds-text-body_small nds-text-title nds-m-left_medium nds-m-top_small nds-align_absolute-center" style="color: #cc0000">Enter your CVV to continue</div>
+                              </template>
+                           </template>
+                        </template>
+                     </div>
+                     <!-- CVV Image only for Desktop -->
+                     <div if:true={myCard.showCvv} class="nds-size_4-of-12 nds-p-left_small nds-show_medium nds-media">
+                        <!-- Card -->
+                        <div class="nds-col nds-size_11-of-12" tabindex="0">
+                           <img src="../resource/Attentis_CVV" />
+                        </div>
+                        <!-- Icon -->
+                        <div class="nds-col nds-size_1-of-12 nds-m-top_xxx-small" tabindex="0">
+                           <lightning-icon
+                              icon-name="utility:close"
+                              alternative-text="Info"
+                              size="small"
+                              title="Info"
+                              class="nds-m-left_xx-small nds-icon-text-default"
+                              onclick={closeCardDesktop}
+                           ></lightning-icon>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </template>
+         </template>
+         <template if:true={listEmpty}>
+            <p class="nds-text-body_regular nds-m-top_large nds-m-bottom_large nds-text-align--left">You can pay by credit/debit card or electronic funds transfer.</p>
+         </template>
+         <!-- Underline -->
+         <div class="nds-border_top"></div>
+         <div class="nds-grid nds-wrap nds-border_top nds-p-left_x-small nds-p-top_x-small">
+            <div class="nds-size_12-of-12 nds-medium-size_4-of-12 nds-large-size_4-of-12">
+               <lightning-button theme="nds" variant="base" label="Add a New Credit/Debit Card" class="nds-button c-fc-action-text" onclick={navigateAddCard}></lightning-button>
+            </div>
+            <div class="nds-size_12-of-12 nds-medium-size_4-of-12 nds-large-size_4-of-12">
+               <lightning-button theme="nds" variant="base" label="Add Bank Information" class="nds-button c-fc-action-text" onclick={navigateAddEFT}></lightning-button>
+            </div>
+         </div>
+      </div>
+
+      <!-- Terms & Conditions -->
+      <label class="nds-show--inline nds-form-element__label c-medium-bold-header">Terms and Conditions</label>
+      <!-- <div class="nds-col nds-box c-box-shadow nds-border_top nds-border_right nds-border_bottom nds-border_left nds-p-around_medium nds-m-top_medium nds-m-bottom_x-large nds-size_12-of-12" style="background-color: rgb(255, 255, 255); border-width: 0.5px; border-style: solid; border-color: rgb(204, 204, 204); border-radius: 5px;"> -->
+      <div class="nds-col nds-box c-box-shadow nds-p-around_medium nds-m-top_medium nds-m-bottom_xx-large nds-size_12-of-12">
+         <div if:true={setUpAutopayFlow}>
+            <label class="nds-show--inline nds-form-element__label c-text-medium_label">Please read and approve the following authorizations:</label>
+            <p class="nds-text-body_regular nds-m-bottom_medium nds-m-top_medium">
+               By scheduling this payment, you are authorizing Attentis Health to electronically debit your bank account or charge your credit card for your full premium amount on your due date every
+               month. This authorization is valid until you cancel auto pay.
+            </p>
+            <p class="nds-text-body_regular nds-m-bottom_medium">
+               In the event that the payment is returned for insufficient funds, you authorize Attentis Health to electronically debit your account for the original amount of the transaction, plus any
+               returned item fee, up to the maximum amount allowed by law.
+            </p>
+            <p class="nds-text-body_regular nds-m-bottom_medium">
+               If the auto payment cannot be processed due to insufficient funds, or expiration of your selected payment method, please make sure you continue to make your monthly premium payments to
+               avoid any loss of coverage.
+            </p>
+            <p class="nds-text-body_regular nds-m-bottom_medium">You can cancel auto pay at any time.</p>
+         </div>
+         <div if:true={makeAPaymentFlow}>
+            <label class="nds-show--inline nds-form-element__label c-text-medium_label">Please read and approve the following authorizations:</label>
+            <p class="nds-text-body_regular nds-m-bottom_medium nds-m-top_medium">
+               By scheduling this payment, you are authorizing Attentis Health to electronically debit your bank account or charge your credit card for the amount(s) and date shown above. This
+               authorization is valid for this transaction only.
+            </p>
+            <p class="nds-text-body_regular nds-m-bottom_medium">
+               In the event that the payment is returned or cannot be processed due to insufficient funds, or the expiration of your selected payment method, Attentis Health will bill you for the full
+               original amount of the transaction, plus any returned item fee, up to the maximum amount allowed by law.
+            </p>
+         </div>
+         <div class="nds-border_top">
+            <div class="nds-form-element nds-m-top_medium nds-m-bottom_medium">
+               <div class="nds-form-element__control">
+                  <label class="nds-checkbox">
+                     <input type="checkbox" name="options" id="checkbox-1" onchange={termsConditions} />
+                     <span class="nds-checkbox_faux"></span>
+                     <label class="nds-checkbox__label">
+                        <span class="nds-form-element__label">I accept the Terms and Conditions</span>
+                     </label>
+                     <template if:true={errorTerms}>
+                        <div class="nds-text-body_small nds-text-title nds-m-left_medium" style="color: #cc0000">*Required</div>
+                     </template>
+                  </label>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- Set Up Auto Pay -->
+   <div class="nds-grid nds-wrap nds-p-bottom_large">
+      <div class="nds-col nds-p-around_x-small nds-large-size_5-of-12 nds-medium-size_4-of-12 nds-small-size_3-of-12 nds-size_2-of-12"></div>
+      <div class="nds-col nds-text-align_center nds-large-size_2-of-12 nds-medium-size_4-of-12 nds-small-size_6-of-12 nds-size_8-of-12">
+         <div class="nds-action">
+            <span>
+               <button if:true={setUpAutopayFlow} onclick={setAutoPay} type="button" class="vlocity-btn nds-button nds-button_brand nds-size_x-small">
+                  <span class="btnLabel">Set up Auto Pay</span>
+               </button>
+               <button
+                  if:true={makeAPaymentFlow}
+                  onclick={setAutoPay}
+                  type="button"
+                  aria-label="Submit your payment information"
+                  class="vlocity-btn nds-button nds-button_brand nds-size_x-small"
+                  disabled={disableSubmitButton}
+               >
+                  <span class="btnLabel">Submit</span>
+               </button>
+            </span>
+         </div>
+      </div>
+      <div class="nds-col nds-p-around_x-small nds-large-size_5-of-12 nds-medium-size_4-of-12 nds-small-size_3-of-12 nds-size_2-of-12"></div>
+   </div>
+   <!-- Cancel -->
+   <div class="nds-grid nds-wrap nds-p-bottom_medium">
+      <div class="nds-col nds-p-around_x-small nds-large-size_5-of-12 nds-medium-size_4-of-12 nds-small-size_3-of-12 nds-size_2-of-12"></div>
+      <div class="nds-col nds-text-align_center nds-large-size_2-of-12 nds-medium-size_4-of-12 nds-small-size_6-of-12 nds-size_8-of-12">
+         <div class="nds-action">
+            <span>
+               <button onclick={goBack} type="button" aria-label="Cancel and go back to Billing and Payments" class="vlocity-btn nds-button nds-button_neutral nds-size_x-small">
+                  <span class="btnLabel">Cancel</span>
+               </button>
+            </span>
+         </div>
+      </div>
+      <div class="nds-col nds-p-around_x-small nds-large-size_5-of-12 nds-medium-size_4-of-12 nds-small-size_3-of-12 nds-size_2-of-12"></div>
+   </div>
+
+   <!-- CVV Modal -->
+   <template if:true={openModalCVV}>
+      <!-- Modal/Popup Box LWC starts here -->
+      <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-fade-in-open">
+         <div class="nds-modal__container">
+            <!-- Modal/Popup Box LWC header here -->
+            <header class="nds-modal__header modal-header-confirmation">
+               <h2 id="modal-heading-02" class="nds-hyphenate modal-title">CVV</h2>
+            </header>
+            <!-- Modal/Popup Box LWC body starts here -->
+            <div class="nds-modal__content nds-p-around_medium" id="modal-content-id-2">
+               <div class="nds-grid nds-p-around_medium">
+                  <div class="nds-col nds-align_absolute-center">
+                     <img src="../resource/Attentis_CVV" />
+                  </div>
+               </div>
+               <div class="nds-grid">
+                  <div class="nds-size_1-of-1 nds-medium-size_6-of-12 nds-large-size_3-of-12 nds-align_absolute-center">
+                     <button class="nds-button nds-button_brand nds-button_stretch" onclick={closeCVVModal} title="Cancel">OK</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <div class="nds-backdrop nds-backdrop_open"></div>
+   </template>
+
+   <!--Modal: Delete Credit/Debit Card or ETF -->
+   <template if:true={modalDeleteCard}>
+      <!-- Modal/Popup Box LWC starts here -->
+      <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="nds-modal nds-fade-in-open">
+         <div class="nds-modal__container modalAccessibility">
+            <!-- Modal/Popup Box LWC header here -->
+
+            <!-- Modal/Popup Box LWC body starts here -->
+            <div class="nds-modal__content nds-p-around_medium" id="modal-content-id-1">
+               <div class="nds-grid nds-p-around_medium">
+                  <div class="nds-col nds-align_absolute-center">
+                     <c-custom-icon
+                     icon-name="Information_Tool_Tip" 
+                     size="small"
+                     variant="warning"
+                     alternative-text="Info" 
+                     extra-class="nds-m-right_x-small"></c-custom-icon>
+                  </div>
+                  <div class="nds-col nds-p-top_small">
+                     <!-- <p if:true={errorMessageCancelPendingPayment} class="nds-text-color_default nds-text-title">In order to delete this account, you need to first cancel the pending payment or autopay that is connected to it.</p> -->
+                     <p if:true={cardPopUp} class="nds-text-color_default nds-text-title">Are you sure you want to delete this card from your saved cards?</p>
+                     <p if:true={accountPopUp} class="nds-text-color_default nds-text-title">Are you sure you want to delete this account from your saved accounts?</p>
+                  </div>
+               </div>
+
+               <div class="nds-grid nds-text-align_center nds-p-bottom_small">
+                  <div class="nds-size_1-of-1">
+                     <div class="nds-col">
+                        <!-- close modal only -->
+                        <!-- <template if:true={errorMessageCancelPendingPayment}>
+                           <button class="nds-button nds-button_brand modal-color-2 nds-m-bottom_x-small" onclick={closeModalDeleteCard} title="Ok">Ok</button>
+                        </template> -->
+
+                        <!-- No, don't delete -->
+                        <button class="nds-m-right_x-small nds-button nds-button_neutral modal-color-1 nds-m-bottom_x-small" onclick={closeModalDeleteCard} title="No, don't delete">
+                        No, don't delete
+                        </button>
+
+                        <!-- removeCard -->
+                        <button class="nds-button nds-button_brand modal-color-2 nds-m-bottom_x-small" onclick={deleteFromUI} title="Yes, delete">Yes, delete</button>
+                        
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <div class="nds-backdrop nds-backdrop_open"></div>
+   </template>
+
+   <!-- Modal No Card Selected for payment -->
+   <template if:true={openModalNoCardSelected}>
+      <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-3" class="nds-modal nds-fade-in-open">
+         <div class="nds-modal__container">
+            <!-- Modal/Popup Box LWC header here -->
+            <!-- Modal/Popup Box LWC body starts here -->
+            <div class="nds-modal__content nds-p-around_medium" id="modal-content-id-3">
+               <div class="nds-grid nds-p-around_medium">
+                  <div class="nds-col nds-align_absolute-center">
+                     <!-- Icon -->
+                     <c-custom-icon
+                        icon-name="Error" 
+                        size="large"
+                        variant="error"
+                        alternative-text="Error No Card or Account selected" 
+                        extra-class="nds-m-right_medium">
+                     </c-custom-icon>
+                  </div>
+                  <div class="nds-col nds-p-top_small">
+                     <p if:false={noAllowToDeleteMsg} class="nds-text-color_default nds-text-title">In order to set up autopay or make a payment, you must first add a Credit or Debit card or a bank account in the Payment Method section.</p>
+                     <p if:true={noAllowToDeleteMsg} class="nds-text-color_default nds-text-title">In order to delete this account, you need to first cancel the pending payment or autopay that is connected to it.</p>
+                  </div>
+               </div>
+
+               <div class="nds-grid nds-text-align_center nds-p-bottom_small">
+                  <div class="nds-size_1-of-1">
+                     <div class="nds-col">
+                        <!-- close modal only -->
+                        <button class="nds-button nds-button_brand modal-color-2 nds-m-bottom_x-small" onclick={closeModalNoCardSelected} title="Ok">Ok</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <div class="nds-backdrop nds-backdrop_open"></div>
+   </template>
+</template>
+
+<!-- <div class="nds-size_11-of-12 nds-box">
+    <div class="nds-grid">
+        
+        <div class="nds-size_4-of-12 nds-show_medium">
+            <div class="nds-m-around_medium">
+                <div class="nds-text-body_small nds-text-title">
+                    
+                    <template if:true={myCard.mastercard}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="40" viewBox="0 0 152.407 108" style="margin-left: -5px"><g><rect width="152.407" height="108" style="fill: none;"/><g><rect x="60.4117" y="25.6968" width="31.5" height="56.6064" style="fill: #ff5f00"/><path d="M382.20839,306a35.9375,35.9375,0,0,1,13.7499-28.3032,36,36,0,1,0,0,56.6064A35.938,35.938,0,0,1,382.20839,306Z" transform="translate(-319.79649 -252)" style="fill: #eb001b"></path><path d="M454.20349,306a35.99867,35.99867,0,0,1-58.2452,28.3032,36.00518,36.00518,0,0,0,0-56.6064A35.99867,35.99867,0,0,1,454.20349,306Z" transform="translate(-319.79649 -252)" style="fill: #f79e1b"></path><path d="M450.76889,328.3077v-1.1589h.4673v-.2361h-1.1901v.2361h.4675v1.1589Zm2.3105,0v-1.3973h-.3648l-.41959.9611-.41971-.9611h-.365v1.3973h.2576v-1.054l.3935.9087h.2671l.39351-.911v1.0563Z" transform="translate(-319.79649 -252)" style="fill: #f79e1b"></path></g></g></svg>
+                    </template>
+                    <template if:true={myCard.visa}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="40" style="margin-left: -9px; margin-top: -4px; margin-right: 4px;" clip-rule="evenodd" fill-rule="evenodd" viewBox="0 0 560 400"><path d="m286.87 176.71c-.228 17.993 16.036 28.034 28.287 34.004 12.588 6.126 16.816 10.054 16.768 15.531-.096 8.384-10.042 12.083-19.35 12.227-16.24.252-25.681-4.384-33.188-7.891l-5.849 27.373c7.531 3.472 21.476 6.499 35.938 6.631 33.944 0 56.152-16.756 56.273-42.736.132-32.971-45.607-34.797-45.295-49.535.108-4.468 4.372-9.237 13.717-10.45 4.624-.612 17.392-1.081 31.866 5.585l5.681-26.484c-7.783-2.835-17.789-5.55-30.244-5.55-31.95 0-54.423 16.984-54.604 41.295m139.44-39.013c-6.198 0-11.423 3.616-13.753 9.165l-48.49 115.777h33.92l6.75-18.654h41.451l3.916 18.654h29.896l-26.089-124.942zm4.744 33.752 9.789 46.916h-26.809zm-185.31-33.752-26.737 124.942h32.322l26.725-124.942zm-47.817 0-33.644 85.04-13.609-72.308c-1.597-8.071-7.903-12.732-14.906-12.732h-54.999l-.769 3.628c11.291 2.45 24.119 6.402 31.89 10.63 4.756 2.582 6.114 4.84 7.675 10.978l25.776 99.706h34.161l52.369-124.942z" fill="#1a1f71"></path></svg>
+                    </template>
+                    <template if:true={myCard.amex}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="40" viewBox="-150 -249.37925 1300 1496.2755" style="margin-left: -5px"><path d="M0 0h997.517v538.49l-49.375 77.147 49.375 68.661v313.219H0v-507.63l30.859-35.488L0 420.454z" fill="#016fd0"></path><path d="M193.64 695.099v-156.61h165.82l17.791 23.193 18.38-23.193h601.886V684.3s-15.74 10.643-33.945 10.8H630.295l-20.058-24.688V695.1h-65.73v-42.142s-8.979 5.882-28.39 5.882h-22.373v36.26h-99.52l-17.766-23.69-18.038 23.69zM0 420.454l37.393-87.177h64.668l21.22 48.833v-48.833h80.388l12.633 35.295 12.247-35.295h360.858v17.744s18.97-17.744 50.146-17.744l117.085.41 20.854 48.193v-48.603h67.273l18.515 27.683v-27.683h67.89v156.61h-67.89l-17.744-27.774v27.773h-98.838l-9.94-24.687h-26.57l-9.779 24.687h-67.028c-26.826 0-43.974-17.381-43.974-17.381v17.381H488.343L468.285 465.2v24.687H92.481L82.548 465.2H56.06l-9.86 24.686H0z" fill="#fff"></path><path d="M50.628 352.584L.193 469.848h32.836l9.306-23.482h54.1l9.257 23.482h33.56L88.863 352.584zm18.66 27.29l16.49 41.034H52.75zm73.435 89.954V352.564l46.661.173 27.14 75.605 26.49-75.778h46.289v117.264h-29.316v-86.405l-31.076 86.405h-25.71l-31.162-86.405v86.405zm166.638 0V352.564h95.663v26.23h-66.038v20.058h64.495v24.688h-64.495v20.83h66.038v25.458zm112.636-117.244v117.264h29.316v-41.66h12.343l35.15 41.66h35.826l-38.574-43.203c15.831-1.336 32.161-14.923 32.161-36.018 0-24.676-19.368-38.043-40.984-38.043zm29.316 26.23h33.51c8.04 0 13.887 6.288 13.887 12.343 0 7.79-7.577 12.344-13.452 12.344h-33.945zm118.807 91.014h-29.933V352.564h29.933zm70.975 0h-6.46c-31.262 0-50.243-24.63-50.243-58.15 0-34.349 18.768-59.114 58.246-59.114h32.402v27.773h-33.586c-16.026 0-27.36 12.507-27.36 31.63 0 22.71 12.96 32.248 31.63 32.248h7.715zm63.792-117.244l-50.435 117.264h32.836l9.305-23.482h54.1l9.258 23.482h33.559l-50.387-117.264zm18.66 27.29l16.49 41.034h-33.029zm73.386 89.954V352.564h37.272l47.59 73.676v-73.676h29.317v117.264h-36.067l-48.796-75.604v75.604zM213.699 675.04V557.776h95.662v26.23h-66.038v20.059h64.495v24.687h-64.495v20.83h66.038v25.458zm468.748 0V557.776h95.662v26.23h-66.038v20.059h64.187v24.687H712.07v20.83h66.038v25.458zm-369.373 0l46.578-57.908-47.687-59.356H348.9l28.4 36.693 28.497-36.693h35.488l-47.06 58.632 46.663 58.632H403.96l-27.576-36.114-26.905 36.114zM444.37 557.796V675.06h30.087v-37.03h30.859c26.111 0 45.903-13.853 45.903-40.792 0-22.317-15.523-39.442-42.094-39.442zm30.087 26.52h32.498c8.436 0 14.465 5.17 14.465 13.5 0 7.826-5.999 13.501-14.561 13.501h-32.402zm89.491-26.54V675.04h29.316v-41.66h12.344l35.15 41.66h35.825l-38.573-43.202c15.83-1.336 32.16-14.924 32.16-36.019 0-24.676-19.368-38.043-40.984-38.043zm29.316 26.23h33.511c8.039 0 13.887 6.288 13.887 12.344 0 7.79-7.577 12.343-13.453 12.343h-33.945zm198.423 91.034v-25.458h58.671c8.681 0 12.44-4.692 12.44-9.837 0-4.93-3.747-9.913-12.44-9.913h-26.513c-23.045 0-35.88-14.04-35.88-35.121 0-18.803 11.753-36.935 46-36.935h57.088l-12.343 26.385h-49.375c-9.438 0-12.343 4.952-12.343 9.682 0 4.86 3.59 10.222 10.8 10.222h27.773c25.69 0 36.838 14.572 36.838 33.655 0 20.517-12.422 37.32-38.236 37.32zm107.597 0v-25.458h58.67c8.682 0 12.44-4.692 12.44-9.837 0-4.93-3.746-9.913-12.44-9.913h-26.512c-23.046 0-35.88-14.04-35.88-35.121 0-18.803 11.753-36.935 45.999-36.935h57.089l-12.344 26.385h-49.374c-9.438 0-12.344 4.952-12.344 9.682 0 4.86 3.59 10.222 10.801 10.222h27.773c25.69 0 36.838 14.572 36.838 33.655 0 20.517-12.422 37.32-38.236 37.32z" fill="#016fd0"></path></svg>
+                    </template>
+                    <label class="nds-show--inline nds-form-element__label c-text-medium_label">
+                        {myCard.cardname}
+                    </label>
+                </div>
+                <p class="nds-text-body_regular nds-m-bottom_medium">**** **** **** {myCard.creditCardNumberLast4} {myCard.accountNumberLast4}</p>
+            </div>
+        </div>
+        <div class="nds-hide_medium">
+            <label class="nds-show--inline nds-form-element__label c-text-medium_label">
+                {myCard.cardname}
+            </label>
+        </div>
+        
+        <div class="nds-size_2-of-12 nds-show_medium">
+            <template if:true={myCard.expDate}>
+                <div class="nds-m-around_medium">
+                    <div class="nds-text-body_small nds-text-title">
+                        <label class="nds-show--inline nds-form-element__label c-text-medium_label">
+                            Exp Date
+                        </label>
+                    </div>
+                    <p class="nds-text-body_regular nds-m-bottom_medium">{myCard.creditCardExpirationDate}</p>
+                </div>
+            </template>
+        </div>
+        
+        <div class="nds-size_2-of-12 nds-show_medium">
+            <template if:true={myCard.cvv}>
+                <div class="nds-m-around_medium nds-size_1-of-2
+                ">
+                    <div class="tooltip">
+                        <input class="nds-input" id={myCard.accountId} type="text" maxlength="3" value={myCard.cvvNumber} required onkeypress={validateCVV}>
+                        <span class="tooltiptext" style="display:inline-block;">
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 458.275 458.275" style="enable-background:new 0 0 458.275 458.275;" xml:space="preserve"><g><g><path d="M273.256,254.839c1.352,0,2.703-0.078,4.045-0.244c1.02-0.127,2.198-0.21,3.115-0.711    c1.924-1.054,1.945-2.976,1.643-4.866c-0.355-2.215-2.291-3.355-4.422-3.078c-2.26,0.295-4.668,0.227-6.711-0.889    c-3.98-2.17-4.996-7.74-3.213-11.669c1.069-2.356,3.229-3.916,5.764-4.351c1.311-0.225,2.684-0.163,3.996,0.008    c1.289,0.168,2.533-0.062,3.469-1.05c1.115-1.183,1.604-3.712,0.957-5.192c-1.148-2.638-4.836-2.524-7.258-2.524    c-4.325,0-8.734,1.067-12.26,3.655c-6.734,4.941-8.523,14.893-4.855,22.245C260.492,252.121,266.848,254.839,273.256,254.839z"></path><path d="M294.586,251.81c1.178,3.244,5.689,2.369,8.385,2.369c1.729,0,3.354-0.577,4.012-2.347c0.143-0.34,0.258-0.69,0.387-1.034    c1.965-5.278,3.93-10.558,5.895-15.835c0.912-2.451,1.824-4.902,2.738-7.354c0.811-2.18,1.627-4.799-1.057-6.2    c-1.275-0.667-3.023-0.409-4.416-0.409c-1.816,0-3.57,0.452-4.268,2.367c-0.758,2.077-1.209,4.313-1.799,6.441    c-1.166,4.205-2.352,8.386-3.244,12.66c-1.223-6.049-3.217-11.978-4.938-17.897c-0.303-1.042-0.574-2.041-1.473-2.769    c-1.252-1.014-2.879-0.803-4.379-0.803c-1.602,0-3.264-0.177-4.496,1.086c-1.068,1.096-1.217,2.608-0.713,3.993    C288.342,234.656,291.465,243.232,294.586,251.81z"></path><path d="M329.504,251.81c1.182,3.243,5.689,2.369,8.387,2.369c1.729,0,3.354-0.577,4.01-2.347c0.143-0.34,0.258-0.69,0.387-1.034    c1.965-5.278,3.93-10.558,5.895-15.835c0.912-2.451,1.824-4.902,2.738-7.354c0.811-2.18,1.627-4.8-1.055-6.2    c-1.275-0.667-3.023-0.409-4.418-0.409c-1.816,0-3.568,0.451-4.266,2.367c-0.758,2.078-1.209,4.313-1.801,6.441    c-1.166,4.205-2.354,8.386-3.242,12.66c-1.229-6.048-3.217-11.976-4.938-17.897c-0.303-1.043-0.576-2.041-1.475-2.769    c-1.25-1.014-2.879-0.803-4.379-0.803c-1.602,0-3.262-0.177-4.494,1.086c-1.07,1.098-1.219,2.606-0.715,3.993    C323.262,234.656,326.383,243.232,329.504,251.81z"></path><path d="M304.051,339.017c-21.604,0-41.697-6.594-58.373-17.875H49.452c-12.181,0-22.09-9.907-22.09-22.09V179.878H215.12    c10.313-16.705,25.198-30.297,42.896-39.025l-230.653,0.016v-19.648c0-12.182,9.909-22.09,22.09-22.09h314.786    c12.18,0,22.09,9.908,22.09,22.09v19.623l-36.258,0.002c34.572,17.043,58.418,52.654,58.418,93.734    c0,14.758-3.064,29.125-8.969,42.379l14.17,13.172v-168.91c0-27.268-22.184-49.451-49.451-49.451H49.452    C22.183,71.77,0,93.954,0,121.221v177.832c0,27.268,22.184,49.451,49.452,49.451h314.009l-18.967-17.631    C331.756,336.232,318.035,339.017,304.051,339.017z"></path><path d="M68.194,219.976c-3.977,0-7.2,3.223-7.2,7.199v21.442c0,3.978,3.224,7.199,7.2,7.199h133.592    c-1.423-6.858-2.173-13.963-2.173-21.238c0-4.954,0.355-9.83,1.026-14.604L68.194,219.976L68.194,219.976z"></path><path d="M452.557,355.464l-73.453-68.279c10.396-14.891,16.51-32.989,16.51-52.524c0-50.75-41.143-91.894-91.893-91.894    s-91.892,41.143-91.892,91.894c0,50.75,41.142,91.891,91.892,91.891c18.236,0,35.215-5.332,49.508-14.494l74.93,69.654    c3.451,3.209,7.828,4.795,12.195,4.795c4.807,0,9.6-1.922,13.127-5.719C460.219,373.538,459.805,362.199,452.557,355.464z     M303.721,173.978c33.459,0,60.68,27.223,60.68,60.683c0,33.459-27.221,60.68-60.68,60.68s-60.68-27.221-60.68-60.68    C243.041,201.201,270.262,173.978,303.721,173.978z"></path></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
+                        </span>
+                    </div>
+                </div>
+            </template>
+        </div>
+        
+        <div class="nds-size_2-of-12 nds-show_medium">
+            <div class="nds-m-around_medium">
+                <button class="nds-button">Edit
+                    <lightning-icon class="nds-m-left_medium" size="x-small" icon-name="utility:edit" alternative-text="Edit" title="Edit"></lightning-icon>
+                </button>
+            </div>
+        </div>
+        
+        <div class="nds-size_2-of-12 nds-show_medium">
+            <div class="nds-m-around_medium">
+                <button class="nds-button" onclick={removeCard} data-btn-id={myCard.accountId}>
+                    Delete
+                    <lightning-icon class="nds-m-left_medium" size="x-small" icon-name="utility:recycle_bin_empty" alternative-text="Delete" title="Delete"></lightning-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <template if:true={myCard.cc}>
+        <template if:true={myCard.isSelected}>
+            <div class="nds-text-body_small nds-text-title nds-m-left_medium" style="color: #cc0000">Enter your CVV to continue</div>
+        </template>
+    </template>
+    
+</div> -->

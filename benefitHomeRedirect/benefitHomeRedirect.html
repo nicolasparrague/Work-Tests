@@ -1,0 +1,57 @@
+<!-- This section is replaced by the below section
+   <template>
+      <div class="action-template">
+         <template if:false={documentBreadCrumb}>
+            <a href={benefitHomeSrc} class="slds-no-print">
+               <span class="nds-text-link" style="font-size: 15px; font-weight: 400">Benefits and Spending</span>
+            </a>
+            <span class="nds-p-horizontal_xx-small">&gt;</span>
+            <span class="slds-no-print" style="font-size: 15px; font-weight: 400">{pageName}</span>
+         </template>
+         <template if:true={documentBreadCrumb}>
+            <a href={benefitHomeSrc} class="slds-no-print">
+               <span class="nds-text-link" style="font-size: 15px; font-weight: 400">Benefits and Spending</span>
+            </a>
+            <span class="nds-p-horizontal_xx-small">&gt;</span>
+            <a href={benefitHomeDetailsSrc} class="slds-no-print">
+               <span class="nds-text-link slds-no-print" style="font-size: 15px; font-weight: 400">{previousPage}</span>
+            </a>
+            <span class="nds-p-horizontal_xx-small">&gt;</span>
+            <span class="slds-no-print" style="font-size: 15px; font-weight: 400">{pageName}</span>
+         </template>
+      </div>
+</template>-->
+<template>
+   <nav aria-label="Breadcrumb" class="action-template">
+      <ol>
+         <template if:false={documentBreadCrumb}>
+            <li style="display: inline;">
+               <a href={benefitHomeSrc} class="slds-no-print">
+                  <span class="nds-text-link" style="font-size: 15px; font-weight: 400">Benefits and Spending</span>
+               </a>
+            </li>
+            <span class="nds-p-horizontal_xx-small">&gt;</span>
+            <li style="display: inline;">
+               <span class="slds-no-print" style="font-size: 15px; font-weight: 400" aria-current="page">{pageName}</span>
+            </li>
+         </template>
+         <template if:true={documentBreadCrumb}>
+            <li style="display: inline;">
+               <a href={benefitHomeSrc} class="slds-no-print">
+                  <span class="nds-text-link" style="font-size: 15px; font-weight: 400">Benefits and Spending</span>
+               </a>
+            </li>
+            <span class="nds-p-horizontal_xx-small">&gt;</span>
+            <li style="display: inline;">
+               <a href={benefitHomeDetailsSrc} class="slds-no-print">
+                  <span class="nds-text-link slds-no-print" style="font-size: 15px; font-weight: 400">{previousPage}</span>
+               </a>
+            </li>
+            <span class="nds-p-horizontal_xx-small">&gt;</span>
+            <li style="display: inline;">
+               <span class="slds-no-print" style="font-size: 15px; font-weight: 400" aria-current="page">{pageName}</span>
+            </li>
+         </template>
+      </ol>
+   </nav>
+</template>

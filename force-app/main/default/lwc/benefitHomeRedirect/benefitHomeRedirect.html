@@ -32,7 +32,7 @@
             </li>
             <span class="nds-p-horizontal_xx-small">&gt;</span>
             <li style="display: inline;">
-               <span class="slds-no-print" style="font-size: 15px; font-weight: 400" aria-current="page">{pageName}</span>
+               <span class="slds-no-print" data-id="pageName" style="font-size: 15px; font-weight: 400" aria-current="page">{pageName}</span>
             </li>
          </template>
          <template if:true={documentBreadCrumb}>
@@ -44,12 +44,12 @@
             <span class="nds-p-horizontal_xx-small">&gt;</span>
             <li style="display: inline;">
                <a href={benefitHomeDetailsSrc} class="slds-no-print">
-                  <span class="nds-text-link slds-no-print" style="font-size: 15px; font-weight: 400">{previousPage}</span>
+                  <span class="nds-text-link slds-no-print" data-id="previousPage" style="font-size: 15px; font-weight: 400">{previousPage}</span>
                </a>
             </li>
             <span class="nds-p-horizontal_xx-small">&gt;</span>
             <li style="display: inline;">
-               <span class="slds-no-print" style="font-size: 15px; font-weight: 400" aria-current="page">{pageName}</span>
+               <span class="slds-no-print" data-id="pageName" style="font-size: 15px; font-weight: 400" aria-current="page">{pageName}</span>
             </li>
          </template>
       </ol>

@@ -23,7 +23,7 @@ export default class BenefitsDentalPlanBenefits extends LightningElement {
     ' exclusions and limitations. If there are any differences between the ' +
     ' information on this page and your official plan documents, the terms of ' +
     ' the plan documents will control.';
-    @track dentalBenefits;
+    @track dentalBenefits = [];
     @track limitBenefits;
 
 

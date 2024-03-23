@@ -5,7 +5,7 @@ const WATERMARK = '../resource/temporary_watermark';
 export default class TempEmpireIdCard extends OmniscriptBaseMixin(LightningElement) {
     @api cardData = null;
     @api type = '';
-    @track cardLogo = '';
+    @track cardLogo = '../resource/empire_logo_color';
     @track member = {};
     @track loading = true;
     @track showRXPCN = true;
@@ -13,7 +13,6 @@ export default class TempEmpireIdCard extends OmniscriptBaseMixin(LightningEleme
     empirePlanName = '';
     firstDescription = '';
     secondDescription = '';
-    cardLogo = '../resource/empire_logo_color';
     cnyLogo = '../resource/ny_seal';
     suitcaseLogo = '../resource/suitcase_logo';
 

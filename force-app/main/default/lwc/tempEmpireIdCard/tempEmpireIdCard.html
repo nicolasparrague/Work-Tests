@@ -23,25 +23,25 @@
                             <div class="id-card-body-main-data">
                                 <div class="id-card-body-main-value">
                                     <ul>
-                                        <li>{cardData.MemberName}</li>
+                                        <li data-id="memberName">{cardData.MemberName}</li>
                                         <li class="id-card-body-nth-line-item">Identification Number</li>
-                                        <li class="id-card-body-nth-line-item id-card-body-bold-text">NYC {cardData.MemberId}</li>
+                                        <li data-id="memberId" class="id-card-body-nth-line-item id-card-body-bold-text">NYC {cardData.MemberId}</li>
                                     </ul>
                                 </div>
                                 <div class="id-card-body-mid-cell"></div>
                                 <div class="id-card-body-main-value">
-                                    <span class="id-card-body-description-text">{firstDescription}</span>
+                                    <span data-id="firstDescription" class="id-card-body-description-text">{firstDescription}</span>
                                 </div>
                             </div>
                             <div class="id-card-body-main-data">
                                 <div class="id-card-body-main-value">
                                     <li class="id-card-body-bold-text">The City of New York Health Benefits Program</li>
-                                    <li class="id-card-body-nth-line-item">Health Plan: {empirePlanName}</li>
+                                    <li data-id="empirePlanName" class="id-card-body-nth-line-item">Health Plan: {empirePlanName}</li>
                                     <li class="id-card-body-nth-line-item">BC Plan 754</li>
                                 </div>
                                 <div class="id-card-body-mid-cell"></div>
                                 <div class="id-card-body-main-value id-card-body-second-description">
-                                    <span class="id-card-body-description-text">{secondDescription}</span>
+                                    <span data-id="secondDescription" class="id-card-body-description-text">{secondDescription}</span>
                                 </div>
                             </div>
                             <div class="id-card-bottom">

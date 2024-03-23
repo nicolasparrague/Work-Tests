@@ -1,17 +1,17 @@
 <template>
-    <template if:true={showHighlightPanel}>
-        <div>
-            <h2>
-                Health Care Financial Summary for This Plan Year
-            </h2>
-            See your total claims rollup here including what has been billed and what you have spent for this plan year. Click the Download Financial Summary link below to save a copy with more detail.
-        </div>
-        </br>
-        <c-cf-a-m-p_-claims-highlight-panel parent-data="true" records={_highlightTotals}>
-        </c-cf-a-m-p_-claims-highlight-panel>
+  <template if:true={showHighlightPanel}>
+      <div>
+          <h2>
+              Health Care Financial Summary for This Plan Year
+          </h2>
+          See your total claims rollup here including what has been billed and what you have spent for this plan year. Click the Download Financial Summary link below to save a copy with more detail.
+      </div>
+      </br>
+      <c-cf-a-m-p_-claims-highlight-panel parent-data="true" records={_highlightTotals}>
+      </c-cf-a-m-p_-claims-highlight-panel>
 
-        <div class="nds-grid nds-grid_align-end">
-            <c-member-claims-financial-summary userid={_userId}></c-member-claims-financial-summary>
-        </div>
-    </template>
+      <div class="nds-grid nds-grid_align-end">
+          <c-member-claims-financial-summary userid={_userId}></c-member-claims-financial-summary>
+      </div>
+  </template>
 </template>

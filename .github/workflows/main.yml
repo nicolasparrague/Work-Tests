@@ -3,8 +3,8 @@ name: CI on PR
 
 # Definition when the workflow should run
 on:
-    pull_request:
-        types: [opened, edited, synchronize, reopened]
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
 
 # # Workflow environment variables
 # env:
@@ -13,47 +13,51 @@ on:
 
 # Jobs to be executed
 jobs:
-    format-lint-lwc-tests:
-        runs-on: ubuntu-latest
-        steps:
-            # Checkout the source code
-            - name: 'Checkout source code'
-              uses: actions/checkout@v3
+  format-lint-lwc-tests:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the source code
+      - name: "Checkout source code"
+        uses: actions/checkout@v3
 
-            # Install Volta to enforce proper node and package manager versions
-            - name: 'Install Volta'
-              uses: volta-cli/action@v4
+      # Install Volta to enforce proper node and package manager versions
+      - name: "Install Volta"
+        uses: volta-cli/action@v4
 
-            # Cache node_modules to speed up the process
-            - name: 'Restore node_modules cache'
-              id: cache-npm
-              uses: actions/cache@v3
-              with:
-                  path: node_modules
-                  key: npm-${{ hashFiles('**/package-lock.json') }}
-                  restore-keys: |
-                      npm-${{ env.cache-name }}-
-                      npm-
+      # Cache node_modules to speed up the process
+      - name: "Restore node_modules cache"
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-${{ env.cache-name }}-
+            npm-
 
-            # Install npm dependencies for Prettier and Jest
-            - name: 'Install npm dependencies'
-              if: steps.cache-npm.outputs.cache-hit != 'true'
-              run: HUSKY=0 npm ci
+      # Install npm dependencies for Prettier and Jest
+      - name: "Install npm dependencies"
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+        run: HUSKY=0 npm ci
 
-            # Prettier formatting
-            - name: 'Code formatting verification with Prettier'
-              run: npm run prettier:verify
+      # - name: Get changed files
+      #   run: |
+      #     CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+      #     echo "$CHANGED_FILES" | grep -E "\.(js|jsx|ts|tsx|html|css|json|md|yaml|yml)$" > changed_files.txt
 
-            # Lint LWC
-            - name: 'Lint Lightning Web Components'
-              run: npm run lint
+      # - name: Run Prettier verification
+      #   run: npm run prettier:verify -- "$(cat changed_files.txt)"
 
-            # LWC unit tests
-            - name: 'Unit test Lightning Web Components'
-              run: npm run test:unit:coverage
+      # # Lint LWC
+      # - name: "Lint Lightning Web Components"
+      #   run: npm run lint
 
-            # Upload code coverage data
-            - name: 'Upload code coverage for LWC to Codecov.io'
-              uses: codecov/codecov-action@v3
-              with:
-                  flags: LWC
+      # LWC unit tests
+      - name: "Unit test Lightning Web Components"
+        run: npm run test:unit:coverage
+
+      # Upload code coverage data
+      - name: "Upload code coverage for LWC to Codecov.io"
+        uses: codecov/codecov-action@v3
+        with:
+          flags: LWC

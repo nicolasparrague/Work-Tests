@@ -59,5 +59,7 @@ jobs:
       # Upload code coverage data
       - name: "Upload code coverage for LWC to Codecov.io"
         uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
         with:
           flags: LWC

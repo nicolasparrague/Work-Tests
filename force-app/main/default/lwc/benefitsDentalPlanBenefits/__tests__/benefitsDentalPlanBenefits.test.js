@@ -1,9 +1,8 @@
 import { createElement } from "lwc";
 import { getDataHandler } from "omnistudio/utility";
-import mockCustomIcon from './mocks/customIcon.js';
 import BenefitsDentalPlanBenefits from "c/benefitsDentalPlanBenefits";
 
-jest.mock('c/customIcon', () => mockCustomIcon);
+jest.mock('c/customIcon');
 
 jest.mock(
   "omnistudio/utility",

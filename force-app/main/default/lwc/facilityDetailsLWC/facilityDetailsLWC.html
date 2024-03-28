@@ -32,7 +32,7 @@
                   <div class="nlds-col nds-size_12-of-12">
                      <div class="nds-m-horizontal_xxx-small">
                         <div class="nds-text-title">Facility Name</div>
-                        <p class="nds-text-body_regular nds-m-bottom_medium">{facility.name}</p>
+                        <p data-id="facilityName" class="nds-text-body_regular nds-m-bottom_medium">{facility.name}</p>
                      </div>
                   </div>
                </div>
@@ -41,7 +41,7 @@
                   <div class="nlds-col nds-size_12-of-12">
                      <div class="nds-m-horizontal_xxx-small">
                         <div class="nds-text-title">Facility Type</div>
-                        <p class="nds-text-body_regular nds-m-bottom_medium">{selectedFacilityType}</p>
+                        <p data-id="facilityType" class="nds-text-body_regular nds-m-bottom_medium">{selectedFacilityType}</p>
                      </div>
                   </div>
                </div>
@@ -50,7 +50,7 @@
                   <div class="nlds-col nds-size_12-of-12">
                      <div class="nds-m-horizontal_xxx-small">
                         <div class="nds-text-title">Phone Number</div>
-                        <p class="nds-text-body_regular nds-m-bottom_medium">{locationPhone}</p>
+                        <p data-id="locationPhone" class="nds-text-body_regular nds-m-bottom_medium">{locationPhone}</p>
                      </div>
                   </div>
                </div>
@@ -59,7 +59,7 @@
                   <div class="nlds-col nds-size_12-of-12">
                      <div class="nds-m-horizontal_xxx-small">
                         <div class="nds-text-title">Address</div>
-                        <p class="nds-text-body_regular nds-m-bottom_medium">
+                        <p data-id="address" class="nds-text-body_regular nds-m-bottom_medium">
                            {facility.addressLine1} <br />
                            {facility.city}, {facility.state} {facility.zip}
                         </p>
@@ -71,7 +71,7 @@
                      <div class="nlds-col nds-size_12-of-12">
                         <div class="nds-m-horizontal_xxx-small">
                            <div class="nds-text-title">Center of Excellence</div>
-                           <p class="nds-text-body_regular nds-m-bottom_medium">{facility.isCOE}</p>
+                           <p data-id="isCoe" class="nds-text-body_regular nds-m-bottom_medium">{facility.isCOE}</p>
                         </div>
                      </div>
                   </div>
@@ -84,9 +84,9 @@
    <!-- Provider Information Block - Mobile -->
    <div class="nds-grid nds-wrap nds-hide_medium nds-m-bottom_small">
       <!-- Facility Name -->
-      <div class="nds-col nds-size_12-of-12 nds-medium-size_12-of-12 nds-large-size_12-of-12 c-medium-bold-header">{facility.name}</div>
+      <div data-id="facilityNameMobile" class="nds-col nds-size_12-of-12 nds-medium-size_12-of-12 nds-large-size_12-of-12 c-medium-bold-header">{facility.name}</div>
       <!-- Facility Type -->
-      <div class="nds-col nds-size_12-of-12 nds-medium-size_12-of-12 nds-large-size_12-of-12 nds-text-body_regular">{selectedFacilityType}</div>
+      <div data-id="facilityTypeMobile" class="nds-col nds-size_12-of-12 nds-medium-size_12-of-12 nds-large-size_12-of-12 nds-text-body_regular">{selectedFacilityType}</div>
    </div>
    <div class="nds-wrap nds-m-bottom_small nds-hide_medium">
       <lightning-accordion theme="nds" active-section-name={activeSectionName} allow-multiple-sections-open={sectionOpen}>
@@ -100,7 +100,7 @@
                </div>
                <!-- Address -->
                <div class="nds-col nds-size_6-of-12 nds-m-top_small">
-                  <a href={directionsUrl} target="_blank" class="nds-text-body_small">{locationAddress}</a>
+                  <a data-id="locationAddress" href={directionsUrl} target="_blank" class="nds-text-body_small">{locationAddress}</a>
                </div>
             </div>
             <div class="nds-col nds-size_12-of-12 nds-text-body_small nds-media">
@@ -113,7 +113,7 @@
                <!-- Phone Number -->
                <div class="nds-col nds-size_6-of-12 nds-m-top_small">
                   <p>
-                     <lightning-formatted-phone value={locationPhone}></lightning-formatted-phone>
+                     <lightning-formatted-phone data-id="locationPhone" value={locationPhone}></lightning-formatted-phone>
                   </p>
                </div>
             </div>
@@ -123,11 +123,10 @@
                   <div class="nds-col nds-size_1-of-12 nds-m-top_small">
                      <svg height="27px" width="30px" fill="#000000"  data-name="Layer 1" viewBox="9 9 50 50" x="0px" y="0px" class="nds-icon-text-default">
                         <title>Center Of Excellence</title>
-                        
                      </svg>
                   </div>
                   <div class="nds-col nds-size_6-of-12 nds-m-top_small">
-                        <div>Center of Excellence Available</div>
+                        <div data-id="centerOfExcellence">Center of Excellence Available</div>
                   </div>
                </div>
             </template>
@@ -189,7 +188,7 @@
    <div class="nds-m-bottom_small">
       <lightning-accordion theme="nds" active-section-name={PlansAccepted} allow-multiple-sections-open>
          <lightning-accordion-section theme="nds" name="PlansAccepted" label="Participating Plans">
-            <c-member-search-combo field-to-save="PlanAccepted" options={plans} class="nds-text-body_regular"> </c-member-search-combo>
+            <c-member-search-combo data-id="plans" field-to-save="PlanAccepted" options={plans} class="nds-text-body_regular"> </c-member-search-combo>
          </lightning-accordion-section>
       </lightning-accordion>
    </div>
@@ -198,7 +197,7 @@
    <div class="nds-m-bottom_small">
       <lightning-accordion theme="nds" active-section-name={NetworksAccepted} allow-multiple-sections-open>
          <lightning-accordion-section theme="nds" name="NetworksAccepted" label="Participating Networks">
-            <c-member-search-combo field-to-save="NetworkAccepted" options={networks} class="nds-text-body_regular"> </c-member-search-combo>
+            <c-member-search-combo data-id="networks" field-to-save="NetworkAccepted" options={networks} class="nds-text-body_regular"> </c-member-search-combo>
          </lightning-accordion-section>
       </lightning-accordion>
    </div>
@@ -269,11 +268,11 @@
          </span>
       </div>
       <div class="nds-col nds-size_11-of-12 slds-no-print">
-         <a onclick={printDetails} class="nds-text-link nds-hide_medium hide-print"> Save</a>
+         <a data-id="print" onclick={printDetails} class="nds-text-link nds-hide_medium hide-print"> Save</a>
       </div>
    </div>
    <div if:true={facilityTypeHospital} class="nds-small-size_12-of-12 nds-medium-size_12-of-12 nds-large-size_12-of-12 nds-text-body_regular">
-      <p>
+      <p data-id="compareHospitalUrl">
          See the Medicare.gov <a href="http://www.medicare.gov/hospitalcompare/search.html" target="_blank" aria-label="Hospital Compare opens a new tab">Hospital compare</a> <lightning-icon theme="nds" icon-name="utility:new_window" size="xx-small" class="nds-p-left_xx-small nds-m-right_xxx-small nds-brand c-fc-action-icon_right"></lightning-icon> tool for information on hospital quality, safety and patient experience.
       </p>
    </div>

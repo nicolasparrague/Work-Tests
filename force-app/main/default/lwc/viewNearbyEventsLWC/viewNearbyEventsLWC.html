@@ -2,6 +2,7 @@
     <button         
          aria-label="View Nearby Events"
          class="nds-button nds-button_neutral nds-m-bottom_x-small nds-m-top_x-small nds-button_stretch"
+         data-id="goToExternalSite"
          onclick={goToExternalSite}>
          <span class="btnLabel1">View Nearby Events</span>
          <lightning-icon icon-name="utility:new_window" size="x-small" class="nds-m-right_xxx-small nds-m-left_x-small c-fc-action-icon_right"></lightning-icon>
@@ -32,11 +33,11 @@
                  <div class="nds-size_1-of-1">
                     <div class="nds-col c-reverse-button-stack_small ">
                        <!-- Go Back option -->
-                       <button class="nds-m-right_large nds-button nds-button_neutral modal-color-1 " onclick={closeModal} title="Go Back">
+                       <button data-id="cancel" class="nds-m-right_large nds-button nds-button_neutral modal-color-1 " onclick={closeModal} title="Go Back">
                           Cancel
                        </button>
                        <!-- Pharmacy  -->
-                       <button class="nds-button nds-button_brand modal-color-2" onclick={openLink} title="Proceed to the site">
+                       <button data-id="continue" class="nds-button nds-button_brand modal-color-2" onclick={openLink} title="Proceed to the site">
                           Continue<lightning-button-icon variant="bare" icon-name="utility:link"></lightning-button-icon>
                        </button>
                     </div>

@@ -1,0 +1,8 @@
+<template>
+    Useful links:
+    <template for:each={links} for:item="link"> 
+        <a class="link" key={link.label} href={link.url}> {link.label}
+            <span class="separator"> | </span>
+        </a>
+    </template>
+</template>

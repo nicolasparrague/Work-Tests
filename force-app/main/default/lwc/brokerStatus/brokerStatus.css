@@ -1,0 +1,31 @@
+.negativeIcon {
+  transform: rotate(180deg) scaleX(-1);
+  --slds-c-icon-color-foreground-default: var(--negative-color);
+}
+
+.positiveIcon {
+  --slds-c-icon-color-foreground-default: var(--positive-color);
+}
+
+.neutralIcon {
+  --slds-c-icon-color-foreground-default: var(--neutral-color);
+}
+
+.negativeText {
+  color: var(--negative-color)
+}
+
+.positiveText {
+  color: var(--positive-color)
+}
+
+.neutralText {
+  color: var(--neutral-color)
+}
+
+:host {
+  --negative-color: rgb(234, 99, 50); 
+  --positive-color: rgb(147, 189, 32);
+  --neutral-color: rgb(235, 183, 52);
+  --slds-c-card-radius-border: 1.5rem;
+}

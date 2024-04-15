@@ -1,19 +1,26 @@
-public class BrokerStatusController {
+public with sharing class BrokerStatusController {
+  @AuraEnabled(cacheable=true)
+  public static String getMemberCount() {
+    Counts counts = new Counts();
 
-    @TestVisible
-    @AuraEnabled(cacheable=true)
-    public static String getMemberCount() {
+    counts.total = [
+      SELECT COUNT()
+      FROM MemberPlan
+      WHERE OwnerId = :UserInfo.getUserId()
+    ];
+    counts.totalUntilLastMonth = [
+      SELECT COUNT()
+      FROM MemberPlan
+      WHERE
+        OwnerId = :UserInfo.getUserId()
+        AND CreatedDate < :Date.today().toStartOfMonth()
+    ];
 
-        Counts count = new Counts();
+    return JSON.serialize(counts);
+  }
 
-        count.total = [SELECT COUNT() FROM MemberPlan WHERE OwnerId = :UserInfo.getUserId()];
-        count.totalUntilLastMonth = [SELECT COUNT() FROM MemberPlan WHERE OwnerId = :UserInfo.getUserId() AND CreatedDate < :Date.today().toStartOfMonth()];
-
-        return JSON.serialize(count);
-    }
-
-    public class Counts {
-        Integer total;
-        Integer totalUntilLastMonth;
-    }
+  private class Counts {
+    Integer total;
+    Integer totalUntilLastMonth;
+  }
 }

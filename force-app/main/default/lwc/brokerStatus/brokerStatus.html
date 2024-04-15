@@ -3,7 +3,7 @@
     <h3 slot="title" class="slds-text-color_weak">Total Current Members</h3>
     <div class="slds-var-p-horizontal_medium">
       <div class="slds-text-heading_large">
-        <b><lightning-formatted-number format-style="decimal" data-id="valueTotal" value={total}></lightning-formatted-number></b>
+        <b><lightning-formatted-number lwc:if={total} format-style="decimal" data-id="total" value={total}></lightning-formatted-number></b>
       </div>
       <p>
         <lightning-icon

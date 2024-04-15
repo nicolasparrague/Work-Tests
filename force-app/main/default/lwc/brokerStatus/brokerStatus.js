@@ -1,4 +1,4 @@
-import { LightningElement, api } from "lwc";
+import { LightningElement, wire } from "lwc";
 import { NavigationMixin } from 'lightning/navigation';
 import getMemberCount from "@salesforce/apex/BrokerStatusController.getMemberCount";
 
@@ -25,21 +25,29 @@ const variantStyles = {
 
 export default class BrokerStatus extends NavigationMixin(LightningElement) {
 
-  @api totalLastMonth = getMemberCount.totalLastMonth;
-  @api total = getMemberCount.total;
+  totalUntilLastMonth = 0;
+  total = 0;
 
-  get difference() {
-    return this.total - this.totalLastMonth;
+  @wire(getMemberCount)
+  wireGetMemberCount({error, data}) {
+      if (error) {
+        this.total = null;
+        this.totalUntilLastMonth = null;
+      } else if (data) {
+        const { total, totalUntilLastMonth } = JSON.parse(data);
+        this.total = total;
+        this.totalUntilLastMonth = totalUntilLastMonth;
+      }
   }
 
   get differenceAbs() {
-    return Math.abs(this.difference);
+    return Math.abs(this.total - this.totalUntilLastMonth);
   }
 
   get variant() {
-    if (this.total > this.totalLastMonth) {
+    if (this.total > this.totalUntilLastMonth) {
       return "positive";
-    } else if (this.total < this.totalLastMonth) {
+    } else if (this.total < this.totalUntilLastMonth) {
       return "negative";
     }
 

@@ -1,0 +1,52 @@
+<template>
+  <div
+    lwc:if={_numberOfPages}
+    class="slds-align_absolute-center"
+    style="height: 5rem"
+  >
+    <lightning-button-icon
+      if:true={shouldShowButton}
+      disabled={previousDisabled}
+      data-id="previous"
+      icon-name="utility:chevronleft"
+      class="slds-p-horizontal_x-small"
+      alternative-text="previous"
+      onclick={handlePrevious}
+    ></lightning-button-icon>
+
+    <template for:each={_pages} for:item="page">
+      <span key={page.value}>
+        <template lwc:if={page.spacer}> ..... </template>
+        <template lwc:elseif={page.selected}>
+          <lightning-button
+            data-id="selected"
+            variant="brand"
+            label={page.value}
+            class="slds-p-horizontal_x-small"
+            alternative-text="selected"
+            disabled
+          ></lightning-button>
+        </template>
+        <template lwc:else>
+          <lightning-button
+            data-value={page.value}
+            variant="base"
+            label={page.value}
+            class="slds-p-horizontal_x-small"
+            alternative-text="next"
+            onclick={handlePageChange}
+          ></lightning-button>
+        </template>
+      </span>
+    </template>
+    <lightning-button-icon
+      if:true={shouldShowButton}
+      disabled={nextDisabled}
+      data-id="next"
+      icon-name="utility:chevronright"
+      class="slds-p-horizontal_x-small"
+      alternative-text="next"
+      onclick={handleNext}
+    ></lightning-button-icon>
+  </div>
+</template>

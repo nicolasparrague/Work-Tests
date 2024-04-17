@@ -17,6 +17,7 @@ describe("c-data-table-pagination", () => {
       is: DataTablePagination
     });
     element.numberOfPages = 20;
+    element.dispatchEvent = jest.fn();
 
     // ACT
     document.body.appendChild(element);
@@ -24,51 +25,36 @@ describe("c-data-table-pagination", () => {
 
     // ASSERT
     expect(buttons.length).toBe(7);
-    expect(
-      element.shadowRoot.querySelector('lightning-button[data-id="selected"]')
-        .label
-    ).toBe(1);
+    expect(element.shadowRoot.querySelector('lightning-button[data-id="selected"]').label).toBe(1);
+    
 
     // ACT
-    const otherButton = element.shadowRoot.querySelector(
-      'lightning-button[data-value="5"]'
-    );
+    const otherButton = element.shadowRoot.querySelector('lightning-button[data-value="5"]');
     otherButton.click();
-
+    
     await flushPromises;
 
     // ASSERT
-    expect(
-      element.shadowRoot.querySelector('lightning-button[data-id="selected"]')
-        .label
-    ).toBe(5);
+
+    expect(element.dispatchEvent).toHaveBeenCalledWith(new CustomEvent({value: '5'}));
+    expect(element.shadowRoot.querySelector('lightning-button[data-id="selected"]').label).toBe(5);
 
     // ACT
-    const buttonNext = element.shadowRoot.querySelector(
-      'lightning-button-icon[data-id="next"]'
-    );
+    const buttonNext = element.shadowRoot.querySelector('lightning-button-icon[data-id="next"]');
     buttonNext.click();
 
     await flushPromises;
 
     // ASSERT
-    expect(
-      element.shadowRoot.querySelector('lightning-button[data-id="selected"]')
-        .label
-    ).toBe(6);
+    expect(element.shadowRoot.querySelector('lightning-button[data-id="selected"]').label).toBe(6);
 
     // ACT
-    const buttonPrevious = element.shadowRoot.querySelector(
-      'lightning-button-icon[data-id="previous"]'
-    );
+    const buttonPrevious = element.shadowRoot.querySelector('lightning-button-icon[data-id="previous"]');
     buttonPrevious.click();
 
     await flushPromises;
 
     // ASSERT
-    expect(
-      element.shadowRoot.querySelector('lightning-button[data-id="selected"]')
-        .label
-    ).toBe(5);
+    expect(element.shadowRoot.querySelector('lightning-button[data-id="selected"]').label).toBe(5);
   });
 });

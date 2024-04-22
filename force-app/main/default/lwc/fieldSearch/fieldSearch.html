@@ -1,0 +1,64 @@
+<template>
+  <lightning-layout multiple-rows>
+    <lightning-layout-item size="7">
+      <lightning-layout multiple-rows>
+        <lightning-layout-item
+          lwc:if={textInputType}
+          size="12"
+          class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left"
+        >
+          <lightning-icon
+            class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"
+            icon-name="utility:search"
+            size="xx-small"
+          ></lightning-icon>
+          <input
+            data-id="inputText"
+            label="search"
+            type="text"
+            placeholder="Search"
+            class="slds-input"
+          />
+        </lightning-layout-item>
+        <template lwc:elseif={dateInputType}>
+          <lightning-layout-item size="6">
+            <lightning-input
+              data-id="inputDateFrom"
+              variant="label-hidden"
+              placeholder="From"
+              label="from"
+              type="date"
+            ></lightning-input>
+          </lightning-layout-item>
+          <lightning-layout-item size="6">
+            <lightning-input
+              data-id="inputDateTo"
+              variant="label-hidden"
+              placeholder="To"
+              label="to"
+              type="date"
+            ></lightning-input>
+          </lightning-layout-item>
+        </template>
+      </lightning-layout>
+    </lightning-layout-item>
+    <lightning-layout-item size="3">
+      <lightning-combobox
+        name="fieldFilter"
+        variant="label-hidden"
+        label="field filter"
+        value={selectedOption}
+        options={_options}
+        placeholder=""
+        onchange={handleOptionChange}
+      ></lightning-combobox>
+    </lightning-layout-item>
+    <lightning-layout-item size="2">
+      <lightning-button
+        label="Apply"
+        onclick={handleApply}
+        variant="brand-outline"
+      ></lightning-button>
+    </lightning-layout-item>
+  </lightning-layout>
+</template>

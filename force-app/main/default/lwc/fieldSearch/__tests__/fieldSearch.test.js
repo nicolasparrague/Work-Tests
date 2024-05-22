@@ -27,11 +27,21 @@ describe('c-field-search', () => {
         const inputText = element.shadowRoot.querySelectorAll('input[data-id="inputText"]');
         inputText.value = 'inputText';
 
-        element.shadowRoot.querySelector('lightning-button').click();
+        const searchButton = element.shadowRoot.querySelector('lightning-button[data-id="search"]');
+        searchButton.click();
         
         // ASSERT
         expect(inputText.length).toBe(1);
         expect(element.dispatchEvent).toHaveBeenCalledWith(new CustomEvent({value: 'option1'}));
+
+        // ACT 
+        const cancelButton = element.shadowRoot.querySelector('lightning-button[data-id="cancel"]');
+        cancelButton.click();
+
+        // ASSERT
+        expect(searchButton.disabled).toBe(true);
+        expect(cancelButton.disabled).toBe(true);
+        expect(element.dispatchEvent).toHaveBeenCalledWith(new CustomEvent('cancel'));
 
         // ACT
         const combobox = element.shadowRoot.querySelector('lightning-combobox');

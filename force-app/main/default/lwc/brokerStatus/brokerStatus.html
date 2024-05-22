@@ -1,0 +1,34 @@
+<template>
+  <lightning-card>
+    <h3 slot="title" class="slds-text-color_weak">Total Current Members</h3>
+    <div class="slds-var-p-horizontal_medium">
+      <div class="slds-text-heading_large">
+        <b><lightning-formatted-number lwc:if={total} format-style="decimal" data-id="total" value={total}></lightning-formatted-number></b>
+      </div>
+      <p>
+        <lightning-icon
+          size="small"
+          class={iconClass}
+          icon-name={iconName}
+        ></lightning-icon>
+        <span class="slds-var-p-horizontal_small">
+          <span data-id="text" class={textClass}>
+            <lightning-formatted-number data-id="differenceAbs" value={differenceAbs}></lightning-formatted-number>
+          </span>
+          <span class="slds-var-p-horizontal_small slds-text-color_weak">
+            {textMessage}
+          </span>
+        </span>
+      </p>
+    </div>
+    <lightning-button-icon
+      title="View More"
+      icon-name="utility:chevronright"
+      size="medium"
+      slot="actions"
+      variant="bare"
+      alternative-text="View More"
+      onclick={navigateToMembersTab}
+    ></lightning-button-icon>
+  </lightning-card>
+</template>
